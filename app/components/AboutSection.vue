@@ -2,18 +2,7 @@
 const { data: companyData } = await useApi<any>("/company-section?populate=*");
 const { data: teamResponse } = await useApi<any>("/team-members?populate=*");
 
-// Берем массив данных
 const allMembers = computed(() => teamResponse.value?.data || []);
-
-// 1. Ищем Ирину по вхождению имени (так точно найдем, даже если ID другой)
-const irina = computed(() =>
-  allMembers.value.find((m: any) => m.name?.includes("ИРИНА")),
-);
-
-// 2. Остальные — это все, КРОМЕ Ирины (сравним по именам)
-const others = computed(() =>
-  allMembers.value.filter((m: any) => m.name !== irina.value?.name),
-);
 
 const stats = [
   { value: "5 +", label: "лет опыта" },
@@ -27,7 +16,7 @@ const stats = [
   <section class="relative py-24 font-sans text-black overflow-hidden">
     <!-- ФОНОВАЯ КАРТИНКА ВСЕГО БЛОКА -->
 
-    <div class="container mx-auto px-6 max-w-[1200px] z-10 relative">
+    <div class="container mx-auto px-6 max-w-300 z-10 relative">
       <!-- ЗАГОЛОВОК СЕКЦИИ -->
       <h2
         class="text-renome text-[36px] font-medium leading-[140%] uppercase mb-10 tracking-wide"
@@ -84,39 +73,14 @@ const stats = [
       <div
         class="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-6 auto-rows-fr"
       >
-        <!-- ИРИНА-->
         <div
-          v-if="irina"
-          class="lg:col-start-1 lg:row-start-1 lg:row-span-2 flex flex-col group h-full"
+          v-for="member in allMembers"
+          :key="member.id"
+          class="flex flex-col group h-full first:lg:row-span-2"
         >
           <div
-            class="flex-grow bg-gray-100 rounded-t-2xl overflow-hidden shadow-sm"
+            class="aspect-video bg-gray-50 rounded-t-xl overflow-hidden grow"
           >
-            <img
-              v-if="irina.avatar"
-              :src="`http://79.174.80.177:1337${irina.avatar.url}`"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
-          <div class="p-6 bg-renome-gradient rounded-b-2xl">
-            <h3
-              class="text-[20px] font-bold uppercase text-white leading-tight text-center"
-            >
-              {{ irina.name }}
-            </h3>
-            <p class="text-[12px] text-white/70 mt-1 uppercase text-center">
-              {{ irina.position }}
-            </p>
-          </div>
-        </div>
-
-        <!-- 2x2 справа -->
-        <div
-          v-for="member in others"
-          :key="member.id"
-          class="flex flex-col group h-full"
-        >
-          <div class="aspect-video bg-gray-50 rounded-t-xl overflow-hidden">
             <img
               v-if="member.avatar"
               :src="`http://79.174.80.177:1337${member.avatar.url}`"
@@ -124,7 +88,7 @@ const stats = [
             />
           </div>
           <div
-            class="p-4 bg-renome-gradient rounded-b-xl flex-grow flex flex-col justify-center"
+            class="p-4 bg-renome-gradient rounded-b-xl flex flex-col justify-center"
           >
             <h4
               class="text-[16px] font-bold uppercase text-white leading-tight text-center"

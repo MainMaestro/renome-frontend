@@ -9,7 +9,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
 </script>
 <template>
   <section id="services" class="py-20 bg-transparent relative z-10 font-sans">
-    <div class="container mx-auto px-6 max-w-[1200px]">
+    <div class="container mx-auto px-6 max-w-300">
       <h2 class="text-renome text-[36px] font-medium uppercase mb-10">
         УСЛУГИ
       </h2>
@@ -18,7 +18,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
         <!-- 1. ГЛАВНАЯ УСЛУГА -->
         <div
           v-if="mainService"
-          class="md:col-span-3 bg-white p-10 rounded-[32px] shadow-2xl flex flex-col md:flex-row gap-10 border border-gray-100"
+          class="md:col-span-3 bg-white p-10 rounded-4xl shadow-2xl flex flex-col md:flex-row gap-10 border border-gray-100"
         >
           <div class="flex-1">
             <div class="flex items-start gap-4 mb-6">
@@ -54,7 +54,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             </button>
           </div>
 
-          <div class="hidden md:block w-[350px] shrink-0">
+          <div class="hidden md:block w-87.5 shrink-0">
             <img
               v-if="mainService.picture"
               :src="`http://79.174.80.177:1337${mainService.picture.url}`"
@@ -67,7 +67,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
         <div
           v-for="service in otherServices"
           :key="service.id"
-          class="bg-white p-8 rounded-[32px] shadow-2xl flex flex-col border border-gray-100 h-full"
+          class="bg-white p-8 rounded-4xl shadow-2xl flex flex-col border border-gray-100 h-full"
         >
           <div class="flex items-center gap-4 mb-6">
             <div
@@ -85,7 +85,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
               {{ service.name }}
             </h3>
           </div>
-          <p class="text-black/70 text-[14px] leading-[160%] mb-10 flex-grow">
+          <p class="text-black/70 text-[14px] leading-[160%] mb-10 grow">
             {{ service.description }}
           </p>
           <button
