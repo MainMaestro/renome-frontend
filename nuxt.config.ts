@@ -1,8 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  css: ["./app/assets/css/main.css"],
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/google-fonts"],
+  modules: ["@nuxtjs/google-fonts"],
   runtimeConfig: {
     // Эта часть доступна только на сервере (SSR)
     strapiToken: process.env.STRAPI_TOKEN,
@@ -13,23 +18,8 @@ export default defineNuxtConfig({
   },
   googleFonts: {
     families: {
-      "Fira+Sans": [300, 400, 500, 700], 
+      "Fira+Sans": [300, 400, 500, 700],
     },
     display: "swap", // Чтобы текст не пропадал при загрузке
-  },
-
-  tailwindcss: {
-    config: {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Fira Sans"', "sans-serif"],
-          },
-          fontWeight: {
-            book: "350",
-          },
-        },
-      },
-    },
   },
 });

@@ -24,21 +24,19 @@ const stats = [
 </script>
 
 <template>
-  <section class="relative py-24  font-sans text-black overflow-hidden">
+  <section class="relative py-24 font-sans text-black overflow-hidden">
     <!-- ФОНОВАЯ КАРТИНКА ВСЕГО БЛОКА -->
-   
 
     <div class="container mx-auto px-6 max-w-[1200px] z-10 relative">
       <!-- ЗАГОЛОВОК СЕКЦИИ -->
       <h2
-        class="text-[#0A4436] text-[36px] font-medium leading-[140%] uppercase mb-10 tracking-wide"
+        class="text-renome text-[36px] font-medium leading-[140%] uppercase mb-10 tracking-wide"
       >
         О КОМПАНИИ
       </h2>
 
       <!-- ОПИСАНИЕ -->
       <div class="flex flex-col lg:flex-row gap-16 items-start">
-
         <!-- ЛЕВАЯ ЧАСТЬ: ТЕКСТ -->
         <div
           class="w-full lg:w-[55%] text-[18px] leading-[140%] font-book text-black"
@@ -49,7 +47,7 @@ const stats = [
 
           <p
             v-if="companyData?.data?.task"
-            class="mt-6 font-medium text-[#0A4436]"
+            class="mt-6 font-medium text-renome"
           >
             {{ companyData.data.task }}
           </p>
@@ -60,10 +58,10 @@ const stats = [
           <div
             v-for="stat in stats"
             :key="stat.label"
-            class="bg-gray-50 rounded-2xl flex flex-col justify-center  border border-gray-100 shadow-2xl transition-all hover:shadow-md"
+            class="bg-gray-50 rounded-2xl flex flex-col justify-center border border-gray-100 shadow-2xl transition-all hover:shadow-md"
           >
             <span
-              class="text-[46px] font-normal leading-none text-[#0A4436] mb-2 text-center"
+              class="text-[46px] font-normal leading-none text-renome mb-2 text-center"
             >
               {{ stat.value }}
             </span>
@@ -77,7 +75,7 @@ const stats = [
       </div>
 
       <h3
-        class="text-[#0A4436] text-[36px] font-medium leading-[140%] uppercase mt-12 tracking-wide"
+        class="text-renome text-[36px] font-medium leading-[140%] uppercase mt-12 tracking-wide"
       >
         КОМАНДА
       </h3>
@@ -97,7 +95,7 @@ const stats = [
             <img
               v-if="irina.avatar"
               :src="`http://79.174.80.177:1337${irina.avatar.url}`"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 "
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
           <div class="p-6 bg-renome-gradient rounded-b-2xl">
@@ -133,7 +131,9 @@ const stats = [
             >
               {{ member.name }}
             </h4>
-            <p class="text-[11px] text-white/60 mt-1 uppercase leading-tight text-center">
+            <p
+              class="text-[11px] text-white/60 mt-1 uppercase leading-tight text-center"
+            >
               {{ member.position }}
             </p>
           </div>
