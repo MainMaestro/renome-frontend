@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Fira Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-renome: #0a4436;
+  --color-renome-title: var(
+    --color-renome
+  ); /* TODO: Rename to --color-renome ASAP!!!! */
+  --background-image-renome-gradient: linear-gradient(
+    135deg,
+    #034432 0%,
+    #0f654d 50%,
+    #023b2b 100%
+  );
+}
+
+.container {
+  @apply p-8 max-w-300;
+}
