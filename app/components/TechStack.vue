@@ -1,6 +1,6 @@
 <template>
   <section class="py-24 bg-[#f1f4f7] font-sans overflow-hidden">
-    <div class="container mx-auto px-6 max-w-[1200px]">
+    <div class="container mx-auto px-6 max-w-300">
       <!-- Заголовок и подзаголовок -->
       <div class="mb-16">
         <h2
@@ -26,7 +26,7 @@
       >
         <!-- Левая карточка -->
         <div
-          class="z-10 w-full lg:w-[350px] bg-white rounded-[32px] p-8 shadow-sm border border-gray-100"
+          class="z-10 w-full lg:w-87.5 bg-white rounded-4xl p-8 shadow-sm border border-gray-100"
         >
           <p class="text-renome font-bold text-[15px] mb-6 leading-tight">
             Мы используем современные технологии для создания стабильных и
@@ -59,7 +59,7 @@
 
         <!-- Центральный круг (Инфографика) -->
         <div
-          class="relative w-full max-w-[500px] aspect-square flex items-center justify-center"
+          class="relative w-full max-w-125 aspect-square flex items-center justify-center"
         >
           <!-- Сюда вставь скачанную картинку круга -->
           <img
@@ -71,7 +71,7 @@
 
         <!-- Правая карточка -->
         <div
-          class="z-10 w-full lg:w-[350px] bg-white rounded-[32px] p-8 shadow-sm border border-gray-100"
+          class="z-10 w-full lg:w-87.5 bg-white rounded-4xl p-8 shadow-sm border border-gray-100"
         >
           <p class="text-renome font-bold text-[15px] mb-6 leading-tight">
             Мы уделяем особое внимание защите данных:

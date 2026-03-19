@@ -17,7 +17,7 @@ const getLogoUrl = (partner: any) => {
 
 <template>
   <section id="partners" class="py-24 font-sans">
-    <div class="container mx-auto px-6 max-w-[1200px]">
+    <div class="container mx-auto px-6 max-w-300">
       <!-- Заголовок и подзаголовок из макета -->
       <h2
         class="text-renome text-[36px] font-bold uppercase mb-4 tracking-tight"
@@ -38,7 +38,7 @@ const getLogoUrl = (partner: any) => {
         <div
           v-for="partner in partnersResponse?.data"
           :key="partner.id"
-          class="bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm flex flex-col items-center text-center transition-all hover:shadow-md"
+          class="bg-white rounded-4xl p-8 border border-gray-100 shadow-sm flex flex-col items-center text-center transition-all hover:shadow-md"
         >
           <!-- Круглое лого с внутренним свечением -->
           <div
@@ -60,7 +60,7 @@ const getLogoUrl = (partner: any) => {
 
           <!-- Описание (shortDescription) -->
           <p
-            class="text-slate-500 text-[14px] leading-[1.6] mb-10 flex-grow font-light"
+            class="text-slate-500 text-[14px] leading-[1.6] mb-10 grow font-light"
           >
             {{
               partner.attributes?.shortDescription || partner.shortDescription
@@ -70,7 +70,7 @@ const getLogoUrl = (partner: any) => {
           <!-- Группа кнопок -->
           <div class="flex items-center gap-2 w-full mt-auto">
             <button
-              class="flex-grow bg-[#004236] text-white py-3.5 rounded-full text-[12px] font-bold uppercase tracking-widest hover:bg-[#00352b] transition-all active:scale-95"
+              class="grow bg-[#004236] text-white py-3.5 rounded-full text-[12px] font-bold uppercase tracking-widest hover:bg-[#00352b] transition-all active:scale-95"
             >
               Узнать подробнее
             </button>
