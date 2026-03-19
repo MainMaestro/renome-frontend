@@ -11,7 +11,9 @@ RUN npm install
 COPY . .
 # Прокидываем переменную с URL бекенда для сборки
 ARG STRAPI_URL=http://79.174.80.177:1337
+ARG STRAPI_TOKEN
 ENV STRAPI_URL=$STRAPI_URL
+ENV STRAPI_TOKEN=$STRAPI_TOKEN
 
 RUN npm run build
 
