@@ -10,7 +10,7 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
 
 <template>
   <section class="py-24 font-sans overflow-hidden">
-    <div class="container mx-auto px-6 max-w-[1200px]">
+    <div class="container mx-auto px-6 max-w-300">
       <h2
         class="text-renome text-[36px] font-bold uppercase mb-16 tracking-tight"
       >
@@ -24,7 +24,7 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
         <div
           v-for="review in reviews"
           :key="review.id"
-          class="bg-white rounded-[24px] p-8 shadow-sm border border-gray-100 flex flex-col justify-between transition-all hover:shadow-md"
+          class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col justify-between transition-all hover:shadow-md"
         >
           <div>
             <!-- Рейтинг (Звезды) -->
@@ -51,12 +51,12 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
           <div class="mt-auto pt-6 border-t border-gray-50 flex justify-end">
             <div class="text-right flex items-center gap-3">
               <p
-                class="text-[13px] font-bold text-black leading-tight max-w-[200px]"
+                class="text-[13px] font-bold text-black leading-tight max-w-50"
               >
                 {{ review.attributes?.author || review.author }}
               </p>
               <!-- Вертикальная черта из макета -->
-              <div class="w-[2px] h-8 bg-renome mt-1"></div>
+              <div class="w-0.5 h-8 bg-renome mt-1"></div>
             </div>
           </div>
         </div>
