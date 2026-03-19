@@ -1,5 +1,5 @@
 <template>
-  <section class="py-24 bg-[#f1f4f7] font-sans overflow-hidden">
+  <section class="py-24 font-sans overflow-hidden">
     <div class="container mx-auto px-6 max-w-300">
       <!-- Заголовок и подзаголовок -->
       <div class="mb-16">
