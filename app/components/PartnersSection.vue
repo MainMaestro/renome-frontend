@@ -1,18 +1,9 @@
 <script setup lang="ts">
-// 1. Получаем конфиг для ссылок на логотипы
-const config = useRuntimeConfig();
-const strapiHost = config.public.apiBase.replace(/\/api$/, "");
+import type { Response, Partner } from "~/models";
 
-// 2. Запрос к коллекции partners (используем твой useApi)
-const { data: partnersResponse } = await useApi<any>("/partners?populate=*");
-
-// 3. Хелпер для формирования URL логотипа
-const getLogoUrl = (partner: any) => {
-  const path =
-    partner.attributes?.logo?.data?.attributes?.url || partner.logo?.url;
-  if (!path) return "";
-  return path.startsWith("http") ? path : `${strapiHost}${path}`;
-};
+const { data: partnersResponse } = await useApi<Response<Partner[]>>(
+  "/partners?populate=*",
+);
 </script>
 
 <template>
@@ -45,8 +36,8 @@ const getLogoUrl = (partner: any) => {
             class="h-32 mb-8 rounded-full border border-gray-50 flex items-center justify-center p-6 shadow-inner bg-white overflow-hidden"
           >
             <img
-              :src="getLogoUrl(partner)"
-              :alt="partner.attributes?.name || partner.name"
+              :src="imageSrc(partner.logo)"
+              :alt="partner.name"
               class="max-w-full max-h-full object-contain rounded-full"
             />
           </div>
@@ -55,16 +46,14 @@ const getLogoUrl = (partner: any) => {
           <h3
             class="text-[18px] font-bold uppercase mb-4 tracking-widest text-slate-900 leading-tight"
           >
-            {{ partner.attributes?.name || partner.name }}
+            {{ partner.name }}
           </h3>
 
           <!-- Описание (shortDescription) -->
           <p
             class="text-slate-500 text-[14px] leading-[1.6] mb-10 grow font-light"
           >
-            {{
-              partner.attributes?.shortDescription || partner.shortDescription
-            }}
+            {{ partner.shortDescription }}
           </p>
 
           <!-- Группа кнопок -->

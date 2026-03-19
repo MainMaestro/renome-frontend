@@ -1,5 +1,17 @@
 <script setup lang="ts">
-const { data: servicesResponse } = await useApi<any>("/services?populate=*");
+import type { Image, Response } from "~/models";
+
+type Service = {
+  id: number;
+  name: string;
+  description: string;
+  icon: Image;
+  picture?: Image;
+};
+
+const { data: servicesResponse } = await useApi<Response<Service[]>>(
+  "/services?populate=*",
+);
 const allServices = computed(() => servicesResponse.value?.data || []);
 
 // Первая услуга (Автоматизация)
@@ -57,7 +69,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
           <div class="hidden md:block w-87.5 shrink-0">
             <img
               v-if="mainService.picture"
-              :src="`http://79.174.80.177:1337${mainService.picture.url}`"
+              :src="imageSrc(mainService.picture)"
               class="w-full object-contain"
             />
           </div>
@@ -75,7 +87,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             >
               <img
                 v-if="service.icon"
-                :src="`http://79.174.80.177:1337${service.icon.url}`"
+                :src="imageSrc(service.icon)"
                 class="w-20"
               />
             </div>

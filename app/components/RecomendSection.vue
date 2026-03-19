@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // Запрос к коллекции recomendations
-const { data: recommendationsResponse } = await useApi<any>(
-  "/recomendations?populate=*",
-);
+const { data: recommendationsResponse } = await useApi<{
+  data: { id: number; title: string; text: string; author: string }[];
+}>("/recomendations?populate=*");
 
 // Данные из Strapi
 const reviews = computed(() => recommendationsResponse.value?.data || []);
@@ -36,14 +36,14 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
 
             <!-- Заголовок отзыва (title) -->
             <h3 class="text-[16px] font-bold text-black mb-6 leading-snug">
-              {{ review.attributes?.title || review.title }}
+              {{ review.title }}
             </h3>
 
             <!-- Текст отзыва (text) -->
             <p
               class="text-gray-600 text-[14px] leading-[1.7] font-light mb-8 italic"
             >
-              {{ review.attributes?.text || review.text }}
+              {{ review.text }}
             </p>
           </div>
 
@@ -53,7 +53,7 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
               <p
                 class="text-[13px] font-bold text-black leading-tight max-w-50"
               >
-                {{ review.attributes?.author || review.author }}
+                {{ review.author }}
               </p>
               <!-- Вертикальная черта из макета -->
               <div class="w-0.5 h-8 bg-renome mt-1"></div>

@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const { data: partnersResponse } = await useApi<any>(
-  "/integrations?populate=*",
-);
+import type { Image } from "~/models";
+
+const { data: partnersResponse } = await useApi<{
+  data: {
+    id: number;
+    name: string;
+    logo: Image;
+  }[];
+}>("/integrations?populate=*");
 const partners = computed(() => partnersResponse.value?.data || []);
 </script>
 
@@ -23,7 +29,7 @@ const partners = computed(() => partnersResponse.value?.data || []);
         >
           <img
             v-if="partner.logo"
-            :src="`http://79.174.80.177:1337${partner.logo.url}`"
+            :src="imageSrc(partner.logo)"
             :alt="partner.name"
             class="w-full h-full object-contain"
           />

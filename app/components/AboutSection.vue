@@ -1,6 +1,13 @@
 <script setup lang="ts">
-const { data: companyData } = await useApi<any>("/company-section?populate=*");
-const { data: teamResponse } = await useApi<any>("/team-members?populate=*");
+import type { TeamMember } from "~/models";
+
+const { data: companyData } = await useApi<{
+  data: { description: string; task: string };
+}>("/company-section?populate=*");
+
+const { data: teamResponse } = await useApi<{
+  data: TeamMember[];
+}>("/team-members?populate=*");
 
 const allMembers = computed(() => teamResponse.value?.data || []);
 
@@ -34,10 +41,7 @@ const stats = [
             {{ companyData.data.description }}
           </div>
 
-          <p
-            v-if="companyData?.data?.task"
-            class="mt-6 font-medium text-renome"
-          >
+          <p v-if="companyData?.data.task" class="mt-6 font-medium text-renome">
             {{ companyData.data.task }}
           </p>
         </div>
@@ -83,7 +87,7 @@ const stats = [
           >
             <img
               v-if="member.avatar"
-              :src="`http://79.174.80.177:1337${member.avatar.url}`"
+              :src="imageSrc(member.avatar)"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>

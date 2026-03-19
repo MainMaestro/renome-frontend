@@ -1,5 +1,4 @@
-// useApi.ts
-export const useApi = <T = any>(endpoint: string, opts = {}) => {
+export const useApi = <T>(endpoint: string, opts = {}) => {
   const config = useRuntimeConfig(); // Должно быть только здесь!
 
   return useFetch<T>(endpoint, {
@@ -9,4 +8,11 @@ export const useApi = <T = any>(endpoint: string, opts = {}) => {
     },
     ...opts,
   });
+};
+
+import type { ImageData } from "~/models";
+export const imageSrc = (image: ImageData) => {
+  const config = useRuntimeConfig();
+
+  return `${config.public.strapiUrl}${image.url}`;
 };

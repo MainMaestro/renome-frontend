@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const { data: quickPriceResponse } = await useApi<any>(
-  "/quick-prices?populate=*",
-);
+const { data: quickPriceResponse } = await useApi<{
+  data: { id: number; name: string; description: string; price: number }[];
+}>("/quick-prices?populate=*");
 const quickPrices = computed(() => quickPriceResponse.value?.data || []);
 </script>
 

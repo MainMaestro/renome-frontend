@@ -1,13 +1,13 @@
 <script setup lang="ts">
-interface StrapiResponse {
-  data: {
+import type { Response } from "~/models";
+
+const { data: hero } = await useApi<
+  Response<{
     id: number;
     title: string;
     description: string;
-  };
-}
-
-const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
+  }>
+>("/hero-section?populate=*");
 </script>
 
 <template>

@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: `${process.env.STRAPI_URL}/api`,
       strapiToken: process.env.STRAPI_TOKEN, // Теперь доступно и в браузере
+      strapiUrl: process.env.STRAPI_URL,
     },
   },
   googleFonts: {

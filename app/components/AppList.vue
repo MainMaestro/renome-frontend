@@ -1,23 +1,9 @@
 <script setup lang="ts">
-// 1. Достаем всё необходимое строго в начале setup
-const config = useRuntimeConfig();
-const strapiHost = config.public.apiBase.replace(/\/api$/, "");
+import type { Response, App } from "~/models";
 
-// 2. Делаем запрос. Используем стандартный useFetch, чтобы исключить ошибки в твоем useApi
-const { data: appsResponse } = await useFetch<any>("/applications?populate=*", {
-  baseURL: config.public.apiBase,
-  headers: {
-    Authorization: `Bearer ${config.public.strapiToken}`,
-  },
-});
-
-// 3. Функция-помощник (не использует хуки Nuxt, только переданные параметры)
-const getImgUrl = (app: any) => {
-  const path =
-    app.attributes?.screenshot?.data?.attributes?.url || app.screenshot?.url;
-  if (!path) return null;
-  return path.startsWith("http") ? path : `${strapiHost}${path}`;
-};
+const { data: appsResponse } = await useApi<Response<App[]>>(
+  "/applications?populate=*",
+);
 </script>
 
 <template>
@@ -49,14 +35,14 @@ const getImgUrl = (app: any) => {
               <h3
                 class="text-[42px] font-bold text-black leading-[1.1] tracking-tighter"
               >
-                {{ app.attributes?.name || app.name }}
+                {{ app.name }}
               </h3>
             </div>
 
             <p
               class="text-[#4b5563] text-[17px] leading-[1.7] font-light max-w-2xl whitespace-pre-line"
             >
-              {{ app.attributes?.description || app.description }}
+              {{ app.description }}
             </p>
 
             <div class="flex items-center gap-4 pt-4">
@@ -79,10 +65,10 @@ const getImgUrl = (app: any) => {
           <!-- Скриншот справа на градиенте -->
           <div class="flex-1 w-full">
             <img
-              v-if="getImgUrl(app)"
-              :src="getImgUrl(app)"
+              v-if="imageSrc(app.screenshot)"
+              :src="imageSrc(app.screenshot)"
               class="w-full h-full object-contain rounded-xl shadow-2xl scale-110 translate-y-3"
-              alt="App Interface"
+              :alt="'Снимок экрана ' + app.name"
             />
             <div v-else class="text-white/20 italic">Нет скриншота</div>
           </div>
