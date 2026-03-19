@@ -1,4 +1,5 @@
 <script setup>
+
 useHead({
   bodyAttrs: {
     class: 'bg-[url("/bg.png")]  bg-cover bg-center bg-fixed min-h-screen font-sans'
@@ -12,7 +13,13 @@ useHead({
     <HeroSection />
     <AboutSection />
     <ServicesSection />
-    <PartnersSection/>
+    <WorkWith/>
     <PriceSection/>
+    <TechStack/>
+    <AppList/>
+    <PartnersSection/>
+    <RecomendSection/>
+    <ProjectList/>
+    <FeedBack/>
   </div>
 </template>

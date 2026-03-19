@@ -1,12 +1,11 @@
-// Добавляем <T = any>, чтобы функция принимала тип данных
+// useApi.ts
 export const useApi = <T = any>(endpoint: string, opts = {}) => {
-  const config = useRuntimeConfig();
+  const config = useRuntimeConfig(); // Должно быть только здесь!
 
-  // Передаем этот тип <T> внутрь useFetch
   return useFetch<T>(endpoint, {
     baseURL: config.public.apiBase,
     headers: {
-      Authorization: `Bearer ${config.strapiToken}`,
+      Authorization: `Bearer ${config.public.strapiToken}`,
     },
     ...opts,
   });
