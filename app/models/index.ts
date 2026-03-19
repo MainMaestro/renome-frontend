@@ -59,3 +59,12 @@ export type TeamMember = {
   avatar: Image;
   position: string;
 } & StrapiDocument;
+
+export type CreateLeadRequest = {
+  data: {
+    name: string;
+    phone: string;
+    comment: string;
+    personalDataConfirmation: boolean;
+  };
+};

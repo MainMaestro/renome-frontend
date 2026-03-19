@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import type { CreateLeadRequest } from "~/models";
 
-const name = ref("");
-const phone = ref("");
-const comment = ref("");
-const personalDataConfirmation = ref(false);
 const loading = ref(false);
 
+const form = ref({
+  name: "",
+  phone: "",
+  comment: "",
+  personalDataConfirmation: false,
+});
 const toast = reactive({
   show: false,
   message: "",
@@ -23,25 +25,22 @@ const triggerToast = (msg: string, error = false) => {
 };
 
 const submitForm = async () => {
-  if (!personalDataConfirmation.value) return;
+  if (!form.value.personalDataConfirmation) return;
   loading.value = true;
   try {
     await useApi("/leads", {
       method: "POST",
       body: {
-        data: {
-          name: name.value,
-          phone: phone.value,
-          comment: comment.value,
-          personalDataConfirmation: true,
-        },
-      },
+        data: form.value,
+      } as CreateLeadRequest,
     });
 
-    name.value = "";
-    phone.value = "";
-    comment.value = "";
-    personalDataConfirmation.value = false;
+    form.value = {
+      name: "",
+      phone: "",
+      comment: "",
+      personalDataConfirmation: false,
+    };
 
     triggerToast("Заявка успешно отправлена!");
   } catch (e) {
@@ -73,7 +72,7 @@ const submitForm = async () => {
             class="bg-white p-10 rounded-4xl shadow-xl space-y-5 border border-white"
           >
             <input
-              v-model="name"
+              v-model="form.name"
               type="text"
               placeholder="Имя"
               required
@@ -81,7 +80,7 @@ const submitForm = async () => {
             />
 
             <input
-              v-model="phone"
+              v-model="form.phone"
               type="tel"
               placeholder="Телефон"
               required
@@ -89,7 +88,7 @@ const submitForm = async () => {
             />
 
             <textarea
-              v-model="comment"
+              v-model="form.comment"
               placeholder="Комментарий"
               rows="4"
               class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400 resize-none"
@@ -97,7 +96,7 @@ const submitForm = async () => {
 
             <div class="flex items-start gap-4 py-2">
               <input
-                v-model="personalDataConfirmation"
+                v-model="form.personalDataConfirmation"
                 type="checkbox"
                 id="agree_footer"
                 required
