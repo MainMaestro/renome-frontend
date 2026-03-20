@@ -8,6 +8,10 @@ export default defineNuxtConfig({
   css: ["./app/assets/css/main.css"],
   devtools: { enabled: true },
   modules: ["@nuxtjs/google-fonts"],
+  components: [
+    { path: '~/components/modal', pathPrefix: false }, // Сканировать подпапку modal
+    '~/components'
+  ],
   runtimeConfig: {
     // Эта часть доступна только на сервере (SSR)
     strapiToken: process.env.STRAPI_TOKEN,

@@ -61,7 +61,7 @@ const getImgUrl = (app: any) => {
 
             <div class="flex items-center gap-4 pt-4">
               <button
-                class="bg-[#004236] text-white px-10 py-4 rounded-full font-bold text-[14px] uppercase tracking-wider hover:bg-[#00352b] transition-all shadow-lg active:scale-95"
+                class="bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[14px] uppercase tracking-wider hover:bg-[#00352b] transition-all shadow-lg active:scale-95"
               >
                 Оставить заявку
               </button>

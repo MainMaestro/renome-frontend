@@ -10,16 +10,7 @@ useHead({
 <template>
  <div class="relative z-10">
     <AppHeader />
-    <HeroSection />
-    <AboutSection />
-    <ServicesSection />
-    <WorkWith/>
-    <PriceSection/>
-    <TechStack/>
-    <AppList/>
-    <PartnersSection/>
-    <RecomendSection/>
-    <ProjectList/>
+    <NuxtPage /> 
     <FeedBack/>
   </div>
 </template>

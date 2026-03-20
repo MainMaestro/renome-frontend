@@ -36,7 +36,7 @@ const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
       </div>
       <div class="mt-10 flex flex-wrap gap-4">
         <button
-          class="bg-renome text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-[#08352a] transition-all shadow-lg"
+          class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-[#08352a] transition-all shadow-lg"
         >
           Получить план внедрения
         </button>

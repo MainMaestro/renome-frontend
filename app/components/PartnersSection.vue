@@ -1,19 +1,24 @@
 <script setup lang="ts">
-// 1. Получаем конфиг для ссылок на логотипы
+import { ref, computed } from 'vue';
+
 const config = useRuntimeConfig();
 const strapiHost = config.public.apiBase.replace(/\/api$/, "");
 
-// 2. Запрос к коллекции partners (используем твой useApi)
+// Твой старый рабочий запрос
 const { data: partnersResponse } = await useApi<any>("/partners?populate=*");
 
-// 3. Хелпер для формирования URL логотипа
+// Состояние для модалки
+const activePartner = ref<any>(null);
+
+// Хелпер для логотипа (без лишних проверок, чтобы не упало)
 const getLogoUrl = (partner: any) => {
-  const path =
-    partner.attributes?.logo?.data?.attributes?.url || partner.logo?.url;
+  const data = partner.attributes || partner;
+  const path = data.logo?.data?.attributes?.url || data.logo?.url;
   if (!path) return "";
   return path.startsWith("http") ? path : `${strapiHost}${path}`;
 };
 </script>
+
 
 <template>
   <section id="partners" class="py-24 font-sans">
@@ -69,22 +74,20 @@ const getLogoUrl = (partner: any) => {
 
           <!-- Группа кнопок -->
           <div class="flex items-center gap-2 w-full mt-auto">
-            <button
-              class="grow bg-[#004236] text-white py-3.5 rounded-full text-[12px] font-bold uppercase tracking-widest hover:bg-[#00352b] transition-all active:scale-95"
-            >
-              Узнать подробнее
-            </button>
-            <button
-              class="w-12 h-12 border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors group"
-            >
-              <span
-                class="text-gray-400 group-hover:translate-x-0.5 transition-transform text-xl"
-                >→</span
-              >
-            </button>
+            <button 
+            @click="activePartner = partner"
+            class="w-full bg-renome-gradient text-white py-3.5 rounded-full text-[12px] font-bold uppercase hover:bg-emerald-900 transition-all"
+          >
+            Узнать подробнее
+          </button>
           </div>
         </div>
       </div>
     </div>
+     <PartnerModal 
+  :partner="activePartner" 
+  :is-open="!!activePartner" 
+  @close="activePartner = null" 
+/>
   </section>
 </template>

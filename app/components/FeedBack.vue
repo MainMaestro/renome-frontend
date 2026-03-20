@@ -115,7 +115,7 @@ const submitForm = async () => {
             <button
               type="submit"
               :disabled="loading"
-              class="bg-[#004236] text-white px-10 py-4 rounded-full flex items-center gap-8 group hover:bg-[#00352b] transition-all shadow-lg active:scale-95 disabled:opacity-50"
+              class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-8 group hover:bg-[#00352b] transition-all shadow-lg active:scale-95 disabled:opacity-50"
             >
               <span class="text-[13px] uppercase font-bold tracking-widest">
                 {{ loading ? "Отправка..." : "Отправить" }}
@@ -133,12 +133,19 @@ const submitForm = async () => {
           class="w-full lg:w-1/2 flex flex-col items-end text-right justify-between self-stretch py-4"
         >
           <div class="mb-20">
-            <div
-              class="text-renome text-[48px] font-black tracking-tighter leading-none italic uppercase"
-            >
-              Renome<br /><span class="text-[32px] font-light tracking-[0.2em]"
-                >Consulting</span
-              >
+            <!-- Лого -->
+            <div class="text-2xl font-bold tracking-tighter text-white">
+              <a href="/" class="flex items-center gap-2 group">
+                <img
+                  src="/logo.png"
+                  alt="Renome Logo"
+                  class="h-30 w-auto object-contain transition-transform group-hover:scale-105"
+                />
+                <!-- Если название текстом рядом с картинкой -->
+                <span
+                  class="text-xl font-bold tracking-tight text-gray-900"
+                ></span>
+              </a>
             </div>
           </div>
 

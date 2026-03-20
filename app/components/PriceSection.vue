@@ -43,8 +43,9 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
       </div>
 
       <div class="mt-20 flex justify-center">
-        <button
-          class="bg-renome text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg"
+        <NuxtLink
+          to="/prices"
+          class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg"
         >
           <span class="text-[12px] uppercase font-bold tracking-widest"
             >Смотреть полный прайс</span
@@ -54,7 +55,7 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
           >
             →
           </div>
-        </button>
+        </NuxtLink>
       </div>
     </div>
   </section>
