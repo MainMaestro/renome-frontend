@@ -23,7 +23,9 @@ const route = useRoute();
 
 const categories = computed(() => response.value?.data || []);
 
-const activeCategoryId = computed(() => Number(route.query.category) || null);
+const activeCategoryId = computed(
+  () => Number(route.query.category) || response.value?.data[0]?.id || 0,
+);
 
 const currentCategory = computed(() =>
   categories.value.find((c) => c.id === activeCategoryId.value || 0),
