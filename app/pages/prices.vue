@@ -1,38 +1,43 @@
 <script setup lang="ts">
-const { data: response } = await useApi<any>("/price-categories?populate=*");
+type Price = {
+  id: number;
+  name: string;
+  description: string;
+  anotation: string;
+  price: number;
+  isPriceFrom: boolean;
+};
+type Category = {
+  id: number;
+  name: string;
+  longName: string;
+  prices: Price[];
+};
+
+const { data: response } = await useApi<{
+  data: Category[];
+}>("/price-categories?populate=*");
+
+const router = useRouter();
+const route = useRoute();
 
 const categories = computed(() => response.value?.data || []);
 
-// Активная категория
-const activeCategoryId = ref<number | null>(null);
+const activeCategoryId = computed(() => Number(route.query.category) || null);
 
-watchEffect(() => {
-  if (categories.value.length > 0 && activeCategoryId.value === null) {
-    activeCategoryId.value = categories.value[0].id;
-  }
-});
-
-// Текущая выбранная категория
 const currentCategory = computed(() =>
-  categories.value.find((c: any) => c.id === activeCategoryId.value),
+  categories.value.find((c) => c.id === activeCategoryId.value || 0),
 );
-
-// Функция для подготовки и сортировки цен
-const getSortedPrices = (category: any) => {
-  const rawPrices = category.attributes?.prices?.data || category.prices || [];
-
-  return [...rawPrices].sort((a, b) => {
-    const priceA = Number(a.attributes?.price || a.price || 0);
-    const priceB = Number(b.attributes?.price || b.price || 0);
-    return priceA - priceB;
-  });
+const navigateToCategory = (category: Category) => {
+  router.push({ path: route.path, query: { category: category.id } });
 };
 
-// Хелпер для форматирования цены (красивые отступы в тысячах)
-const formatPrice = (val: any) => {
-  const num = Number(val);
-  if (num === 0) return "Бесплатно";
-  return new Intl.NumberFormat("ru-RU").format(num) + " ₽";
+const getSortedPrices = (category: Category) =>
+  category.prices.toSorted((a, b) => a.price - b.price);
+
+const formatPrice = (price: number) => {
+  if (price === 0) return "Бесплатно";
+  return new Intl.NumberFormat("ru-RU").format(price) + " ₽";
 };
 </script>
 
@@ -73,7 +78,7 @@ const formatPrice = (val: any) => {
         <button
           v-for="cat in categories"
           :key="cat.id"
-          @click="activeCategoryId = cat.id"
+          @click="navigateToCategory(cat)"
           class="px-8 py-4 rounded-xl font-bold text-[14px] transition-all"
           :class="[
             activeCategoryId === cat.id
@@ -81,7 +86,7 @@ const formatPrice = (val: any) => {
               : 'text-gray-400 hover:bg-gray-50',
           ]"
         >
-          {{ cat.attributes?.name || cat.name }}
+          {{ cat.name }}
         </button>
       </div>
 
@@ -91,7 +96,7 @@ const formatPrice = (val: any) => {
         class="bg-white rounded-[40px] p-12 shadow-xl border border-white"
       >
         <h2 class="text-renome text-[42px] font-bold mb-10 uppercase">
-          {{ currentCategory.attributes?.name || currentCategory.name }}
+          {{ currentCategory.longName }}
         </h2>
 
         <div class="space-y-4">
@@ -102,21 +107,26 @@ const formatPrice = (val: any) => {
           >
             <div class="pl-8 py-4">
               <h4 class="font-bold text-black text-[16px]">
-                {{ price.attributes?.name || price.name }}
+                {{ price.name }}
               </h4>
-              <p class="text-gray-400 text-[13px] mt-1">
-                {{
-                  price.attributes?.description ||
-                  price.description ||
-                  "Подробности при консультации"
-                }}
+              <p
+                class="text-gray-400 text-[13px] mt-1"
+                v-if="price.description"
+              >
+                {{ price.description }}
               </p>
             </div>
 
             <div
-              class="bg-renome-gradient text-white px-10 py-5 font-bold text-[18px] min-w-45 text-center rounded-xl whitespace-nowrap"
+              class="bg-renome-gradient text-white px-10 py-5 min-w-45 text-center rounded-xl whitespace-nowrap"
             >
-              {{ formatPrice(price.attributes?.price || price.price) }}
+              <div class="text-[18px] font-bold">
+                {{ price.isPriceFrom ? "от" : "" }}
+                {{ formatPrice(price.price) }}
+              </div>
+              <div class="text-xs">
+                {{ price.anotation }}
+              </div>
             </div>
           </div>
         </div>
