@@ -53,7 +53,7 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <section class="py-24 font-sans relative overflow-hidden">
+  <section id="feedBack" class="py-24 font-sans relative overflow-hidden">
     <div class="container mx-auto px-6 max-w-300">
       <div class="flex flex-col lg:flex-row gap-20 items-start">
         <div class="w-full lg:w-1/2">
@@ -115,16 +115,12 @@ const submitForm = async () => {
             <button
               type="submit"
               :disabled="loading"
-              class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-8 group hover:bg-[#00352b] transition-all shadow-lg active:scale-95 disabled:opacity-50"
+              class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-8 group hover:bg-[#00352b] transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               <span class="text-[13px] uppercase font-bold tracking-widest">
                 {{ loading ? "Отправка..." : "Отправить" }}
               </span>
-              <div
-                class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
-              >
-                <span class="text-white text-lg">→</span>
-              </div>
+              
             </button>
           </form>
         </div>

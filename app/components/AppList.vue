@@ -18,6 +18,16 @@ const getImgUrl = (app: any) => {
   if (!path) return null;
   return path.startsWith("http") ? path : `${strapiHost}${path}`;
 };
+
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }
+};
 </script>
 
 <template>
@@ -61,17 +71,10 @@ const getImgUrl = (app: any) => {
 
             <div class="flex items-center gap-4 pt-4">
               <button
-                class="bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[14px] uppercase tracking-wider hover:bg-[#00352b] transition-all shadow-lg active:scale-95"
+              @click="scrollToSection('feedBack')"
+                class="bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[14px] uppercase tracking-wider hover:bg-[#00352b] transition-all shadow-lg active:scale-95 cursor-pointer"
               >
                 Оставить заявку
-              </button>
-              <button
-                class="w-14 h-14 border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-50 transition-all group"
-              >
-                <span
-                  class="text-2xl text-gray-400 group-hover:translate-x-1 transition-transform"
-                  >→</span
-                >
               </button>
             </div>
           </div>

@@ -104,18 +104,26 @@
       <!-- Кнопка внизу -->
       <div class="mt-16">
         <button
-          class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg"
+        @click="scrollToSection('feedBack')"
+          class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           <span class="text-[12px] uppercase font-bold tracking-widest"
             >Оставить заявку</span
           >
-          <div
-            class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
-          >
-            →
-          </div>
         </button>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+const scrollToSection = (id) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }
+};
+</script>
