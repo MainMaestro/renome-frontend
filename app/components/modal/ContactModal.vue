@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
+
+const props = defineProps<{
+  isOpen: boolean;
+}>();
+
+const emit = defineEmits(["close"]);
 
 const name = ref("");
 const phone = ref("");
@@ -12,6 +18,16 @@ const toast = reactive({
   message: "",
   isError: false,
 });
+
+// Блокировка скролла при открытии
+watch(
+  () => props.isOpen,
+  (val) => {
+    if (process.client) {
+      document.body.style.overflow = val ? "hidden" : "auto";
+    }
+  },
+);
 
 const triggerToast = (msg: string, error = false) => {
   toast.message = msg;
@@ -26,6 +42,7 @@ const submitForm = async () => {
   if (!personalDataConfirmation.value) return;
   loading.value = true;
   try {
+    // Используем ваш API endpoint
     await useApi("/leads", {
       method: "POST",
       body: {
@@ -44,6 +61,7 @@ const submitForm = async () => {
     personalDataConfirmation.value = false;
 
     triggerToast("Заявка успешно отправлена!");
+    setTimeout(() => emit("close"), 1500); // Закрываем после успеха
   } catch (e) {
     triggerToast("Ошибка сервера", true);
   } finally {
@@ -53,31 +71,65 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <section id="feedBack" class="py-24 font-sans relative overflow-hidden">
-    <div class="container mx-auto px-6 max-w-300">
-      <div class="flex flex-col lg:flex-row gap-20 items-start">
-        <div class="w-full lg:w-1/2">
-          <div class="mb-10 text-renome">
-            <h2 class="text-[24px] font-bold uppercase tracking-tight">
+  <Transition name="fade">
+    <div
+      v-if="isOpen"
+      class="fixed inset-0 z-100 flex items-center justify-center p-4"
+    >
+      <!-- Backdrop -->
+      <div
+        class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        @click="emit('close')"
+      ></div>
+
+      <!-- Modal Content -->
+      <div
+        class="relative w-full max-w-175 max-h-[95vh] overflow-y-auto rounded-4xl shadow-2xl no-scrollbar border border-white/20"
+      >
+        <!-- Кнопка закрытия (крестик) -->
+        <button
+          @click="emit('close')"
+          class="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors text-2xl z-50"
+        >
+          ✕
+        </button>
+
+        <!-- Фоновая картинка (опционально, если partners.png подходит под Hero) -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+          <img src="/bg.png" class="w-full h-full object-cover" />
+        </div>
+
+        <div class="relative z-10 p-8 md:p-12">
+          <!-- Logo & Header -->
+          <div class="flex flex-col items-center text-center mb-10">
+            <img
+              src="/logo.png"
+              alt="Renome"
+              class="h-24 mb-6 object-contain"
+            />
+            <h2
+              class="text-[22px] font-bold uppercase text-[#004d40] tracking-tight"
+            >
               Хотите узнать больше?
             </h2>
             <h3
-              class="text-[32px] font-bold uppercase tracking-tight leading-tight"
+              class="text-[28px] font-bold uppercase text-[#004d40] leading-none"
             >
               Напишите нам, мы поможем
             </h3>
           </div>
 
+          <!-- Form -->
           <form
             @submit.prevent="submitForm"
-            class="bg-white p-10 rounded-4xl shadow-xl space-y-5 border border-white"
+            class="space-y-4 max-w-[500px] mx-auto"
           >
             <input
               v-model="name"
               type="text"
               placeholder="Имя"
               required
-              class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400"
+              class="w-full p-4 rounded-xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-renome transition-all"
             />
 
             <input
@@ -85,27 +137,28 @@ const submitForm = async () => {
               type="tel"
               placeholder="Телефон"
               required
-              class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400"
+              class="w-full p-4 rounded-xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-renome transition-all"
             />
 
             <textarea
               v-model="comment"
               placeholder="Комментарий"
-              rows="4"
-              class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400 resize-none"
+              rows="3"
+              class="w-full p-4 rounded-xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-renome transition-all resize-none"
             ></textarea>
 
-            <div class="flex items-start gap-4 py-2">
+            <!-- Согласие -->
+            <div class="flex items-start gap-3 py-2">
               <input
                 v-model="personalDataConfirmation"
                 type="checkbox"
-                id="agree_footer"
+                id="modal_agree"
                 required
-                class="mt-1 w-5 h-5 accent-renome"
+                class="mt-1 w-4 h-4 accent-[#004d40]"
               />
               <label
-                for="agree_footer"
-                class="text-[11px] text-gray-400 leading-tight cursor-pointer"
+                for="modal_agree"
+                class="text-[15px] text-black leading-tight"
               >
                 Нажимая кнопку «Отправить», я даю свое согласие на обработку
                 моих персональных данных, в соответствии с Федеральным законом
@@ -115,52 +168,44 @@ const submitForm = async () => {
               </label>
             </div>
 
-            <button
-              type="submit"
-              :disabled="loading"
-              class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-8 group hover:bg-[#00352b] transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
-            >
-              <span class="text-[13px] uppercase font-bold tracking-widest">
-                {{ loading ? "Отправка..." : "Отправить" }}
-              </span>
-            </button>
+            <!-- Кнопка Отправить (как в дизайне) -->
+            <div class="flex justify-center pt-4">
+              <button
+                type="submit"
+                :disabled="loading"
+                class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6   transition-all group disabled:opacity-50 shadow-lg active:scale-95 cursor-pointer"
+              >
+                <span class="text-[14px] uppercase font-bold tracking-widest">
+                  {{ loading ? "Отправка..." : "Отправить" }}
+                </span>
+                <div
+                  class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white"
+                >
+                  <span class="text-xl">→</span>
+                </div>
+              </button>
+            </div>
           </form>
-        </div>
 
-        <div
-          class="w-full lg:w-1/2 flex flex-col items-end text-right justify-between self-stretch py-4"
-        >
-          <div class="mb-20">
-            <!-- Лого -->
-            <div class="text-2xl font-bold tracking-tighter text-white">
-              <a href="/" class="flex items-center gap-2 group">
-                <img
-                  src="/logo.png"
-                  alt="Renome Logo"
-                  class="h-30 w-auto object-contain transition-transform group-hover:scale-105"
-                />
-                <!-- Если название текстом рядом с картинкой -->
-                <span
-                  class="text-xl font-bold tracking-tight text-gray-900"
-                ></span>
-              </a>
+          <div
+            class="mt-12 flex flex-col md:flex-row justify-between items-center text-[12px] text-gray-900 border-t border-gray-100 pt-8 gap-4"
+          >
+            <div class="text-center md:text-left">
+              <p class="font-bold uppercase tracking-tighter">
+                г. Санкт-Петербург
+              </p>
+              <p class="text-[16px] font-bold">+7(812)333-93-01</p>
+              <p class="font-bold">Email: info@renome - consult.com</p>
             </div>
-          </div>
 
-          <div class="space-y-8 text-gray-900">
-            <div class="flex flex-col items-end gap-1">
-              <p class="font-bold">г. Санкт-Петербург</p>
-              <p class="text-[22px] font-bold">+7(812)333-93-01</p>
-              <p class="underline font-bold">info@renome-consult.com</p>
-            </div>
-            <div class="flex justify-end gap-4">
+            <div class="flex gap-4">
               <div
                 class="w-10 h-10 rounded-lg flex items-center justify-center text-white"
               >
                 <a
                   href="https://t.me"
                   target="_blank"
-                  class="w-10 h-10 rounded-xl flex items-center justify-center text-renome transition-all shadow-md group"
+                  class="w-10 h-10 rounded-xl flex items-center justify-center text-renome   transition-all shadow-md group"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -175,7 +220,7 @@ const submitForm = async () => {
               </div>
               <a
                 href="tel:+78123339301"
-                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome transition-all shadow-md group"
+                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome  transition-all shadow-md group"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -189,7 +234,7 @@ const submitForm = async () => {
               </a>
               <a
                 href="mailto:info@renome-consult.com"
-                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome transition-all shadow-md group"
+                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome   transition-all shadow-md group"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -206,54 +251,44 @@ const submitForm = async () => {
                 </svg>
               </a>
             </div>
-            <div
-              class="text-[10px] text-gray-400 space-y-1 leading-relaxed max-w-100"
-            >
-              <p>ООО "РЕНОМЕ КОНСАЛТИНГ"</p>
-              <p>
-                Юр. адрес: 188664, Россия, обл Ленинградская, р-н
-                Всеволожский...
-              </p>
-              <p>ИНН / КПП 4706092018 / 470601001</p>
-            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Всплывающее уведомление (Toast) -->
-    <Transition name="toast">
-      <div
-        v-if="toast.show"
-        class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-8 py-4 rounded-2xl shadow-2xl backdrop-blur-md border border-white/10"
-        :class="
-          toast.isError ? 'bg-red-600 text-white' : 'bg-renome text-white'
-        "
-      >
+      <!-- Тост внутри модалки -->
+      <Transition name="toast">
         <div
-          class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-[12px]"
+          v-if="toast.show"
+          class="absolute bottom-10 left-1/2 -translate-x-1/2 z-[110] px-6 py-3 rounded-full text-white shadow-xl text-sm font-bold uppercase tracking-wider"
+          :class="toast.isError ? 'bg-red-500' : 'bg-green-600'"
         >
-          {{ toast.isError ? "!" : "✓" }}
-        </div>
-        <span class="text-[14px] font-bold uppercase tracking-wider">
           {{ toast.message }}
-        </span>
-      </div>
-    </Transition>
-  </section>
+        </div>
+      </Transition>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .toast-enter-active,
 .toast-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 }
 .toast-enter-from {
   opacity: 0;
-  transform: translate(-50%, 40px);
-}
-.toast-leave-to {
-  opacity: 0;
   transform: translate(-50%, 20px);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 </style>

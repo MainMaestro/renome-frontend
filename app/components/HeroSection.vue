@@ -6,6 +6,7 @@ interface StrapiResponse {
     description: string;
   };
 }
+const isContactModalOpen = ref(false);
 
 const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
 const scrollToSection = (id: string) => {
@@ -45,7 +46,7 @@ const scrollToSection = (id: string) => {
       </div>
       <div class="mt-10 flex flex-wrap gap-4">
         <button
-  @click.prevent="scrollToSection('feedBack')"
+    @click="isContactModalOpen = true"
 
           class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
@@ -62,4 +63,8 @@ const scrollToSection = (id: string) => {
       </div>
     </div>
   </section>
+  <ContactModal 
+    :isOpen="isContactModalOpen" 
+    @close="isContactModalOpen = false" 
+  />
 </template>

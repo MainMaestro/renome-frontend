@@ -104,7 +104,7 @@
       <!-- Кнопка внизу -->
       <div class="mt-16">
         <button
-        @click="scrollToSection('feedBack')"
+          @click="isContactModalOpen = true"
           class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           <span class="text-[12px] uppercase font-bold tracking-widest"
@@ -114,9 +114,15 @@
       </div>
     </div>
   </section>
+  <ContactModal 
+    :isOpen="isContactModalOpen" 
+    @close="isContactModalOpen = false" 
+  />
 </template>
 
 <script setup>
+const isContactModalOpen = ref(false);
+
 const scrollToSection = (id) => {
   const element = document.getElementById(id);
   if (element) {

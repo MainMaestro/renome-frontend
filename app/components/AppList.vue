@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // 1. Достаем всё необходимое строго в начале setup
 const config = useRuntimeConfig();
+const isContactModalOpen = ref(false);
+
 const strapiHost = config.public.apiBase.replace(/\/api$/, "");
 
 // 2. Делаем запрос. Используем стандартный useFetch, чтобы исключить ошибки в твоем useApi
@@ -71,7 +73,7 @@ const scrollToSection = (id: string) => {
 
             <div class="flex items-center gap-4 pt-4">
               <button
-              @click="scrollToSection('feedBack')"
+                @click="isContactModalOpen = true"
                 class="bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[14px] uppercase tracking-wider hover:bg-[#00352b] transition-all shadow-lg active:scale-95 cursor-pointer"
               >
                 Оставить заявку
@@ -93,4 +95,8 @@ const scrollToSection = (id: string) => {
       </div>
     </div>
   </section>
+  <ContactModal 
+    :isOpen="isContactModalOpen" 
+    @close="isContactModalOpen = false" 
+  />
 </template>

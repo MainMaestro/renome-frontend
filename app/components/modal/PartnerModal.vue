@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, watch } from "vue";
 
 const config = useRuntimeConfig();
+const isContactModalOpen = ref(false);
 
 const props = defineProps<{
   partner: any;
@@ -150,7 +151,7 @@ const scrollToSection = (id: string) => {
                 </li>
               </ul>
             </div>
-            <div v-if="data.advantages">
+            <div v-if="data.abilities2">
               <h3
                 class="text-renome font-black text-sm uppercase mb-5 tracking-wider"
               >
@@ -158,7 +159,7 @@ const scrollToSection = (id: string) => {
               </h3>
               <ul class="space-y-3">
                 <li
-                  v-for="item in data.advantages?.split('\n') || []"
+                  v-for="item in data.abilities2?.split('\n') || []"
                   :key="item"
                   class="flex gap-3 text-[14px] text-[#263238] font-medium leading-snug"
                 >
@@ -181,29 +182,45 @@ const scrollToSection = (id: string) => {
                 class="bg-white p-6 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col border border-white/50 hover:shadow-lg transition-all justify-between"
               >
                 <div>
+                  <!-- Заголовок тарифа -->
                   <div class="font-bold text-[#263238] text-[17px] mb-1">
                     {{ tarif.attributes?.name || tarif.name }}
                   </div>
-                  <div class="text-[14px] text-[#78909C] font-semibold">
-                    Включает:
-                  </div>
+
+                  <!-- ПРОВЕРКА: Показываем блок "Включает", только если описание не пустое -->
                   <div
-                    v-for="line in tarif.attributes?.description?.split('\n') ||
-                    tarif.description?.split('\n') ||
-                    []"
-                    :key="line"
-                    class="flex items-start gap-2 text-[13px] text-[#455A64] leading-snug"
+                    v-if="tarif.attributes?.description || tarif.description"
                   >
-                    <span
-                      class="w-1.5 h-1.5 bg-[#009688] mt-1.5 shrink-0"
-                    ></span>
-                    <span>{{ line }}</span>
+                    <div class="text-[14px] text-[#78909C] font-semibold mb-2">
+                      Включает:
+                    </div>
+
+                    <!-- Список пунктов -->
+                    <div
+                      v-for="line in (
+                        tarif.attributes?.description ||
+                        tarif.description ||
+                        ''
+                      ).split('\n')"
+                      :key="line"
+                      class="flex items-start gap-2 text-[13px] text-[#455A64] leading-snug mb-1"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 bg-[#009688] mt-1.5 shrink-0"
+                      ></span>
+                      <span>{{ line }}</span>
+                    </div>
                   </div>
                 </div>
 
-                <div class="text-xl text-renome">
+                <!-- Цена внизу -->
+                <div class="text-xl text-renome mt-6">
                   {{
-                    (tarif.attributes?.price || tarif.price)?.toLocaleString()
+                    (
+                      tarif.attributes?.price ||
+                      tarif.price ||
+                      0
+                    ).toLocaleString()
                   }}
                   Р/ в месяц
                 </div>
@@ -213,7 +230,7 @@ const scrollToSection = (id: string) => {
 
           <div class="mt-12 flex justify-end">
             <button
-              @click="scrollToSection('feedBack')"
+              @click="isContactModalOpen = true"
               class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95"
             >
               Заказать
@@ -223,6 +240,10 @@ const scrollToSection = (id: string) => {
       </div>
     </div>
   </Transition>
+  <ContactModal
+    :isOpen="isContactModalOpen"
+    @close="isContactModalOpen = false"
+  />
 </template>
 
 <style scoped>

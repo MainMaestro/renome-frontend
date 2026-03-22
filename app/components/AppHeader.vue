@@ -4,6 +4,7 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 const isScrolled = ref(false);
 const router = useRouter();
 const route = useRoute();
+const isContactModalOpen = ref(false);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50;
@@ -112,11 +113,15 @@ const scrollWithOffset = (id: string) => {
 
       <!-- Кнопка -->
       <button
-        @click="scrollWithOffset('feedBack')"
+        @click="isContactModalOpen = true"
         class="bg-renome-gradient border border-white/20 px-8 py-2.5 rounded-full text-white text-[17px] font-medium hover:brightness-110 transition-all shadow-md active:scale-95 cursor-pointer"
       >
         Связаться
       </button>
     </div>
   </header>
+  <ContactModal 
+    :isOpen="isContactModalOpen" 
+    @close="isContactModalOpen = false" 
+  />
 </template>

@@ -45,9 +45,9 @@ const formatPrice = (price: number) => {
 const scrollToSection = (id: string) => {
   const element = document.getElementById(id);
   if (element) {
-    element.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     });
   }
 };
@@ -91,8 +91,6 @@ const scrollToSection = (id: string) => {
           v-for="cat in categories"
           :key="cat.id"
           @click="navigateToCategory(cat)"
-          class="px-8 py-4 rounded-xl font-bold text-[14px] transition-all"
-          @click="activeCategoryId = cat.id"
           class="px-8 py-4 rounded-xl font-bold text-[14px] transition-all cursor-pointer"
           :class="[
             activeCategoryId === cat.id
@@ -147,10 +145,10 @@ const scrollToSection = (id: string) => {
 
         <div class="mt-12">
           <button
-          @click="scrollToSection('feedBack')"
+            @click="scrollToSection('feedBack')"
             class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-renome-gradient/20 transition-all shadow-lg cursor-pointer active:scale-95 disabled:opacity-50"
           >
-            <span class="text-[12px] uppercase font-bold tracking-widest "
+            <span class="text-[12px] uppercase font-bold tracking-widest"
               >Заказать</span
             >
           </button>
