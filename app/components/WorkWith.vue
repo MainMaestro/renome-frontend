@@ -11,32 +11,30 @@ const partners = computed(() => {
 const row1 = computed(() => partners.value.slice(0, Math.ceil(partners.value.length / 2)));
 const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length / 2)));
 </script>
-
 <template>
-  <section class="py-20 bg-transparent relative z-10 font-sans overflow-hidden">
-    <div class="container mx-auto px-6 max-w-300 mb-10">
-      <h2 class="text-renome-title text-[32px] font-bold uppercase tracking-tight">
+  <section class="py-12 md:py-20 bg-transparent relative z-10 font-sans overflow-hidden">
+    <div class="container mx-auto px-6 max-w-300 mb-8 md:mb-10">
+      <h2 class="text-renome-title text-[24px] md:text-[32px] font-bold uppercase tracking-tight text-center md:text-left">
         РАБОТАЕМ С
       </h2>
     </div>
 
-    <div class="flex flex-col gap-6 w-full">
+    <div class="flex flex-col gap-4 md:gap-6 w-full">
       <!-- Первая строка -->
       <div class="marquee-container">
         <div class="marquee-content">
-          <!-- Группа 1 и Группа 2 для бесшовности -->
           <div v-for="group in [1, 2]" :key="'row1-group-' + group" class="flex gap-4 px-2">
             <div 
               v-for="partner in row1" 
               :key="'row1-' + group + '-' + partner.id" 
-              class="bg-white h-17.5 min-w-40 p-4 rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm"
+              class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-[12px] md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
               <img 
                 v-if="partner.logo" 
                 :src="`http://79.174.80.177:1337${partner.logo.url}`" 
-                class="w-full h-full object-contain" 
+                class="max-w-full max-h-full object-contain pointer-events-none block" 
               />
-              <span v-else class="text-[12px] font-bold uppercase text-gray-400">{{ partner.name }}</span>
+              <span v-else class="text-[10px] md:text-[12px] font-bold uppercase text-gray-400 whitespace-nowrap">{{ partner.name }}</span>
             </div>
           </div>
         </div>
@@ -49,14 +47,14 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
             <div 
               v-for="partner in row2" 
               :key="'row2-' + group + '-' + partner.id" 
-              class="bg-white h-17.5 min-w-40 p-4 rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm"
+              class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-[12px] md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
               <img 
                 v-if="partner.logo" 
                 :src="`http://79.174.80.177:1337${partner.logo.url}`" 
-                class="w-full h-full object-contain" 
+                class="max-w-full max-h-full object-contain pointer-events-none block" 
               />
-              <span v-else class="text-[12px] font-bold uppercase text-gray-400">{{ partner.name }}</span>
+              <span v-else class="text-[10px] md:text-[12px] font-bold uppercase text-gray-400 whitespace-nowrap">{{ partner.name }}</span>
             </div>
           </div>
         </div>
@@ -68,14 +66,19 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
 <style scoped>
 .marquee-container {
   @apply flex overflow-hidden w-full;
+  /* Убирает возможные артефакты Safari при отрисовке */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .marquee-content {
   @apply flex flex-nowrap min-w-full shrink-0 items-center;
   animation: scroll-left 40s linear infinite;
+  will-change: transform;
 }
 
 .marquee-content.reverse {
+  /* Важно для Safari: анимация должна быть такой же, но с другим направлением */
   animation: scroll-right 40s linear infinite;
 }
 
@@ -87,5 +90,12 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
 @keyframes scroll-right {
   from { transform: translateX(-50%); }
   to { transform: translateX(0); }
+}
+
+/* Оптимизация для мобильных: чуть быстрее прокрутка на маленьких экранах */
+@media (max-width: 768px) {
+  .marquee-content {
+    animation-duration: 25s;
+  }
 }
 </style>

@@ -34,7 +34,7 @@ const scrollToSection = (id: string) => {
     <div class="container mx-auto relative z-10 px-6">
       <div v-if="hero?.data" class="max-w-175">
         <h1
-          class="leading-[110%] uppercase mb-6 text-renome-title font-normal text-[46px]"
+          class="leading-[110%] uppercase mb-6 text-renome-title font-normal text-[46px] pt-20"
         >
           {{ hero.data.title }}
         </h1>
