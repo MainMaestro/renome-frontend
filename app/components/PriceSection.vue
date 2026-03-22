@@ -11,7 +11,7 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
       <h2
         class="text-renome text-[36px] font-medium uppercase mb-12 tracking-wide"
       >
-        ПРАЙС
+        ЦЕНА
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
@@ -37,7 +37,7 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
           <div
             class="font-bold group-even:text-[48px] group-even:text-white text-[40px] text-renome"
           >
-            от {{ item.price }}
+            от {{ item.price }} &#8381
           </div>
         </div>
       </div>

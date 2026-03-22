@@ -8,6 +8,15 @@ interface StrapiResponse {
 }
 
 const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }
+};
 </script>
 
 <template>
@@ -36,13 +45,17 @@ const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
       </div>
       <div class="mt-10 flex flex-wrap gap-4">
         <button
-          class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-[#08352a] transition-all shadow-lg"
+  @click.prevent="scrollToSection('feedBack')"
+
+          class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           Получить план внедрения
         </button>
 
         <button
-          class="border-2 border-renomerenome text-renome px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome hover:text-white transition-all"
+
+  @click.prevent="scrollToSection('services')"
+          class="border-2 border-renomerenome text-renome px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome hover:text-white transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           Наши услуги
         </button>

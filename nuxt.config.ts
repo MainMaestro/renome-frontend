@@ -26,4 +26,12 @@ export default defineNuxtConfig({
     },
     display: "swap", // Чтобы текст не пропадал при загрузке
   },
+   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
+  router: {
+    options: {
+      scrollBehaviorType: 'smooth'
+    }
+  }
 });

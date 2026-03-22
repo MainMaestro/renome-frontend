@@ -34,6 +34,16 @@ const formatPrice = (val: any) => {
   if (num === 0) return "Бесплатно";
   return new Intl.NumberFormat("ru-RU").format(num) + " ₽";
 };
+
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }
+};
 </script>
 
 <template>
@@ -52,13 +62,13 @@ const formatPrice = (val: any) => {
         <h1 class="text-renome text-[48px] font-bold uppercase mb-2">
           Цены на услуги
         </h1>
-        <p class="text-gray-500 font-medium">
+        <p class="text-gray-500 font-medium mb-6">
           Консалтинг | Автоматизация | Интеграция
         </p>
         <div class="flex gap-6 items-start max-w-2xl mb-12">
-          <div class="w-0.5 h-14 bg-renome shrink-0 mt-1"></div>
+          <div class="w-0.5 h-20 bg-renome shrink-0 mt-1"></div>
 
-          <p class="text-[#4b5563] text-[18px] leading-relaxed font-light">
+          <p class="text-black/80 text-[18px] leading-relaxed font-light">
             Выберите подходящий формат работы — <br />
             консультация, разработка системы <br />
             или комплексной автоматизации процессов.
@@ -74,7 +84,7 @@ const formatPrice = (val: any) => {
           v-for="cat in categories"
           :key="cat.id"
           @click="activeCategoryId = cat.id"
-          class="px-8 py-4 rounded-xl font-bold text-[14px] transition-all"
+          class="px-8 py-4 rounded-xl font-bold text-[14px] transition-all cursor-pointer"
           :class="[
             activeCategoryId === cat.id
               ? 'bg-renome-gradient text-white shadow-lg'
@@ -123,16 +133,12 @@ const formatPrice = (val: any) => {
 
         <div class="mt-12">
           <button
-            class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-renome-gradient/20 transition-all shadow-lg"
+          @click="scrollToSection('feedBack')"
+            class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-renome-gradient/20 transition-all shadow-lg cursor-pointer active:scale-95 disabled:opacity-50"
           >
-            <span class="text-[12px] uppercase font-bold tracking-widest"
+            <span class="text-[12px] uppercase font-bold tracking-widest "
               >Заказать</span
             >
-            <div
-              class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
-            >
-              →
-            </div>
           </button>
         </div>
       </div>

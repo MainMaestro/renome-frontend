@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { data: companyData } = await useApi<any>("/company-section?populate=*");
 const { data: teamResponse } = await useApi<any>("/team-members?populate=*");
+const displayMembers = computed(() => {
+  const members = [...(allMembers.value || [])];
+
+  return members.slice(0, 6); // Берем строго первые 6
+});
 
 const allMembers = computed(() => teamResponse.value?.data || []);
 
@@ -13,7 +18,7 @@ const stats = [
 </script>
 
 <template>
-  <section class="relative py-24 font-sans text-black overflow-hidden">
+  <section id="about" class="relative py-24 font-sans text-black overflow-hidden">
     <!-- ФОНОВАЯ КАРТИНКА ВСЕГО БЛОКА -->
 
     <div class="container mx-auto px-6 max-w-300 z-10 relative">
@@ -70,33 +75,35 @@ const stats = [
       </h3>
 
       <!-- СЕТКА КОМАНДЫ -->
-      <div
-        class="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-6 auto-rows-fr"
-      >
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
-          v-for="member in allMembers"
+          v-for="member in displayMembers"
           :key="member.id"
-          class="flex flex-col group h-full first:lg:row-span-2"
+          class="flex flex-col group w-full"
         >
+          <!-- Квадратный контейнер для фото -->
           <div
-            class="aspect-video bg-gray-50 rounded-t-xl overflow-hidden grow"
+            class="aspect-square bg-gray-100 rounded-t-xl overflow-hidden relative border-x border-t border-gray-100"
           >
             <img
               v-if="member.avatar"
               :src="`http://79.174.80.177:1337${member.avatar.url}`"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
+            
           </div>
+
+          <!-- Инфо-блок (фиксируем высоту, чтобы все карточки были в ряд) -->
           <div
-            class="p-4 bg-renome-gradient rounded-b-xl flex flex-col justify-center"
+            class="p-5 bg-renome-gradient rounded-b-xl flex flex-col justify-center items-center min-h-25 h-25"
           >
             <h4
-              class="text-[16px] font-bold uppercase text-white leading-tight text-center"
+              class="text-[16px] font-extrabold uppercase text-white leading-tight text-center tracking-tight"
             >
               {{ member.name }}
             </h4>
             <p
-              class="text-[11px] text-white/60 mt-1 uppercase leading-tight text-center"
+              class="text-[11px] text-white/70 mt-2 uppercase leading-tight text-center font-medium tracking-widest"
             >
               {{ member.position }}
             </p>

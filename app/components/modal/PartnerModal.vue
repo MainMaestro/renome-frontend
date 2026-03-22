@@ -54,6 +54,17 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleEsc);
   document.body.style.overflow = "auto";
 });
+
+const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+  emit("close");
+  if (element) {
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+};
 </script>
 
 <template>
@@ -202,7 +213,8 @@ onUnmounted(() => {
 
           <div class="mt-12 flex justify-end">
             <button
-              class="bg-[#00382E] text-white px-12 py-3.5 rounded-full text-base font-bold hover:bg-black transition-all shadow-xl active:scale-95"
+              @click="scrollToSection('feedBack')"
+              class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95"
             >
               Заказать
             </button>
