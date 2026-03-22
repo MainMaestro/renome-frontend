@@ -51,18 +51,26 @@ const submitForm = async () => {
   }
 };
 </script>
-
 <template>
-  <section id="feedBack" class="py-24 font-sans relative overflow-hidden">
-    <div class="container mx-auto px-6 max-w-300">
-      <div class="flex flex-col lg:flex-row gap-20 items-start">
+  <section
+    id="feedBack"
+    class="py-12 md:py-24 font-sans relative overflow-hidden"
+  >
+    <div class="container mx-auto px-4 md:px-6 max-w-[1200px]">
+      <!-- flex-col-reverse, чтобы форма на мобилках была ниже или выше в зависимости от логики. 
+           Обычно форму оставляют внизу, а контакты/лого сверху, либо наоборот. 
+           Здесь сделаем стандартный flex-col (заголовки -> форма -> контакты) -->
+      <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+        <!-- ЛЕВАЯ ЧАСТЬ: Форма -->
         <div class="w-full lg:w-1/2">
-          <div class="mb-10 text-renome">
-            <h2 class="text-[24px] font-bold uppercase tracking-tight">
+          <div class="mb-8 md:mb-10 text-renome text-center lg:text-left">
+            <h2
+              class="text-[20px] md:text-[24px] font-bold uppercase tracking-tight"
+            >
               Хотите узнать больше?
             </h2>
             <h3
-              class="text-[32px] font-bold uppercase tracking-tight leading-tight"
+              class="text-[26px] md:text-[32px] font-bold uppercase tracking-tight leading-tight"
             >
               Напишите нам, мы поможем
             </h3>
@@ -70,14 +78,14 @@ const submitForm = async () => {
 
           <form
             @submit.prevent="submitForm"
-            class="bg-white p-10 rounded-4xl shadow-xl space-y-5 border border-white"
+            class="bg-white p-6 md:p-10 rounded-3xl md:rounded-4xl shadow-xl space-y-4 md:space-y-5 border border-gray-50"
           >
             <input
               v-model="name"
               type="text"
               placeholder="Имя"
               required
-              class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400"
+              class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all text-base"
             />
 
             <input
@@ -85,14 +93,14 @@ const submitForm = async () => {
               type="tel"
               placeholder="Телефон"
               required
-              class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400"
+              class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all text-base"
             />
 
             <textarea
               v-model="comment"
               placeholder="Комментарий"
               rows="4"
-              class="w-full p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none text-black placeholder:text-gray-400 resize-none"
+              class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all resize-none text-base"
             ></textarea>
 
             <div class="flex items-start gap-4 py-2">
@@ -101,11 +109,11 @@ const submitForm = async () => {
                 type="checkbox"
                 id="agree_footer"
                 required
-                class="mt-1 w-5 h-5 accent-renome"
+                class="mt-1 w-5 h-5 shrink-0 accent-renome"
               />
               <label
                 for="agree_footer"
-                class="text-[11px] text-gray-400 leading-tight cursor-pointer"
+                class="text-[10px] md:text-[11px] text-gray-400 leading-tight cursor-pointer"
               >
                 Нажимая кнопку «Отправить», я даю свое согласие на обработку
                 моих персональных данных, в соответствии с Федеральным законом
@@ -118,78 +126,67 @@ const submitForm = async () => {
             <button
               type="submit"
               :disabled="loading"
-              class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-8 group hover:bg-[#00352b] transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
+              class="w-full lg:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center justify-center gap-8 hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50"
             >
               <span class="text-[13px] uppercase font-bold tracking-widest">
                 {{ loading ? "Отправка..." : "Отправить" }}
               </span>
+              <span class="text-xl">→</span>
             </button>
           </form>
         </div>
 
+        <!-- ПРАВАЯ ЧАСТЬ: Контакты -->
         <div
-          class="w-full lg:w-1/2 flex flex-col items-end text-right justify-between self-stretch py-4"
+          class="w-full lg:w-1/2 flex flex-col items-center lg:items-end text-center lg:text-right justify-between self-stretch py-4"
         >
-          <div class="mb-20">
-            <!-- Лого -->
-            <div class="text-2xl font-bold tracking-tighter text-white">
-              <a href="/" class="flex items-center gap-2 group">
-                <img
-                  src="/logo.png"
-                  alt="Renome Logo"
-                  class="h-30 w-auto object-contain transition-transform group-hover:scale-105"
-                />
-                <!-- Если название текстом рядом с картинкой -->
-                <span
-                  class="text-xl font-bold tracking-tight text-gray-900"
-                ></span>
-              </a>
-            </div>
+          <!-- Лого -->
+          <div class="mb-12 lg:mb-20">
+            <NuxtLink to="/" class="group">
+              <img
+                src="/logo.png"
+                alt="Renome Logo"
+                class="h-20 md:h-30 w-auto object-contain transition-transform group-hover:scale-105"
+              />
+            </NuxtLink>
           </div>
 
-          <div class="space-y-8 text-gray-900">
-            <div class="flex flex-col items-end gap-1">
-              <p class="font-bold">г. Санкт-Петербург</p>
-              <p class="text-[22px] font-bold">+7(812)333-93-01</p>
-              <p class="underline font-bold">info@renome-consult.com</p>
-            </div>
-            <div class="flex justify-end gap-4">
-              <div
-                class="w-10 h-10 rounded-lg flex items-center justify-center text-white"
-              >
-                <a
-                  href="https://t.me"
-                  target="_blank"
-                  class="w-10 h-10 rounded-xl flex items-center justify-center text-renome transition-all shadow-md group"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    class="w-6 h-6 fill-current transition-transform group-hover:scale-110"
-                    xmlns="http://www.w3.org"
-                  >
-                    <path
-                      d="M19.2,4.4L2.9,10.7c-1.1,0.4-1.1,1.1-0.2,1.3l4.1,1.3l1.6,4.8c0.2,0.5,0.1,0.7,0.6,0.7c0.4,0,0.6-0.2,0.8-0.4 c0.1-0.1,1-1,2-2l4.2,3.1c0.8,0.4,1.3,0.2,1.5-0.7l2.8-13.1C20.6,4.6,19.9,4,19.2,4.4z M17.1,7.4l-7.8,7.1L9,17.8L7.4,13l9.2-5.8 C17,6.9,17.4,7.1,17.1,7.4z"
-                    />
-                  </svg>
-                </a>
-              </div>
+          <!-- Инфо -->
+          <div class="space-y-8 text-gray-900 w-full">
+            <div class="flex flex-col items-center lg:items-end gap-2">
+              <p class="font-bold opacity-60 uppercase text-xs md:text-sm">
+                г. Санкт-Петербург
+              </p>
               <a
                 href="tel:+78123339301"
-                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome transition-all shadow-md group"
+                class="text-[24px] md:text-[28px] font-bold hover:text-emerald-600 transition-colors"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  class="w-6 h-6 fill-current transition-transform group-hover:scale-110"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                +7 (812) 333-93-01
+              </a>
+              <a
+                href="mailto:info@renome-consult.com"
+                class="underline font-bold text-base md:text-lg hover:text-emerald-600 transition-colors"
+              >
+                info@renome-consult.com
+              </a>
+            </div>
+
+            <!-- Соцсети -->
+            <div class="flex justify-center lg:justify-end gap-4">
+              <a
+                href="https://t.me"
+                target="_blank"
+                class="w-12 h-12 rounded-2xl flex items-center justify-center text-renome bg-white shadow-md hover:-translate-y-1 transition-all"
+              >
+                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
                   <path
-                    d="M16.5562 12.9062L16.1007 13.359C16.1007 13.359 15.0181 14.4355 12.0631 11.4972C9.10812 8.55901 10.1907 7.48257 10.1907 7.48257L10.4775 7.19738C11.1841 6.49484 11.2507 5.36691 10.6342 4.54348L9.37326 2.85908C8.61028 1.83992 7.13596 1.70529 6.26145 2.57483L4.69185 4.13552C4.25823 4.56668 3.96765 5.12559 4.00289 5.74561C4.09304 7.33182 4.81071 10.7447 8.81536 14.7266C13.0621 18.9492 17.0468 19.117 18.6763 18.9651C19.1917 18.9171 19.6399 18.6546 20.0011 18.2954L21.4217 16.883C22.3806 15.9295 22.1102 14.2949 20.8833 13.628L18.9728 12.5894C18.1672 12.1515 17.1858 12.2801 16.5562 12.9062Z"
+                    d="M19.2,4.4L2.9,10.7c-1.1,0.4-1.1,1.1-0.2,1.3l4.1,1.3l1.6,4.8c0.2,0.5,0.1,0.7,0.6,0.7c0.4,0,0.6-0.2,0.8-0.4 c0.1-0.1,1-1,2-2l4.2,3.1c0.8,0.4,1.3,0.2,1.5-0.7l2.8-13.1C20.6,4.6,19.9,4,19.2,4.4z M17.1,7.4l-7.8,7.1L9,17.8L7.4,13l9.2-5.8 C17,6.9,17.4,7.1,17.1,7.4z"
                   />
                 </svg>
               </a>
               <a
                 href="mailto:info@renome-consult.com"
-                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome transition-all shadow-md group"
+                class="w-12 h-12 rounded-2xl flex items-center justify-center text-renome bg-white shadow-md hover:-translate-y-1 transition-all"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -205,55 +202,48 @@ const submitForm = async () => {
                   />
                 </svg>
               </a>
-            </div>
-            <div
-              class="text-[10px] text-gray-400 space-y-1 leading-relaxed max-w-100"
-            >
-              <p>ООО "РЕНОМЕ КОНСАЛТИНГ"</p>
-              <p>
-                Юр. адрес: 188664, Россия, обл Ленинградская, р-н
-                Всеволожский...
-              </p>
-              <p>ИНН / КПП 4706092018 / 470601001</p>
+              <a
+                href="tel:+78123339301"
+                class="w-12 h-12 rounded-2xl flex items-center justify-center text-renome bg-white shadow-md hover:-translate-y-1 transition-all"
+              >
+                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                  <path
+                    d="M16.5562 12.9062L16.1007 13.359C16.1007 13.359 15.0181 14.4355 12.0631 11.4972C9.10812 8.55901 10.1907 7.48257 10.1907 7.48257L10.4775 7.19738C11.1841 6.49484 11.2507 5.36691 10.6342 4.54348L9.37326 2.85908C8.61028 1.83992 7.13596 1.70529 6.26145 2.57483L4.69185 4.13552C4.25823 4.56668 3.96765 5.12559 4.00289 5.74561C4.09304 7.33182 4.81071 10.7447 8.81536 14.7266C13.0621 18.9492 17.0468 19.117 18.6763 18.9651"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Всплывающее уведомление (Toast) -->
-    <Transition name="toast">
+    <!-- Тост-уведомление -->
+    <Transition name="slide-up">
       <div
         v-if="toast.show"
-        class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-8 py-4 rounded-2xl shadow-2xl backdrop-blur-md border border-white/10"
-        :class="
-          toast.isError ? 'bg-red-600 text-white' : 'bg-renome text-white'
-        "
+        :class="[
+          'fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl shadow-2xl text-white font-bold',
+          toast.isError ? 'bg-red-500' : 'bg-emerald-600',
+        ]"
       >
-        <div
-          class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-[12px]"
-        >
-          {{ toast.isError ? "!" : "✓" }}
-        </div>
-        <span class="text-[14px] font-bold uppercase tracking-wider">
-          {{ toast.message }}
-        </span>
+        {{ toast.message }}
       </div>
     </Transition>
   </section>
 </template>
 
 <style scoped>
-.toast-enter-active,
-.toast-leave-active {
-  transition: all 0.5s ease;
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.4s ease;
 }
-.toast-enter-from {
-  opacity: 0;
-  transform: translate(-50%, 40px);
-}
-.toast-leave-to {
+.slide-up-enter-from {
   opacity: 0;
   transform: translate(-50%, 20px);
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -20px);
 }
 </style>

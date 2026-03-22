@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const isScrolled = ref(false);
+const isMobileMenuOpen = ref(false); // Состояние мобильного меню
+const isContactModalOpen = ref(false);
 const router = useRouter();
 const route = useRoute();
-const isContactModalOpen = ref(false);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50;
+};
+
+// Закрытие меню при клике
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false;
 };
 
 onMounted(() => {
@@ -18,7 +24,6 @@ onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
 
-// Ссылки: если это якорь на главной, пишем просто #id
 const menuItems = [
   { name: "О нас", link: "#about" },
   { name: "Услуги", link: "#services" },
@@ -28,33 +33,17 @@ const menuItems = [
 ];
 
 const handleMenuClick = async (link: string) => {
-  // Если это якорь (начинается с #)
+  closeMobileMenu(); // Закрываем шторку при переходе
+  
   if (link.startsWith('#')) {
     const targetId = link.substring(1);
-
-    // 1. Если мы НЕ на главной
     if (route.path !== '/') {
-      // Переходим на главную
       await router.push('/');
-      
-      // Ждем, пока Nuxt завершит переход и отрисует DOM
-      // Используем небольшую задержку, чтобы страница успела "собраться"
-      setTimeout(() => {
-        const element = document.getElementById(targetId);
-        if (element) {
-          scrollWithOffset(targetId);
-        } else {
-          // Если элемент еще не появился (бывает на тяжелых страницах), 
-          // пробуем еще раз через мгновение
-          setTimeout(() => scrollWithOffset(targetId), 200);
-        }
-      }, 400); 
+      setTimeout(() => scrollWithOffset(targetId), 400); 
     } else {
-      // 2. Если уже на главной — просто скроллим
       scrollWithOffset(targetId);
     }
   } else {
-    // 3. Если это обычная ссылка на страницу
     await router.push(link);
   }
 };
@@ -62,16 +51,11 @@ const handleMenuClick = async (link: string) => {
 const scrollWithOffset = (id: string) => {
   const element = document.getElementById(id);
   if (element) {
-    const offset = 100; // Высота шапки
+    const offset = 80; // Скорректировал под мобильную шапку
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
-
-    // Очищаем URL от якоря, чтобы при F5 не прыгало
+    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     window.history.replaceState(null, '', window.location.pathname);
   }
 };
@@ -80,46 +64,89 @@ const scrollWithOffset = (id: string) => {
 <template>
   <header
     :class="[
-      'fixed top-0 left-0 w-full z-100 transition-all duration-500',
-      isScrolled ? 'bg-white shadow-lg' : 'bg-transparent',
+      'fixed top-0 left-0 w-full z-[100] transition-all duration-500',
+      isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg py-3' : 'bg-transparent py-5',
     ]"
   >
-    <div class="container mx-auto px-6 flex items-center justify-between">
+    <div class="container mx-auto px-4 md:px-6 flex items-center justify-between">
       <!-- Лого -->
-      <NuxtLink to="/" class="flex items-center group">
+      <NuxtLink to="/" class="flex items-center z-[110]" @click="closeMobileMenu">
         <img
           src="/logo.png"
           alt="Renome Logo"
           :class="[
             'w-auto object-contain transition-all duration-500',
-            isScrolled ? 'h-10 brightness-0' : 'h-14',
+            isScrolled || isMobileMenuOpen ? 'h-8 md:h-10 brightness-0' : 'h-10 md:h-14',
           ]"
         />
       </NuxtLink>
 
-      <!-- Меню -->
+      <!-- Десктопное меню -->
       <nav class="hidden lg:flex items-center gap-10">
         <a
           v-for="item in menuItems"
           :key="item.name"
           href="#"
           @click.prevent="handleMenuClick(item.link)"
-          :class=" ['font-medium text-renome transition-all duration-300 cursor-pointer hover:text-emerald-500'
-          ]"
+          class="font-medium text-renome transition-all duration-300 hover:text-emerald-500"
         >
           {{ item.name }}
         </a>
       </nav>
 
-      <!-- Кнопка -->
-      <button
-        @click="isContactModalOpen = true"
-        class="bg-renome-gradient border border-white/20 px-8 py-2.5 rounded-full text-white text-[17px] font-medium hover:brightness-110 transition-all shadow-md active:scale-95 cursor-pointer"
-      >
-        Связаться
-      </button>
+      <div class="flex items-center gap-4">
+        <!-- Кнопка "Связаться" (скрыта на совсем маленьких экранах или уменьшена) -->
+        <button
+          @click="isContactModalOpen = true"
+          class="hidden sm:block bg-renome-gradient px-6 md:px-8 py-2 md:py-2.5 rounded-full text-white text-sm md:text-[17px] font-medium hover:brightness-110 transition-all active:scale-95"
+        >
+          Связаться
+        </button>
+
+        <!-- Бургер-иконка -->
+        <button 
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+          class="lg:hidden flex flex-col gap-1.5 z-[110] p-2"
+        >
+          <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></span>
+          <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></span>
+          <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></span>
+        </button>
+      </div>
     </div>
+
+    <!-- Мобильное меню (Шторка) -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0 -translate-y-full"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 -translate-y-full"
+    >
+      <div 
+        v-if="isMobileMenuOpen" 
+        class="fixed inset-0 bg-white z-[100] lg:hidden flex flex-col items-center justify-center gap-8"
+      >
+        <a
+          v-for="item in menuItems"
+          :key="item.name"
+          href="#"
+          @click.prevent="handleMenuClick(item.link)"
+          class="text-2xl font-semibold text-renome hover:text-emerald-500"
+        >
+          {{ item.name }}
+        </a>
+        <button
+          @click="isContactModalOpen = true; closeMobileMenu()"
+          class="bg-renome-gradient px-10 py-4 rounded-full text-white text-xl font-bold"
+        >
+          Связаться
+        </button>
+      </div>
+    </Transition>
   </header>
+
   <ContactModal 
     :isOpen="isContactModalOpen" 
     @close="isContactModalOpen = false" 

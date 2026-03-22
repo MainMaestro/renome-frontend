@@ -31,70 +31,65 @@ const scrollToSection = (id: string) => {
   }
 };
 </script>
-
 <template>
-  <section class="py-24">
-    <div class="container mx-auto px-6">
-      <h2
-        class="text-renome text-[32px] font-bold uppercase mb-16 tracking-tight"
-      >
+  <section id="applications" class="py-12 md:py-24 bg-gray-50/30">
+    <div class="container mx-auto px-4 md:px-6 max-w-[1200px]">
+      <h2 class="text-renome text-[28px] md:text-[32px] font-bold uppercase mb-10 md:mb-16 tracking-tight text-center md:text-left">
         НАШИ ПРИЛОЖЕНИЯ
       </h2>
 
-      <div class="flex flex-col gap-10">
-        <!-- Безопасно перебираем data -->
+      <div class="flex flex-col gap-6 md:gap-12">
+        <!-- Карточка приложения -->
         <div
           v-for="app in appsResponse?.data"
           :key="app.id"
-          class="bg-white rounded-[40px] p-10 md:p-14 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-16 items-center"
+          class="bg-white rounded-[2.5rem] md:rounded-[40px] p-6 md:p-14 shadow-sm border border-gray-100 flex flex-col lg:flex-row gap-10 md:gap-16 items-center overflow-hidden"
         >
-          <div class="flex-[1.3] space-y-8">
-            <div class="flex items-start gap-6">
-              <div class="w-14 h-14 shrink-0 mt-1">
-                <!-- Иконка-заглушка, пока не подтянешь лого из Strapi -->
-                <div
-                  class="w-full h-full bg-slate-100 rounded-full flex items-center justify-center text-2xl"
-                >
-                  🌀
-                </div>
+          <!-- Контентная часть -->
+          <div class="flex-[1.3] space-y-6 md:space-y-8 w-full">
+            <div class="flex items-center md:items-start gap-4 md:gap-6">
+              <div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                🌀
               </div>
-              <h3
-                class="text-[42px] font-bold text-black leading-[1.1] tracking-tighter"
-              >
+              <h3 class="text-[28px] md:text-[42px] font-bold text-black leading-[1.1] tracking-tighter">
                 {{ app.attributes?.name || app.name }}
               </h3>
             </div>
 
-            <p
-              class="text-[#4b5563] text-[17px] leading-[1.7] font-light max-w-2xl whitespace-pre-line"
-            >
+            <p class="text-[#4b5563] text-[15px] md:text-[17px] leading-[1.6] md:leading-[1.7] font-light max-w-2xl whitespace-pre-line">
               {{ app.attributes?.description || app.description }}
             </p>
 
-            <div class="flex items-center gap-4 pt-4">
+            <div class="pt-2 md:pt-4">
               <button
                 @click="isContactModalOpen = true"
-                class="bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[14px] uppercase tracking-wider hover:bg-[#00352b] transition-all shadow-lg active:scale-95 cursor-pointer"
+                class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95"
               >
                 Оставить заявку
               </button>
             </div>
           </div>
 
-          <!-- Скриншот справа на градиенте -->
-          <div class="flex-1 w-full">
-            <img
-              v-if="getImgUrl(app)"
-              :src="getImgUrl(app)"
-              class="w-full h-full object-contain rounded-xl shadow-2xl scale-110 translate-y-3"
-              alt="App Interface"
-            />
-            <div v-else class="text-white/20 italic">Нет скриншота</div>
+          <!-- Скриншот (адаптивный масштаб) -->
+          <div class="flex-1 w-full relative mt-4 lg:mt-0">
+            <div v-if="getImgUrl(app)" class="relative group">
+              <!-- Декоративный фон под скриншотом для объема на десктопе -->
+              <div class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-[2rem] blur-2xl hidden lg:block"></div>
+              <img
+                :src="getImgUrl(app)"
+                class="relative w-full h-auto object-contain rounded-2xl shadow-xl lg:scale-110 lg:translate-y-3 transition-transform duration-500 group-hover:scale-115"
+                alt="App Interface"
+              />
+            </div>
+            <div v-else class="text-gray-300 italic text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed">
+              Нет скриншота
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
   <ContactModal 
     :isOpen="isContactModalOpen" 
     @close="isContactModalOpen = false" 
