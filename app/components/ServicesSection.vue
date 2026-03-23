@@ -9,7 +9,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
 </script>
 <template>
   <section id="services" class="py-12 md:py-20 bg-transparent relative z-10 font-sans">
-    <div class="container mx-auto px-4 md:px-6 max-w-[1200px]"> <!-- Исправил max-w-300 на стандартный -->
+    <div class="container mx-auto px-4 md:px-6 max-w-300"> <!-- Исправил max-w-300 на стандартный -->
       <h2 class="text-renome text-[28px] md:text-[36px] font-medium uppercase mb-8 md:mb-10 text-center md:text-left">
         УСЛУГИ
       </h2>
@@ -18,7 +18,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
         <!-- 1. ГЛАВНАЯ УСЛУГА (Full width on all screens, layout changes on md) -->
         <div
           v-if="mainService"
-          class="md:col-span-3 bg-white p-6 md:p-10 rounded-[2rem] md:rounded-4xl shadow-xl flex flex-col md:flex-row gap-8 md:gap-10 border border-gray-100"
+          class="md:col-span-3 bg-white p-6 md:p-10 rounded-4xl md:rounded-4xl shadow-xl flex flex-col md:flex-row gap-8 md:gap-10 border border-gray-100"
         >
           <div class="flex-1 order-2 md:order-1">
             <div class="flex items-center md:items-start gap-4 mb-6">
@@ -47,7 +47,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             <img
               v-if="mainService.picture"
               :src="`http://79.174.80.177:1337${mainService.picture.url}`"
-              class="max-h-[200px] md:max-h-full w-auto object-contain"
+              class="max-h-50 md:max-h-full w-auto object-contain"
             />
           </div>
         </div>
@@ -56,7 +56,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
         <div
           v-for="service in otherServices"
           :key="service.id"
-          class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-4xl shadow-xl flex flex-col border border-gray-100 h-full transition-transform hover:-translate-y-1"
+          class="bg-white p-6 md:p-8 rounded-4xl md:rounded-4xl shadow-xl flex flex-col border border-gray-100 h-full transition-transform hover:-translate-y-1"
         >
           <div class="flex items-center gap-4 mb-6">
             <div class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shrink-0">

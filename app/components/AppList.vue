@@ -32,8 +32,8 @@ const scrollToSection = (id: string) => {
 };
 </script>
 <template>
-  <section id="applications" class="py-12 md:py-24 bg-gray-50/30">
-    <div class="container mx-auto px-4 md:px-6 max-w-[1200px]">
+  <section id="applications" class="py-12 md:py-24 ">
+    <div class="container mx-auto px-4 md:px-6 max-w-300">
       <h2 class="text-renome text-[28px] md:text-[32px] font-bold uppercase mb-10 md:mb-16 tracking-tight text-center md:text-left">
         НАШИ ПРИЛОЖЕНИЯ
       </h2>
@@ -74,7 +74,7 @@ const scrollToSection = (id: string) => {
           <div class="flex-1 w-full relative mt-4 lg:mt-0">
             <div v-if="getImgUrl(app)" class="relative group">
               <!-- Декоративный фон под скриншотом для объема на десктопе -->
-              <div class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-[2rem] blur-2xl hidden lg:block"></div>
+              <div class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-4xl blur-2xl hidden lg:block"></div>
               <img
                 :src="getImgUrl(app)"
                 class="relative w-full h-auto object-contain rounded-2xl shadow-xl lg:scale-110 lg:translate-y-3 transition-transform duration-500 group-hover:scale-115"

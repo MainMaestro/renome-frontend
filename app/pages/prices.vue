@@ -61,7 +61,7 @@ const scrollToSection = (id: string) => {
       <img
         src="/price.png"
         alt="Hero Background"
-        class="w-full h-full object-contain object-right-top lg:object-top-right opacity-40 lg:opacity-90"
+        class="w-full h-full object-contain object-top-right lg:object-top-right opacity-40 lg:opacity-90"
       />
     </div>
 
@@ -106,7 +106,7 @@ const scrollToSection = (id: string) => {
       <!-- Контент выбранной категории -->
       <div
         v-if="currentCategory"
-        class="bg-white rounded-[24px] lg:rounded-[40px] p-6 lg:p-12 shadow-xl border border-white"
+        class="bg-white rounded-3xl lg:rounded-[40px] p-6 lg:p-12 shadow-xl border border-white"
       >
         <h2 class="text-renome text-[28px] md:text-[36px] lg:text-[42px] font-bold mb-8 lg:mb-10 uppercase leading-tight">
           {{ currentCategory.longName }}
@@ -158,7 +158,6 @@ const scrollToSection = (id: string) => {
 </template>
 
 <style scoped>
-/* Прячем полосу прокрутки для табов, сохраняя функционал скролла */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

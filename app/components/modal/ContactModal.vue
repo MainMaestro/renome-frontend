@@ -86,9 +86,9 @@ const submitForm = async () => {
         class="relative w-full max-w-175 max-h-[95vh] overflow-y-auto rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
       >
         <div class="absolute inset-0 z-0 pointer-events-none">
-          <img 
-            src="/bg.png" 
-            class="w-full h-full object-cover object-center  " 
+          <img
+            src="/bg.png"
+            class="w-full h-full object-cover object-center"
             alt="Background"
           />
         </div>
@@ -111,16 +111,23 @@ const submitForm = async () => {
                 alt="Renome"
                 class="h-16 md:h-24 mb-4 md:mb-6 object-contain"
               />
-              <h2 class="text-[18px] md:text-[22px] font-bold uppercase text-[#004d40] tracking-tight">
+              <h2
+                class="text-[18px] md:text-[22px] font-bold uppercase text-renome tracking-tight"
+              >
                 Хотите узнать больше?
               </h2>
-              <h3 class="text-[22px] md:text-[28px] font-bold uppercase text-[#004d40] leading-tight md:leading-none">
+              <h3
+                class="text-[22px] md:text-[28px] font-bold uppercase text-renome leading-tight md:leading-none"
+              >
                 Напишите нам, мы поможем
               </h3>
             </div>
 
             <!-- Форма -->
-            <form @submit.prevent="submitForm" class="space-y-3 md:space-y-4 max-w-[500px] mx-auto">
+            <form
+              @submit.prevent="submitForm"
+              class="space-y-3 md:space-y-4 max-w-125 mx-auto"
+            >
               <input
                 v-model="name"
                 type="text"
@@ -150,10 +157,14 @@ const submitForm = async () => {
                   type="checkbox"
                   id="modal_agree"
                   required
-                  class="mt-1 w-4 h-4 accent-[#004d40] shrink-0"
+                  class="mt-1 w-4 h-4 accent-renome shrink-0"
                 />
-                <label for="modal_agree" class="text-[12px] md:text-[14px] text-black leading-tight cursor-pointer">
-                  Нажимая кнопку «Отправить», я даю свое согласие на обработку персональных данных в соответствии с ФЗ №152.
+                <label
+                  for="modal_agree"
+                  class="text-[12px] md:text-[14px] text-black leading-tight cursor-pointer"
+                >
+                  Нажимая кнопку «Отправить», я даю свое согласие на обработку
+                  персональных данных в соответствии с ФЗ №152.
                 </label>
               </div>
 
@@ -164,10 +175,14 @@ const submitForm = async () => {
                   :disabled="loading"
                   class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-3 md:py-4 rounded-full flex items-center justify-center md:justify-between gap-4 md:gap-6 transition-all group shadow-lg active:scale-95 cursor-pointer"
                 >
-                  <span class="text-[13px] md:text-[14px] uppercase font-bold tracking-widest">
+                  <span
+                    class="text-[13px] md:text-[14px] uppercase font-bold tracking-widest"
+                  >
                     {{ loading ? "Отправка..." : "Отправить" }}
                   </span>
-                  <div class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center text-white">
+                  <div
+                    class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center text-white"
+                  >
                     <span class="text-lg md:text-xl">→</span>
                   </div>
                 </button>
@@ -176,25 +191,57 @@ const submitForm = async () => {
           </div>
 
           <!-- Футер (Контакты + SVG) -->
-          <div class="mt-8 md:mt-12 flex flex-col md:flex-row justify-between items-center text-[12px] text-gray-900 border-t border-gray-100 pt-6 md:pt-8 gap-6 w-full">
+          <div
+            class="mt-8 md:mt-12 flex flex-col md:flex-row justify-between items-center text-[12px] text-gray-900 border-t border-gray-100 pt-6 md:pt-8 gap-6 w-full"
+          >
             <div class="text-center md:text-left space-y-1">
-              <p class="font-bold uppercase tracking-tighter">г. Санкт-Петербург</p>
-              <p class="text-[14px] md:text-[16px] font-bold">+7(812)333-93-01</p>
+              <p class="font-bold uppercase tracking-tighter">
+                г. Санкт-Петербург
+              </p>
+              <p class="text-[14px] md:text-[16px] font-bold">
+                +7(812)333-93-01
+              </p>
               <p class="font-bold">Email: info@renome-consult.com</p>
             </div>
 
             <div class="flex gap-4">
               <!-- Telegram -->
-              <a href="https://t.me" target="_blank" class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110">
-                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current"><path d="M19.2,4.4L2.9,10.7c-1.1,0.4-1.1,1.1-0.2,1.3l4.1,1.3l1.6,4.8c0.2,0.5,0.1,0.7,0.6,0.7c0.4,0,0.6-0.2,0.8-0.4 c0.1-0.1,1-1,2-2l4.2,3.1c0.8,0.4,1.3,0.2,1.5-0.7l2.8-13.1C20.6,4.6,19.9,4,19.2,4.4z M17.1,7.4l-7.8,7.1L9,17.8L7.4,13l9.2-5.8 C17,6.9,17.4,7.1,17.1,7.4z"/></svg>
+              <a
+                href="https://t.me"
+                target="_blank"
+                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
+              >
+                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                  <path
+                    d="M19.2,4.4L2.9,10.7c-1.1,0.4-1.1,1.1-0.2,1.3l4.1,1.3l1.6,4.8c0.2,0.5,0.1,0.7,0.6,0.7c0.4,0,0.6-0.2,0.8-0.4 c0.1-0.1,1-1,2-2l4.2,3.1c0.8,0.4,1.3,0.2,1.5-0.7l2.8-13.1C20.6,4.6,19.9,4,19.2,4.4z M17.1,7.4l-7.8,7.1L9,17.8L7.4,13l9.2-5.8 C17,6.9,17.4,7.1,17.1,7.4z"
+                  />
+                </svg>
               </a>
               <!-- Email (SVG Почты) -->
-              <a href="mailto:info@renome-consult.com" class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110">
-                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current" xmlns="http://www.w3.org"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z"/></svg>
+              <a
+                href="mailto:info@renome-consult.com"
+                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-6 h-6 fill-current"
+                  xmlns="http://www.w3.org"
+                >
+                  <path
+                    d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z"
+                  />
+                </svg>
               </a>
               <!-- Phone -->
-              <a href="tel:+78123339301" class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110">
-                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+              <a
+                href="tel:+78123339301"
+                class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
+              >
+                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                  <path
+                    d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"
+                  />
+                </svg>
               </a>
             </div>
           </div>
@@ -205,8 +252,19 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 </style>

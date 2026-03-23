@@ -54,12 +54,9 @@ const submitForm = async () => {
 <template>
   <section
     id="feedBack"
-    class="py-12 md:py-24 font-sans relative overflow-hidden"
+    class="pt-12 md:pt-24 font-sans relative overflow-hidden"
   >
-    <div class="container mx-auto px-4 md:px-6 max-w-[1200px]">
-      <!-- flex-col-reverse, чтобы форма на мобилках была ниже или выше в зависимости от логики. 
-           Обычно форму оставляют внизу, а контакты/лого сверху, либо наоборот. 
-           Здесь сделаем стандартный flex-col (заголовки -> форма -> контакты) -->
+    <div class="container mx-auto px-4 md:px-6 max-w-300">
       <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
         <!-- ЛЕВАЯ ЧАСТЬ: Форма -->
         <div class="w-full lg:w-1/2">
@@ -150,72 +147,80 @@ const submitForm = async () => {
               />
             </NuxtLink>
           </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row justify-between items-end gap-8 py-10 border-t border-gray-100"
+      >
+        <!-- ЛЕВАЯ ЧАСТЬ: Контакты -->
+        <div class="text-left space-y-1 pb-1">
+          <p class="text-[16px] font-bold text-black">г. Санкт-Петербург</p>
+          <p class="text-[16px] font-bold text-black">+7(812)333-93-01</p>
+          <p class="text-[16px] font-bold text-black">
+            Email: <span class="font-bold">info@renome - consult.com</span>
+          </p>
+        </div>
 
-          <!-- Инфо -->
-          <div class="space-y-8 text-gray-900 w-full">
-            <div class="flex flex-col items-center lg:items-end gap-2">
-              <p class="font-bold opacity-60 uppercase text-xs md:text-sm">
-                г. Санкт-Петербург
-              </p>
-              <a
-                href="tel:+78123339301"
-                class="text-[24px] md:text-[28px] font-bold hover:text-emerald-600 transition-colors"
-              >
-                +7 (812) 333-93-01
-              </a>
-              <a
-                href="mailto:info@renome-consult.com"
-                class="underline font-bold text-base md:text-lg hover:text-emerald-600 transition-colors"
-              >
-                info@renome-consult.com
-              </a>
-            </div>
+        <!-- ПРАВАЯ ЧАСТЬ: Иконки + Реквизиты -->
+        <div class="flex flex-col items-end max-w-2xl text-right">
+          <!-- Блок с иконками (как на картинке) -->
+          <div class="flex items-center gap-6 mb-6">
+            <a
+              href="https://t.me"
+              target="_blank"
+              class="text-renome hover:opacity-80 transition-opacity"
+            >
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M19.2,4.4L2.9,10.7c-1.1,0.4-1.1,1.1-0.2,1.3l4.1,1.3l1.6,4.8c0.2,0.5,0.1,0.7,0.6,0.7c0.4,0,0.6-0.2,0.8-0.4 c0.1-0.1,1-1,2-2l4.2,3.1c0.8,0.4,1.3,0.2,1.5-0.7l2.8-13.1C20.6,4.6,19.9,4,19.2,4.4z"
+                />
+              </svg>
+            </a>
+            <div class="w-px h-6 bg-gray-300"></div>
+            <a
+              href="tel:+78123339301"
+              class="text-renome hover:opacity-80 transition-opacity"
+            >
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"
+                />
+              </svg>
+            </a>
+            <div class="w-px h-6 bg-gray-300"></div>
+            <a
+              href="mailto:info@renome-consult.com"
+              class="text-renome hover:opacity-80 transition-opacity"
+            >
+              <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z"
+                />
+              </svg>
+            </a>
+          </div>
 
-            <!-- Соцсети -->
-            <div class="flex justify-center lg:justify-end gap-4">
-              <a
-                href="https://t.me"
-                target="_blank"
-                class="w-12 h-12 rounded-2xl flex items-center justify-center text-renome bg-white shadow-md hover:-translate-y-1 transition-all"
-              >
-                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-                  <path
-                    d="M19.2,4.4L2.9,10.7c-1.1,0.4-1.1,1.1-0.2,1.3l4.1,1.3l1.6,4.8c0.2,0.5,0.1,0.7,0.6,0.7c0.4,0,0.6-0.2,0.8-0.4 c0.1-0.1,1-1,2-2l4.2,3.1c0.8,0.4,1.3,0.2,1.5-0.7l2.8-13.1C20.6,4.6,19.9,4,19.2,4.4z M17.1,7.4l-7.8,7.1L9,17.8L7.4,13l9.2-5.8 C17,6.9,17.4,7.1,17.1,7.4z"
-                  />
-                </svg>
-              </a>
-              <a
-                href="mailto:info@renome-consult.com"
-                class="w-12 h-12 rounded-2xl flex items-center justify-center text-renome bg-white shadow-md hover:-translate-y-1 transition-all"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  class="w-6 h-6 stroke-current transition-transform group-hover:scale-110"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                >
-                  <path
-                    d="M20.9717 8C20.9717 8 16.9505 13 12.0005 13C7.05051 13 3.0293 8 3.0293 8M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </a>
-              <a
-                href="tel:+78123339301"
-                class="w-12 h-12 rounded-2xl flex items-center justify-center text-renome bg-white shadow-md hover:-translate-y-1 transition-all"
-              >
-                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-                  <path
-                    d="M16.5562 12.9062L16.1007 13.359C16.1007 13.359 15.0181 14.4355 12.0631 11.4972C9.10812 8.55901 10.1907 7.48257 10.1907 7.48257L10.4775 7.19738C11.1841 6.49484 11.2507 5.36691 10.6342 4.54348L9.37326 2.85908C8.61028 1.83992 7.13596 1.70529 6.26145 2.57483L4.69185 4.13552C4.25823 4.56668 3.96765 5.12559 4.00289 5.74561C4.09304 7.33182 4.81071 10.7447 8.81536 14.7266C13.0621 18.9492 17.0468 19.117 18.6763 18.9651"
-                  />
-                </svg>
-              </a>
-            </div>
+          <!-- Реквизиты списком -->
+          <div class="space-y-0.5 text-[13px] text-black leading-snug">
+            <p class="font-bold uppercase tracking-tight">
+              ООО "РЕНОМЕ КОНСАЛТИНГ"
+            </p>
+            <p>
+              Юр. адрес: 188664, Россия, обл Ленинградская, р-н Всеволожский, гп
+              Токсово, пер Школьный, д. 10
+            </p>
+            <p>ИНН / КПП 4706092018 / 470601001</p>
+            <p>ОГРН 1254700015217</p>
+            <p class="text-gray-600">
+              62.02 — Деятельность консультативная и работы в области
+              компьютерных технологий
+            </p>
           </div>
         </div>
       </div>
+    </div>
+    <div>
+      <!-- Инфо -->
     </div>
 
     <!-- Тост-уведомление -->

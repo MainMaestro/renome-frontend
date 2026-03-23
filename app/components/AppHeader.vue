@@ -64,13 +64,13 @@ const scrollWithOffset = (id: string) => {
 <template>
   <header
     :class="[
-      'fixed top-0 left-0 w-full z-[100] transition-all duration-500',
+      'fixed top-0 left-0 w-full z-100 transition-all duration-500',
       isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg py-3' : 'bg-transparent py-5',
     ]"
   >
     <div class="container mx-auto px-4 md:px-6 flex items-center justify-between">
       <!-- Лого -->
-      <NuxtLink to="/" class="flex items-center z-[110]" @click="closeMobileMenu">
+      <NuxtLink to="/" class="flex items-center z-110" @click="closeMobileMenu">
         <img
           src="/logo.png"
           alt="Renome Logo"
@@ -98,7 +98,7 @@ const scrollWithOffset = (id: string) => {
         <!-- Кнопка "Связаться" (скрыта на совсем маленьких экранах или уменьшена) -->
         <button
           @click="isContactModalOpen = true"
-          class="hidden sm:block bg-renome-gradient px-6 md:px-8 py-2 md:py-2.5 rounded-full text-white text-sm md:text-[17px] font-medium hover:brightness-110 transition-all active:scale-95"
+          class="hidden sm:block bg-renome-gradient px-6 md:px-8 py-2 md:py-2.5 rounded-full text-white text-sm md:text-[17px] font-medium hover:brightness-110 transition-all active:scale-95 cursor-pointer"
         >
           Связаться
         </button>
@@ -106,7 +106,7 @@ const scrollWithOffset = (id: string) => {
         <!-- Бургер-иконка -->
         <button 
           @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="lg:hidden flex flex-col gap-1.5 z-[110] p-2"
+          class="lg:hidden flex flex-col gap-1.5 z-110 p-2"
         >
           <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></span>
           <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></span>
@@ -126,7 +126,7 @@ const scrollWithOffset = (id: string) => {
     >
       <div 
         v-if="isMobileMenuOpen" 
-        class="fixed inset-0 bg-white z-[100] lg:hidden flex flex-col items-center justify-center gap-8"
+        class="fixed inset-0 bg-white z-100 lg:hidden flex flex-col items-center justify-center gap-8"
       >
         <a
           v-for="item in menuItems"
@@ -139,7 +139,7 @@ const scrollWithOffset = (id: string) => {
         </a>
         <button
           @click="isContactModalOpen = true; closeMobileMenu()"
-          class="bg-renome-gradient px-10 py-4 rounded-full text-white text-xl font-bold"
+          class="bg-renome-gradient px-10 py-4 rounded-full text-white text-xl font-bold "
         >
           Связаться
         </button>

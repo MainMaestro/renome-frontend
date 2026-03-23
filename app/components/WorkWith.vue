@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { data: partnersResponse } = await useApi<any>("/integrations?populate=*");
 
-// Безопасное получение данных
 const partners = computed(() => {
   const data = partnersResponse.value?.data || [];
   return Array.isArray(data) ? data : [];
@@ -27,7 +26,7 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
             <div 
               v-for="partner in row1" 
               :key="'row1-' + group + '-' + partner.id" 
-              class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-[12px] md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
+              class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-xl md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
               <img 
                 v-if="partner.logo" 
@@ -47,7 +46,7 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
             <div 
               v-for="partner in row2" 
               :key="'row2-' + group + '-' + partner.id" 
-              class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-[12px] md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
+              class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-xl md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
               <img 
                 v-if="partner.logo" 
@@ -66,7 +65,6 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
 <style scoped>
 .marquee-container {
   @apply flex overflow-hidden w-full;
-  /* Убирает возможные артефакты Safari при отрисовке */
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
@@ -78,7 +76,6 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
 }
 
 .marquee-content.reverse {
-  /* Важно для Safari: анимация должна быть такой же, но с другим направлением */
   animation: scroll-right 40s linear infinite;
 }
 
@@ -92,7 +89,6 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
   to { transform: translateX(0); }
 }
 
-/* Оптимизация для мобильных: чуть быстрее прокрутка на маленьких экранах */
 @media (max-width: 768px) {
   .marquee-content {
     animation-duration: 25s;
