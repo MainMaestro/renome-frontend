@@ -40,8 +40,8 @@ const triggerToast = (msg: string, error = false) => {
 
 const submitForm = async () => {
   if (!personalDataConfirmation.value) return;
-  const phoneRegex = /^[+]?[0-9]{10,15}$/; 
-  if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
+  const phoneRegex = /^[+]?[0-9]{10,15}$/;
+  if (!phoneRegex.test(phone.value.replace(/\D/g, ""))) {
     triggerToast("Введите корректный номер телефона", true);
     return;
   }
@@ -169,7 +169,10 @@ const submitForm = async () => {
                   class="text-[12px] md:text-[14px] text-black leading-tight cursor-pointer"
                 >
                   Нажимая кнопку «Отправить», я даю свое согласие на обработку
-                  персональных данных в соответствии с ФЗ №152.
+                  моих персональных данных, в соответствии с Федеральным законом
+                  от 27.07.2006 года №152-ФЗ «О персональных данных», на
+                  условиях и для целей, определенных в Согласии на обработку
+                  персональных данных *
                 </label>
               </div>
 
@@ -254,17 +257,17 @@ const submitForm = async () => {
       </div>
     </div>
   </Transition>
-   <Transition name="slide-up">
-  <div
-    v-if="toast.show"
-    :class="[
-      'fixed bottom-10 left-1/2 -translate-x-1/2 z-1000 px-6 py-3 rounded-2xl shadow-2xl text-white font-bold whitespace-nowrap',
-      toast.isError ? 'bg-red-500' : 'bg-emerald-600',
-    ]"
-  >
-    {{ toast.message }}
-  </div>
-</Transition>
+  <Transition name="slide-up">
+    <div
+      v-if="toast.show"
+      :class="[
+        'fixed bottom-10 left-1/2 -translate-x-1/2 z-1000 px-6 py-3 rounded-2xl shadow-2xl text-white font-bold whitespace-nowrap',
+        toast.isError ? 'bg-red-500' : 'bg-emerald-600',
+      ]"
+    >
+      {{ toast.message }}
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
