@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, reactive, watch, inject } from "vue";
 
+const company = inject<any>("companyInfo");
+const tgLink = inject<string>("tgLink");
+
 const props = defineProps<{
   isOpen: boolean;
 }>();
@@ -72,7 +75,6 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
-const company = inject<any>('companyInfo');
 </script>
 
 <template>
@@ -216,7 +218,7 @@ const company = inject<any>('companyInfo');
             <div class="flex gap-4">
               <!-- Telegram -->
               <a
-                href="https://t.me"
+                :href="tgLink"
                 target="_blank"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
@@ -228,7 +230,7 @@ const company = inject<any>('companyInfo');
               </a>
               <!-- Email (SVG Почты) -->
               <a
-                href="mailto:info@renome-consult.com"
+                :href="`mailto:${company.email}`"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg
@@ -243,7 +245,7 @@ const company = inject<any>('companyInfo');
               </a>
               <!-- Phone -->
               <a
-                href="tel:+78123339301"
+                :href="`tel:${company.phone}`"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
