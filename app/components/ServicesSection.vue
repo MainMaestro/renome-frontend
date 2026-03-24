@@ -36,7 +36,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             <p class="text-black/80 text-[15px] md:text-[16px] leading-[150%] mb-8">
               {{ mainService.description }}
             </p>
-            <button class="w-full md:w-auto flex items-center justify-center md:justify-start gap-4 bg-renome-gradient text-white px-8 py-4 rounded-full hover:opacity-90 transition-all">
+            <button class="w-full md:w-auto flex items-center justify-center md:justify-start gap-4 bg-renome-gradient text-white px-8 py-4 rounded-full hover:opacity-90 transition-all hover:brightness-110 shadow-lg active:scale-95 cursor-pointer">
               <span class="text-[14px] font-medium uppercase tracking-wider">Узнать подробнее</span>
               <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">→</div>
             </button>
@@ -73,7 +73,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
           <p class="text-black/70 text-[14px] leading-[160%] mb-8 grow">
             {{ service.description }}
           </p>
-          <button class="flex items-center justify-between bg-renome-gradient text-white px-6 py-3 rounded-full w-full sm:w-fit gap-4 hover:opacity-90 transition-all">
+          <button class="flex items-center justify-between bg-renome-gradient text-white px-6 py-3 rounded-full w-full sm:w-fit gap-4 hover:opacity-90 transition-all hover:brightness-110 cursor-pointer shadow-md active:scale-95">
             <span class="text-[12px] uppercase font-bold tracking-wider">Узнать подробнее</span>
             <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">→</div>
           </button>

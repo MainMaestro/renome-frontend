@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, inject } from "vue";
 
 const props = defineProps<{
   isOpen: boolean;
@@ -72,6 +72,7 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
+const company = inject<any>('companyInfo');
 </script>
 
 <template>
@@ -181,7 +182,7 @@ const submitForm = async () => {
                 <button
                   type="submit"
                   :disabled="loading"
-                  class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-3 md:py-4 rounded-full flex items-center justify-center md:justify-between gap-4 md:gap-6 transition-all group shadow-lg active:scale-95 cursor-pointer"
+                  class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-3 md:py-4 rounded-full flex items-center justify-center md:justify-between gap-4 md:gap-6 transition-all group shadow-lg active:scale-95 cursor-pointer hover:brightness-110"
                 >
                   <span
                     class="text-[13px] md:text-[14px] uppercase font-bold tracking-widest"
@@ -204,12 +205,12 @@ const submitForm = async () => {
           >
             <div class="text-center md:text-left space-y-1">
               <p class="font-bold uppercase tracking-tighter">
-                г. Санкт-Петербург
+                {{ company?.address }}
               </p>
               <p class="text-[14px] md:text-[16px] font-bold">
-                +7(812)333-93-01
+                {{ company?.phone }}
               </p>
-              <p class="font-bold">Email: info@renome-consult.com</p>
+              <p class="font-bold">{{ company?.email }}</p>
             </div>
 
             <div class="flex gap-4">

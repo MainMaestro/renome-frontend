@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, inject } from "vue";
+const logoUrl = inject<string>('logoUrl');
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false); // Состояние мобильного меню
@@ -72,7 +73,7 @@ const scrollWithOffset = (id: string) => {
       <!-- Лого -->
       <NuxtLink to="/" class="flex items-center z-110" @click="closeMobileMenu">
         <img
-          src="/logo.png"
+          :src="logoUrl"
           alt="Renome Logo"
           :class="[
             'w-auto object-contain transition-all duration-500',

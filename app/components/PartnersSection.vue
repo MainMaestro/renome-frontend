@@ -4,7 +4,6 @@ import { ref, computed } from 'vue';
 const config = useRuntimeConfig();
 const strapiHost = config.public.apiBase.replace(/\/api$/, "");
 
-// Твой старый рабочий запрос
 const { data: partnersResponse } = await useApi<any>("/partners?populate=*");
 
 // Состояние для модалки
@@ -76,7 +75,7 @@ const getLogoUrl = (partner: any) => {
           <div class="flex items-center gap-2 w-full mt-auto">
             <button 
             @click="activePartner = partner"
-            class="w-full bg-renome-gradient text-white py-3.5 rounded-full text-[12px] font-bold uppercase hover:bg-emerald-900 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+            class="w-full bg-renome-gradient text-white py-3.5 rounded-full text-[12px] font-bold uppercase hover:bg-emerald-900 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             Узнать подробнее
           </button>

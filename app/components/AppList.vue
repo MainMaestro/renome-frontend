@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { inject } from "vue";
+const logoWithoutText = inject<string>('logoWithoutText');
 // 1. Достаем всё необходимое строго в начале setup
 const config = useRuntimeConfig();
 const isContactModalOpen = ref(false);
@@ -48,8 +50,12 @@ const scrollToSection = (id: string) => {
           <!-- Контентная часть -->
           <div class="flex-[1.3] space-y-6 md:space-y-8 w-full">
             <div class="flex items-center md:items-start gap-4 md:gap-6">
-              <div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
-                🌀
+              <div class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                <img
+                  :src="logoWithoutText"
+                  alt="App Icon"
+                  class="w-6 h-6 md:w-8 md:h-8 object-contain"
+                />
               </div>
               <h3 class="text-[28px] md:text-[42px] font-bold text-black leading-[1.1] tracking-tighter">
                 {{ app.attributes?.name || app.name }}
@@ -63,7 +69,7 @@ const scrollToSection = (id: string) => {
             <div class="pt-2 md:pt-4">
               <button
                 @click="isContactModalOpen = true"
-                class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95"
+                class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
               >
                 Оставить заявку
               </button>

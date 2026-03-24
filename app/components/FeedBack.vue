@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, inject } from "vue";
+const logoUrl = inject<string>('logoUrl');
+const tgLink = inject<string>('tgLink');
+const company = inject<any>('companyInfo');
 
 const name = ref("");
 const phone = ref("");
@@ -55,6 +58,7 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
+
 </script>
 <template>
   <section
@@ -128,7 +132,7 @@ const submitForm = async () => {
             <button
               type="submit"
               :disabled="loading"
-              class="w-full lg:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center justify-center gap-8 hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50"
+              class="w-full lg:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center justify-center gap-8 hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               <span class="text-[13px] uppercase font-bold tracking-widest">
                 {{ loading ? "Отправка..." : "Отправить" }}
@@ -146,9 +150,9 @@ const submitForm = async () => {
           <div class="mb-12 lg:mb-20">
             <NuxtLink to="/" class="group">
               <img
-                src="/logo.png"
+                :src="logoUrl"
                 alt="Renome Logo"
-                class="h-20 md:h-30 w-auto object-contain transition-transform group-hover:scale-105"
+                class="h-20 md:h-30 w-auto object-contain transition-transform group-hover:scale-105 "
               />
             </NuxtLink>
           </div>
@@ -159,19 +163,19 @@ const submitForm = async () => {
       >
         <!-- ЛЕВАЯ ЧАСТЬ: Контакты -->
         <div class="text-left space-y-1 pb-1">
-          <p class="text-[16px] font-bold text-black">г. Санкт-Петербург</p>
-          <p class="text-[16px] font-bold text-black">+7(812)333-93-01</p>
+          <p class="text-[16px] font-bold text-black">{{ company?.address }}</p>
+          <p class="text-[16px] font-bold text-black">{{ company?.phone }}</p>
           <p class="text-[16px] font-bold text-black">
-            Email: <span class="font-bold">info@renome - consult.com</span>
+            Email: <span class="font-bold">{{ company?.email }}</span>
           </p>
         </div>
 
         <!-- ПРАВАЯ ЧАСТЬ: Иконки + Реквизиты -->
         <div class="flex flex-col items-end max-w-2xl text-right">
-          <!-- Блок с иконками (как на картинке) -->
+          <!-- Блок с иконками -->
           <div class="flex items-center gap-6 mb-6">
             <a
-              href="https://t.me"
+              :href="tgLink"
               target="_blank"
               class="text-renome hover:opacity-80 transition-opacity"
             >
@@ -183,7 +187,7 @@ const submitForm = async () => {
             </a>
             <div class="w-px h-6 bg-gray-300"></div>
             <a
-              href="tel:+78123339301"
+              :href="`tel:${company.phone}`"
               class="text-renome hover:opacity-80 transition-opacity"
             >
               <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
@@ -194,7 +198,7 @@ const submitForm = async () => {
             </a>
             <div class="w-px h-6 bg-gray-300"></div>
             <a
-              href="mailto:info@renome-consult.com"
+              :href="`mailto:${company?.email}`"
               class="text-renome hover:opacity-80 transition-opacity"
             >
               <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
@@ -207,26 +211,22 @@ const submitForm = async () => {
 
           <div class="space-y-0.5 text-[13px] text-black leading-snug">
             <p class="font-bold uppercase tracking-tight">
-              ООО "РЕНОМЕ КОНСАЛТИНГ"
+              {{ company?.companyName }}
             </p>
             <p>
-              Юр. адрес: 188664, Россия, обл Ленинградская, р-н Всеволожский, гп
-              Токсово, пер Школьный, д. 10
+              {{ company?.companyAddress }}
             </p>
-            <p>ИНН / КПП 4706092018 / 470601001</p>
-            <p>ОГРН 1254700015217</p>
+            <p>
+              ИНН: {{ company?.companyInn }} / КПП: {{ company?.companyKpp }}{{ tgLink }}
+            </p>
+            <p>ОГРН: {{ company?.companyOgrn }}</p>
             <p class="text-gray-600">
-              62.02 — Деятельность консультативная и работы в области
-              компьютерных технологий
+              {{ company?.companyOkved }}
             </p>
           </div>
         </div>
       </div>
     </div>
-    <div>
-      <!-- Инфо -->
-    </div>
-
     <!-- Тост-уведомление -->
     <Transition name="slide-up">
       <div

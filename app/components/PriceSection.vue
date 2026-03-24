@@ -45,7 +45,7 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
       <div class="mt-20 flex justify-center">
         <NuxtLink
           to="/prices"
-          class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg"
+          class="bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center gap-6 group hover:bg-emerald-900 transition-all shadow-lg hover:brightness-110"
         >
           <span class="text-[12px] uppercase font-bold tracking-widest"
             >Смотреть полный прайс</span

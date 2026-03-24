@@ -116,7 +116,7 @@ const isContactModalOpen = ref(false);
       <div class="mt-12 lg:mt-16 flex justify-center lg:justify-start">
         <button
           @click="isContactModalOpen = true"
-          class="w-full sm:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center justify-center gap-6 group transition-all shadow-lg active:scale-95 cursor-pointer"
+          class="w-full sm:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center justify-center gap-6 group transition-all shadow-lg active:scale-95 cursor-pointer hover:brightness-110"
         >
           <span class="text-[12px] uppercase font-bold tracking-widest">Оставить заявку</span>
           <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white">

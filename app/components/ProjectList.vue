@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { inject } from "vue";
+const logoWithoutText = inject<string>('logoWithoutText');
 const config = useRuntimeConfig();
 const strapiHost = config.public.apiBase.replace(/\/api$/, '');
 
@@ -29,11 +31,12 @@ const getImg = (project: any) => {
           <div class="flex-1 space-y-6">
             <div class="flex items-start gap-5">
               <!-- Иконка-спираль -->
-              <div class="w-12 h-12 shrink-0 mt-1">
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org">
-                  <circle cx="20" cy="20" r="18" stroke="#333" stroke-width="1" stroke-dasharray="2 2" />
-                  <path d="M20 10C20 10 24 14 24 20C24 26 20 30 20 30M20 10C20 10 16 14 16 20C16 26 20 30 20 30" stroke="#333" stroke-width="1.5" />
-                </svg>
+              <div class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+                <img 
+                  :src="logoWithoutText" 
+                  alt="Icon" 
+                  class="w-6 h-6 object-contain"
+                />
               </div>
               <h3 class="text-[22px] font-bold text-renome uppercase leading-tight tracking-tight">
                 {{ project.attributes?.name || project.name }}
