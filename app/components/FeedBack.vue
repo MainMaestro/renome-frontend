@@ -24,6 +24,11 @@ const triggerToast = (msg: string, error = false) => {
 
 const submitForm = async () => {
   if (!personalDataConfirmation.value) return;
+  const phoneRegex = /^[+]?[0-9]{10,15}$/;
+  if (!phoneRegex.test(phone.value.replace(/\D/g, ""))) {
+    triggerToast("Введите корректный номер телефона", true);
+    return;
+  }
   loading.value = true;
   try {
     await useApi("/leads", {
@@ -200,7 +205,6 @@ const submitForm = async () => {
             </a>
           </div>
 
-          <!-- Реквизиты списком -->
           <div class="space-y-0.5 text-[13px] text-black leading-snug">
             <p class="font-bold uppercase tracking-tight">
               ООО "РЕНОМЕ КОНСАЛТИНГ"

@@ -40,6 +40,11 @@ const triggerToast = (msg: string, error = false) => {
 
 const submitForm = async () => {
   if (!personalDataConfirmation.value) return;
+  const phoneRegex = /^[+]?[0-9]{10,15}$/; 
+  if (!phoneRegex.test(phone.value.replace(/\D/g, ''))) {
+    triggerToast("Введите корректный номер телефона", true);
+    return;
+  }
   loading.value = true;
   try {
     await useApi("/leads", {
@@ -249,6 +254,17 @@ const submitForm = async () => {
       </div>
     </div>
   </Transition>
+   <Transition name="slide-up">
+  <div
+    v-if="toast.show"
+    :class="[
+      'fixed bottom-10 left-1/2 -translate-x-1/2 z-1000 px-6 py-3 rounded-2xl shadow-2xl text-white font-bold whitespace-nowrap',
+      toast.isError ? 'bg-red-500' : 'bg-emerald-600',
+    ]"
+  >
+    {{ toast.message }}
+  </div>
+</Transition>
 </template>
 
 <style scoped>
