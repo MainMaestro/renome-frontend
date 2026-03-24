@@ -89,9 +89,9 @@ const company = inject<any>('companyInfo');
 
       <!-- Modal Content -->
       <div
-        class="relative w-full max-w-175 max-h-[95vh] overflow-y-auto rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
+        class="relative w-full max-w-175 max-h-[95dvh] flex flex-col overflow-y-auto rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
       >
-        <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="fixed inset-0 z-0 pointer-events-none">
           <img
             src="/bg.png"
             class="w-full h-full object-cover object-center"
