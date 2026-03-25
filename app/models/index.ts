@@ -47,3 +47,9 @@ export type HeroSection = StrapiModel & {
   title: string;
   description: string;
 };
+
+export type Partner = StrapiModel & {
+  name: string;
+  shortDescription: string;
+  logo: StrapiImage;
+};
