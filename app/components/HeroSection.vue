@@ -1,14 +1,10 @@
 <script setup lang="ts">
-interface StrapiResponse {
-  data: {
-    id: number;
-    title: string;
-    description: string;
-  };
-}
+import type { Response, HeroSection } from "~/models";
 const isContactModalOpen = ref(false);
 
-const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
+const { data: hero } = await useApi<Response<HeroSection>>(
+  "/hero-section?populate=*",
+);
 const scrollToSection = (id: string) => {
   const element = document.getElementById(id);
   if (element) {

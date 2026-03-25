@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import type { ListResponse, Service } from "~/models";
+
 const isContactModalOpen = ref(false);
 
-const { data: servicesResponse } = await useApi<any>("/services?populate=*");
+const { data: servicesResponse } = await useApi<ListResponse<Service>>(
+  "/services?populate=*",
+);
 const allServices = computed(() => servicesResponse.value?.data || []);
 // Первая услуга (Автоматизация)
 const mainService = computed(() => allServices.value[0]);
@@ -34,7 +38,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
               >
                 <img
                   v-if="mainService.icon"
-                  :src="`http://79.174.80.177:1337${mainService.icon.url}`"
+                  :src="useImageUrl(mainService.icon)"
                   class="w-full h-full object-contain"
                 />
               </div>
@@ -70,7 +74,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
           >
             <img
               v-if="mainService.picture"
-              :src="`http://79.174.80.177:1337${mainService.picture.url}`"
+              :src="useImageUrl(mainService.picture)"
               class="max-h-50 md:max-h-full w-auto object-contain"
             />
           </div>
@@ -88,7 +92,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             >
               <img
                 v-if="service.icon"
-                :src="`http://79.174.80.177:1337${service.icon.url}`"
+                :src="useImageUrl(service.icon)"
                 class="w-full h-full object-contain"
               />
             </div>

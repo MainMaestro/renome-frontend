@@ -1,10 +1,11 @@
 <script setup lang="ts">
-// Запрос к коллекции recomendations
-const { data: recommendationsResponse } = await useApi<any>(
-  "/recomendations?populate=*",
-);
+import type { ListResponse, Recomendation } from "~/models";
 
-// Данные из Strapi
+// Запрос к коллекции recomendations
+const { data: recommendationsResponse } = await useApi<
+  ListResponse<Recomendation>
+>("/recomendations?populate=*");
+
 const reviews = computed(() => recommendationsResponse.value?.data || []);
 </script>
 
@@ -36,14 +37,14 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
 
             <!-- Заголовок отзыва (title) -->
             <h3 class="text-[16px] font-bold text-black mb-6 leading-snug">
-              {{ review.attributes?.title || review.title }}
+              {{ review.title }}
             </h3>
 
             <!-- Текст отзыва (text) -->
             <p
               class="text-gray-600 text-[14px] leading-[1.7] font-light mb-8 italic"
             >
-              {{ review.attributes?.text || review.text }}
+              {{ review.text }}
             </p>
           </div>
 
@@ -53,7 +54,7 @@ const reviews = computed(() => recommendationsResponse.value?.data || []);
               <p
                 class="text-[13px] font-bold text-black leading-tight max-w-50"
               >
-                {{ review.attributes?.author || review.author }}
+                {{ review.author }}
               </p>
               <!-- Вертикальная черта из макета -->
               <div class="w-0.5 h-8 bg-renome mt-1"></div>

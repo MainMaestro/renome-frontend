@@ -1,33 +1,24 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from "vue";
+import type { Partner } from "~/models";
 
-const config = useRuntimeConfig();
 const isContactModalOpen = ref(false);
 
 const props = defineProps<{
-  partner: any;
+  partner: Partner;
   isOpen: boolean;
 }>();
 
 const emit = defineEmits(["close"]);
 
-// 1. Конфиг для картинок
-const strapiHost = config.public.apiBase.replace(/\/api$/, "");
-
 // 2. Доступ к данным
-const data = computed(() => props.partner?.attributes || props.partner || {});
-
-// 3. Хелпер URL
-const getUrl = (path: string | undefined) => {
-  if (!path) return "";
-  return path.startsWith("http") ? path : `${strapiHost}${path}`;
-};
+const data = computed(() => props.partner || {});
 
 // 4. Тарифы
 const tarifs = computed(() => {
-  const t = data.value.tarifs?.data || data.value.tarifs || [];
-  return Array.isArray(t) ? t : [];
+  return data.value.tarifs || [];
 });
+
+console.log(props.partner?.description);
 
 watch(
   () => props.isOpen,
@@ -55,17 +46,6 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleEsc);
   document.body.style.overflow = "auto";
 });
-
-const scrollToSection = (id: string) => {
-  const element = document.getElementById(id);
-  emit("close");
-  if (element) {
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
-};
 </script>
 
 <template>
@@ -101,9 +81,7 @@ const scrollToSection = (id: string) => {
           <div class="flex items-center gap-5 mb-8">
             <div class="bg-white p-3 rounded-2xl shadow-sm border border-white">
               <img
-                :src="
-                  getUrl(data.logo?.url || data.logo?.data?.attributes?.url)
-                "
+                :src="useImageUrl(data.logo)"
                 class="h-15 w-auto object-contain"
               />
             </div>
@@ -118,45 +96,14 @@ const scrollToSection = (id: string) => {
           <div
             class="text-[#455A64] text-[15px] leading-relaxed mb-10 max-w-4xl font-medium"
           >
-            <p>{{ data.description }}</p>
+            <p>{{ data.anotation }}</p>
           </div>
 
           <div
             class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12 bg-white p-6 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex-col justify-center border border-white/50 hover:shadow-lg transition-all"
           >
-            <div>
-              <h3
-                class="text-renome font-black text-sm uppercase mb-5 tracking-wider"
-              >
-                ВОЗМОЖНОСТИ {{ data.name }}
-              </h3>
-              <ul class="space-y-3">
-                <li
-                  v-for="item in data.abilities?.split('\n') || []"
-                  :key="item"
-                  class="flex gap-3 text-[14px] text-[#263238] font-medium leading-snug"
-                >
-                  <span class="w-2 h-2 bg-[#009688] mt-1.5 shrink-0"></span>
-                  {{ item }}
-                </li>
-              </ul>
-            </div>
-            <div v-if="data.abilities2">
-              <h3
-                class="text-renome font-black text-sm uppercase mb-5 tracking-wider"
-              >
-                ПРЕИМУЩЕСТВА {{ data.name }}
-              </h3>
-              <ul class="space-y-3">
-                <li
-                  v-for="item in data.abilities2?.split('\n') || []"
-                  :key="item"
-                  class="flex gap-3 text-[14px] text-[#263238] font-medium leading-snug"
-                >
-                  <span class="w-2 h-2 bg-[#009688] mt-1.5 shrink-0"></span>
-                  {{ item }}
-                </li>
-              </ul>
+            <div v-if="data.description">
+              <RtfText :text="data.description" />
             </div>
           </div>
 
@@ -174,24 +121,18 @@ const scrollToSection = (id: string) => {
                 <div>
                   <!-- Заголовок тарифа -->
                   <div class="font-bold text-[#263238] text-[17px] mb-1">
-                    {{ tarif.attributes?.name || tarif.name }}
+                    {{ tarif.name }}
                   </div>
 
                   <!-- ПРОВЕРКА: Показываем блок "Включает", только если описание не пустое -->
-                  <div
-                    v-if="tarif.attributes?.description || tarif.description"
-                  >
+                  <div v-if="tarif.description">
                     <div class="text-[14px] text-[#78909C] font-semibold mb-2">
                       Включает:
                     </div>
 
                     <!-- Список пунктов -->
                     <div
-                      v-for="line in (
-                        tarif.attributes?.description ||
-                        tarif.description ||
-                        ''
-                      ).split('\n')"
+                      v-for="line in (tarif.description || '').split('\n')"
                       :key="line"
                       class="flex items-start gap-2 text-[13px] text-[#455A64] leading-snug mb-1"
                     >
@@ -205,14 +146,8 @@ const scrollToSection = (id: string) => {
 
                 <!-- Цена внизу -->
                 <div class="text-xl text-renome mt-6">
-                  {{
-                    (
-                      tarif.attributes?.price ||
-                      tarif.price ||
-                      0
-                    ).toLocaleString()
-                  }}
-                  Р/ в месяц
+                  {{ formatPrice(tarif.price) }}
+                  / в месяц
                 </div>
               </div>
             </div>

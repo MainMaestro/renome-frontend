@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, watch, inject } from "vue";
-
-const company = inject<any>("companyInfo");
+import type { LeadRequest, SiteInfo } from "~/models";
+const company = inject<SiteInfo>("companyInfo");
 const tgLink = inject<string>("tgLink");
 
 const props = defineProps<{
@@ -10,10 +9,12 @@ const props = defineProps<{
 
 const emit = defineEmits(["close"]);
 
-const name = ref("");
-const phone = ref("");
-const comment = ref("");
-const personalDataConfirmation = ref(false);
+const form = ref<LeadRequest>({
+  name: "",
+  phone: "",
+  comment: "",
+  personalDataConfirmation: false,
+});
 const loading = ref(false);
 
 const toast = reactive({
@@ -42,9 +43,9 @@ const triggerToast = (msg: string, error = false) => {
 };
 
 const submitForm = async () => {
-  if (!personalDataConfirmation.value) return;
+  if (!form.value.personalDataConfirmation) return;
   const phoneRegex = /^[+]?[0-9]{10,15}$/;
-  if (!phoneRegex.test(phone.value.replace(/\D/g, ""))) {
+  if (!phoneRegex.test(form.value.phone.replace(/\D/g, ""))) {
     triggerToast("Введите корректный номер телефона", true);
     return;
   }
@@ -53,19 +54,14 @@ const submitForm = async () => {
     await useApi("/leads", {
       method: "POST",
       body: {
-        data: {
-          name: name.value,
-          phone: phone.value,
-          comment: comment.value,
-          personalDataConfirmation: true,
-        },
+        data: form.value,
       },
     });
 
-    name.value = "";
-    phone.value = "";
-    comment.value = "";
-    personalDataConfirmation.value = false;
+    form.value.name = "";
+    form.value.phone = "";
+    form.value.comment = "";
+    form.value.personalDataConfirmation = false;
 
     triggerToast("Заявка успешно отправлена!");
     setTimeout(() => emit("close"), 1500);
@@ -91,7 +87,7 @@ const submitForm = async () => {
 
       <!-- Modal Content -->
       <div
-        class="relative w-full max-w-175 max-h-[95dvh] flex flex-col  rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
+        class="relative w-full max-w-175 max-h-[95dvh] flex flex-col rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
       >
         <!-- Кнопка закрытия -->
 
@@ -110,7 +106,9 @@ const submitForm = async () => {
         </div>
 
         <!-- Контентная часть -->
-        <div class="relative z-10 p-6 md:p-12 flex flex-col min-h-full overflow-y-auto">
+        <div
+          class="relative z-10 p-6 md:p-12 flex flex-col min-h-full overflow-y-auto"
+        >
           <!-- Верх контента (Logo + Headers) -->
           <div class="flex-1">
             <div class="flex flex-col items-center text-center mb-6 md:mb-10">
@@ -137,7 +135,7 @@ const submitForm = async () => {
               class="space-y-3 md:space-y-4 max-w-125 mx-auto"
             >
               <input
-                v-model="name"
+                v-model="form.name"
                 type="text"
                 placeholder="Имя"
                 required
@@ -145,7 +143,7 @@ const submitForm = async () => {
               />
 
               <input
-                v-model="phone"
+                v-model="form.phone"
                 type="tel"
                 placeholder="Телефон"
                 required
@@ -153,7 +151,7 @@ const submitForm = async () => {
               />
 
               <textarea
-                v-model="comment"
+                v-model="form.comment"
                 placeholder="Комментарий"
                 rows="3"
                 class="w-full p-3 md:p-4 rounded-xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-renome transition-all resize-none"
@@ -161,7 +159,7 @@ const submitForm = async () => {
 
               <div class="flex items-start gap-3 py-2">
                 <input
-                  v-model="personalDataConfirmation"
+                  v-model="form.personalDataConfirmation"
                   type="checkbox"
                   id="modal_agree"
                   required
@@ -230,7 +228,7 @@ const submitForm = async () => {
               </a>
               <!-- Email (SVG Почты) -->
               <a
-                :href="`mailto:${company.email}`"
+                :href="`mailto:${company?.email}`"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg
@@ -245,7 +243,7 @@ const submitForm = async () => {
               </a>
               <!-- Phone -->
               <a
-                :href="`tel:${company.phone}`"
+                :href="`tel:${company?.phone}`"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">

@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import type { SiteInfo, Response } from "./models";
+const PRETTY_NAME = "Реноме Консалтинг";
+const DESCRIPTION = "Профессиональные консультации и ИТ-решения";
+
 onMounted(() => {
   const fixHeight = () => {
     const doc = document.documentElement;
@@ -27,9 +30,6 @@ onMounted(() => {
   }
 });
 
-// Если в Strapi есть описание (например, поле description), подставьте его сюда
-const description = "Профессиональные консультации и ИТ-решения";
-
 useHead({
   meta: [
     {
@@ -42,54 +42,34 @@ useHead({
     class: "min-h-[100dvh] m-0 p-0 overflow-x-hidden",
   },
 });
-const config = useRuntimeConfig();
-const STRAPI_SERVER = config.public.apiBase.replace(/\/api$/, "");
 
-const { data: siteResponse } = await useApi<any>("/site-info?populate=*");
+const { data: siteResponse } = await useApi<Response<SiteInfo>>(
+  "/site-info?populate=*",
+);
 
 // Основной объект данных
-const companyData = computed(() => siteResponse.value?.data || {});
-// Извлекаем данные (учитывая структуру Strapi 4)
-const companyName = computed(
-  () =>
-    siteResponse.value?.data?.attributes?.companyName ||
-    siteResponse.value?.data?.companyName ||
-    "Реноме Консалтинг",
+const companyData = computed(
+  () => siteResponse.value?.data || ({} as SiteInfo),
 );
 useSeoMeta({
-  title: "Реноме консалтинг",
-  ogTitle: companyName,
-  description: description,
-  ogDescription: description,
-  ogImage: "/og-image.png", // Картинка для соцсетей (положите в /public)
+  title: PRETTY_NAME,
+  ogTitle: PRETTY_NAME,
+  description: DESCRIPTION,
+  ogDescription: DESCRIPTION,
+  ogImage: "/og-image.png",
   ogType: "website",
   twitterCard: "summary_large_image",
 });
-// Ссылка на Telegram (с проверкой структуры из вашего лога)
+
+/**
+ * @deprecated Remove ASAP, change links display to v-for list
+ */
 const tgLink = computed(() => {
-  // Ищем массив links прямо в companyData.value
-  const links = companyData.value?.links;
-
-  if (Array.isArray(links)) {
-    const found = links.find((l: any) => l.url?.includes("t.me"));
-    return found?.url;
-  }
+  return companyData.value.links.find((l: any) => l.url?.includes("t.me"))?.url;
 });
 
-const logoUrl = computed(() => {
-  const path = companyData.value?.logoWithText?.url;
-  return path ? `${STRAPI_SERVER}${path}` : null;
-});
-
-const logoWithoutText = computed(() => {
-  const path = companyData.value?.logo?.url; // Берем из поля 'logo'
-  return path ? `${STRAPI_SERVER}${path}` : null; // Заглушка, если нет в Strapi
-});
-// Пробрасываем данные
 provide("companyInfo", companyData);
 provide("tgLink", tgLink);
-provide("logoUrl", logoUrl);
-provide("logoWithoutText", logoWithoutText);
 </script>
 
 <template>
@@ -140,7 +120,7 @@ body {
 /* 3. Фикс для мобильного Android Chrome (запрет "прыжков") */
 @media (max-width: 768px) {
   .fixed-bg-layer {
-    /* Даем небольшой запас ВНИЗ (только для мобилок), 
+    /* Даем небольшой запас ВНИЗ (только для мобилок),
        чтобы перекрыть ход адресной строки */
     height: 110%;
     bottom: -10%;

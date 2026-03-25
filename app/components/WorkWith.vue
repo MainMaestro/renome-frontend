@@ -1,19 +1,30 @@
 <script setup lang="ts">
-const { data: partnersResponse } = await useApi<any>("/integrations?populate=*");
+import type { Integration, ListResponse } from "~/models";
+
+const { data: partnersResponse } = await useApi<ListResponse<Integration>>(
+  "/integrations?populate=*",
+);
 
 const partners = computed(() => {
-  const data = partnersResponse.value?.data || [];
-  return Array.isArray(data) ? data : [];
+  return partnersResponse.value?.data || [];
 });
 
 // Разделение на две строки
-const row1 = computed(() => partners.value.slice(0, Math.ceil(partners.value.length / 2)));
-const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length / 2)));
+const row1 = computed(() =>
+  partners.value.slice(0, Math.ceil(partners.value.length / 2)),
+);
+const row2 = computed(() =>
+  partners.value.slice(Math.ceil(partners.value.length / 2)),
+);
 </script>
 <template>
-  <section class="py-12 md:py-20 bg-transparent relative z-10 font-sans overflow-hidden">
+  <section
+    class="py-12 md:py-20 bg-transparent relative z-10 font-sans overflow-hidden"
+  >
     <div class="container mx-auto px-6 max-w-300 mb-8 md:mb-10">
-      <h2 class="text-renome-title text-[24px] md:text-[32px] font-bold uppercase tracking-tight text-center md:text-left">
+      <h2
+        class="text-renome-title text-[24px] md:text-[32px] font-bold uppercase tracking-tight text-center md:text-left"
+      >
         РАБОТАЕМ С
       </h2>
     </div>
@@ -22,18 +33,27 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
       <!-- Первая строка -->
       <div class="marquee-container">
         <div class="marquee-content">
-          <div v-for="group in [1, 2]" :key="'row1-group-' + group" class="flex gap-4 px-2">
-            <div 
-              v-for="partner in row1" 
-              :key="'row1-' + group + '-' + partner.id" 
+          <div
+            v-for="group in [1, 2]"
+            :key="'row1-group-' + group"
+            class="flex gap-4 px-2"
+          >
+            <div
+              v-for="partner in row1"
+              :key="'row1-' + group + '-' + partner.id"
               class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-xl md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
-              <img 
-                v-if="partner.logo" 
-                :src="`http://79.174.80.177:1337${partner.logo.url}`" 
-                class="max-w-full max-h-full object-contain pointer-events-none block" 
+              <img
+                v-if="partner.logo"
+                :src="`useImageUrl(partner.logo)`"
+                :alt="'Логотип ' + partner.name"
+                class="max-w-full max-h-full object-contain pointer-events-none block"
               />
-              <span v-else class="text-[10px] md:text-[12px] font-bold uppercase text-gray-400 whitespace-nowrap">{{ partner.name }}</span>
+              <span
+                v-else
+                class="text-[10px] md:text-[12px] font-bold uppercase text-gray-400 whitespace-nowrap"
+                >{{ partner.name }}</span
+              >
             </div>
           </div>
         </div>
@@ -42,18 +62,26 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
       <!-- Вторая строка (реверс) -->
       <div class="marquee-container">
         <div class="marquee-content reverse">
-          <div v-for="group in [1, 2]" :key="'row2-group-' + group" class="flex gap-4 px-2">
-            <div 
-              v-for="partner in row2" 
-              :key="'row2-' + group + '-' + partner.id" 
+          <div
+            v-for="group in [1, 2]"
+            :key="'row2-group-' + group"
+            class="flex gap-4 px-2"
+          >
+            <div
+              v-for="partner in row2"
+              :key="'row2-' + group + '-' + partner.id"
               class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-xl md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
-              <img 
-                v-if="partner.logo" 
-                :src="`http://79.174.80.177:1337${partner.logo.url}`" 
-                class="max-w-full max-h-full object-contain pointer-events-none block" 
+              <img
+                v-if="partner.logo"
+                :src="`http://79.174.80.177:1337${partner.logo.url}`"
+                class="max-w-full max-h-full object-contain pointer-events-none block"
               />
-              <span v-else class="text-[10px] md:text-[12px] font-bold uppercase text-gray-400 whitespace-nowrap">{{ partner.name }}</span>
+              <span
+                v-else
+                class="text-[10px] md:text-[12px] font-bold uppercase text-gray-400 whitespace-nowrap"
+                >{{ partner.name }}</span
+              >
             </div>
           </div>
         </div>
@@ -65,8 +93,20 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
 <style scoped>
 .marquee-container {
   @apply flex overflow-hidden w-full;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
 }
 
 .marquee-content {
@@ -80,13 +120,21 @@ const row2 = computed(() => partners.value.slice(Math.ceil(partners.value.length
 }
 
 @keyframes scroll-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes scroll-right {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 768px) {

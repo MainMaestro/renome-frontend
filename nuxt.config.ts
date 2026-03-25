@@ -9,13 +9,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/google-fonts"],
   components: [
-    { path: '~/components/modal', pathPrefix: false }, // Сканировать подпапку modal
-    '~/components'
+    { path: "~/components/modal", pathPrefix: false }, // Сканировать подпапку modal
+    "~/components",
   ],
   runtimeConfig: {
     // Эта часть доступна только на сервере (SSR)
     strapiToken: process.env.STRAPI_TOKEN,
     public: {
+      strapiUrl: `${process.env.STRAPI_URL}`,
       apiBase: `${process.env.STRAPI_URL}/api`,
       strapiToken: process.env.STRAPI_TOKEN, // Теперь доступно и в браузере
     },
@@ -26,12 +27,12 @@ export default defineNuxtConfig({
     },
     display: "swap", // Чтобы текст не пропадал при загрузке
   },
-   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
   },
   router: {
     options: {
-      scrollBehaviorType: 'smooth'
-    }
-  }
+      scrollBehaviorType: "smooth",
+    },
+  },
 });

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, inject } from "vue";
-const logoUrl = inject<string>("logoUrl");
+import type { SiteInfo } from "~/models";
+const siteInfo = inject<SiteInfo>("companyInfo");
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false); // Состояние мобильного меню
@@ -65,26 +65,28 @@ const scrollWithOffset = (id: string) => {
 <template>
   <header
     :class="[
-    'fixed top-0 left-0 w-full z-100 transition-all duration-500',
-    isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg' : 'bg-transparent',
-  ]"
-  class="h-20 md:h-24 flex items-center" 
+      'fixed top-0 left-0 w-full z-100 transition-all duration-500',
+      isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg' : 'bg-transparent',
+    ]"
+    class="h-20 md:h-24 flex items-center"
   >
-    <div
-      class="container mx-auto flex items-center justify-between"
-    >
+    <div class="container mx-auto flex items-center justify-between">
       <!-- Лого -->
-      <NuxtLink to="/" class="flex items-center z-110 px-4" @click="closeMobileMenu">
-  <img
-    :src="logoUrl"
-    alt="Renome Logo"
-    class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left"
-    :style="{ 
-      transform: isScrolled ? 'scale(0.8)' : 'scale(1)',
-      filter: isScrolled || isMobileMenuOpen ? 'brightness(0)' : 'none' 
-    }"
-  />
-</NuxtLink>
+      <NuxtLink
+        to="/"
+        class="flex items-center z-110 px-4"
+        @click="closeMobileMenu"
+      >
+        <img
+          :src="useImageUrl(siteInfo?.logoWithText)"
+          alt="Renome Logo"
+          class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left"
+          :style="{
+            transform: isScrolled ? 'scale(0.8)' : 'scale(1)',
+            filter: isScrolled || isMobileMenuOpen ? 'brightness(0)' : 'none',
+          }"
+        />
+      </NuxtLink>
 
       <!-- Десктопное меню -->
       <nav class="hidden lg:flex items-center gap-10">
@@ -171,10 +173,10 @@ const scrollWithOffset = (id: string) => {
     </Transition>
   </header>
 
- <Teleport to="body">
-  <ContactModal 
-    :isOpen="isContactModalOpen" 
-    @close="isContactModalOpen = false" 
-  />
-</Teleport>
+  <Teleport to="body">
+    <ContactModal
+      :isOpen="isContactModalOpen"
+      @close="isContactModalOpen = false"
+    />
+  </Teleport>
 </template>

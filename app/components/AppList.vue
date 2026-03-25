@@ -1,42 +1,19 @@
 <script setup lang="ts">
-import { inject } from "vue";
-const logoWithoutText = inject<string>('logoWithoutText');
-// 1. Достаем всё необходимое строго в начале setup
-const config = useRuntimeConfig();
 const isContactModalOpen = ref(false);
+const siteInfo = inject<SiteInfo>("companyInfo");
 
-const strapiHost = config.public.apiBase.replace(/\/api$/, "");
+import type { ListResponse, Application, SiteInfo } from "~/models";
 
-// 2. Делаем запрос. Используем стандартный useFetch, чтобы исключить ошибки в твоем useApi
-const { data: appsResponse } = await useFetch<any>("/applications?populate=*", {
-  baseURL: config.public.apiBase,
-  headers: {
-    Authorization: `Bearer ${config.public.strapiToken}`,
-  },
-});
-
-// 3. Функция-помощник (не использует хуки Nuxt, только переданные параметры)
-const getImgUrl = (app: any) => {
-  const path =
-    app.attributes?.screenshot?.data?.attributes?.url || app.screenshot?.url;
-  if (!path) return null;
-  return path.startsWith("http") ? path : `${strapiHost}${path}`;
-};
-
-const scrollToSection = (id: string) => {
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
-    });
-  }
-};
+const { data: appsResponse } = await useApi<ListResponse<Application>>(
+  "/applications?populate=*",
+);
 </script>
 <template>
-  <section id="applications" class="py-12 md:py-24 ">
+  <section id="applications" class="py-12 md:py-24">
     <div class="container mx-auto px-4 md:px-6 max-w-300">
-      <h2 class="text-renome text-[28px] md:text-[32px] font-bold uppercase mb-10 md:mb-16 tracking-tight text-center md:text-left">
+      <h2
+        class="text-renome text-[28px] md:text-[32px] font-bold uppercase mb-10 md:mb-16 tracking-tight text-center md:text-left"
+      >
         НАШИ ПРИЛОЖЕНИЯ
       </h2>
 
@@ -50,20 +27,26 @@ const scrollToSection = (id: string) => {
           <!-- Контентная часть -->
           <div class="flex-[1.3] space-y-6 md:space-y-8 w-full">
             <div class="flex items-center md:items-start gap-4 md:gap-6">
-              <div class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+              <div
+                class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
+              >
                 <img
-                  :src="logoWithoutText"
+                  :src="useImageUrl(siteInfo?.logo)"
                   alt="App Icon"
                   class="w-6 h-6 md:w-8 md:h-8 object-contain"
                 />
               </div>
-              <h3 class="text-[28px] md:text-[42px] font-bold text-black leading-[1.1] tracking-tighter">
-                {{ app.attributes?.name || app.name }}
+              <h3
+                class="text-[28px] md:text-[42px] font-bold text-black leading-[1.1] tracking-tighter"
+              >
+                {{ app.name }}
               </h3>
             </div>
 
-            <p class="text-[#4b5563] text-[15px] md:text-[17px] leading-[1.6] md:leading-[1.7] font-light max-w-2xl whitespace-pre-line">
-              {{ app.attributes?.description || app.description }}
+            <p
+              class="text-[#4b5563] text-[15px] md:text-[17px] leading-[1.6] md:leading-[1.7] font-light max-w-2xl whitespace-pre-line"
+            >
+              {{ app.description }}
             </p>
 
             <div class="pt-2 md:pt-4">
@@ -78,16 +61,21 @@ const scrollToSection = (id: string) => {
 
           <!-- Скриншот (адаптивный масштаб) -->
           <div class="flex-1 w-full relative mt-4 lg:mt-0">
-            <div v-if="getImgUrl(app)" class="relative group">
+            <div v-if="useImageUrl(app.screenshot)" class="relative group">
               <!-- Декоративный фон под скриншотом для объема на десктопе -->
-              <div class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-4xl blur-2xl hidden lg:block"></div>
+              <div
+                class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-4xl blur-2xl hidden lg:block"
+              ></div>
               <img
-                :src="getImgUrl(app)"
+                :src="useImageUrl(app.screenshot)"
                 class="relative w-full h-auto object-contain rounded-2xl shadow-xl lg:scale-110 lg:translate-y-3 transition-transform duration-500 group-hover:scale-115"
                 alt="App Interface"
               />
             </div>
-            <div v-else class="text-gray-300 italic text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed">
+            <div
+              v-else
+              class="text-gray-300 italic text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed"
+            >
               Нет скриншота
             </div>
           </div>
@@ -96,8 +84,8 @@ const scrollToSection = (id: string) => {
     </div>
   </section>
 
-  <ContactModal 
-    :isOpen="isContactModalOpen" 
-    @close="isContactModalOpen = false" 
+  <ContactModal
+    :isOpen="isContactModalOpen"
+    @close="isContactModalOpen = false"
   />
 </template>

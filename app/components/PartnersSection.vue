@@ -1,23 +1,13 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import type { ListResponse, Partner } from "~/models";
 
-const config = useRuntimeConfig();
-const strapiHost = config.public.apiBase.replace(/\/api$/, "");
-
-const { data: partnersResponse } = await useApi<any>("/partners?populate=*");
+const { data: partnersResponse } = await useApi<ListResponse<Partner>>(
+  "/partners?populate=*",
+);
 
 // Состояние для модалки
 const activePartner = ref<any>(null);
-
-// Хелпер для логотипа (без лишних проверок, чтобы не упало)
-const getLogoUrl = (partner: any) => {
-  const data = partner.attributes || partner;
-  const path = data.logo?.data?.attributes?.url || data.logo?.url;
-  if (!path) return "";
-  return path.startsWith("http") ? path : `${strapiHost}${path}`;
-};
 </script>
-
 
 <template>
   <section id="partners" class="py-24 font-sans">
@@ -49,8 +39,8 @@ const getLogoUrl = (partner: any) => {
             class="h-32 mb-8 rounded-full border border-gray-50 flex items-center justify-center p-6 shadow-inner bg-white overflow-hidden"
           >
             <img
-              :src="getLogoUrl(partner)"
-              :alt="partner.attributes?.name || partner.name"
+              :src="useImageUrl(partner.logo)"
+              :alt="partner.name"
               class="max-w-full max-h-full object-contain rounded-full"
             />
           </div>
@@ -59,34 +49,32 @@ const getLogoUrl = (partner: any) => {
           <h3
             class="text-[18px] font-bold uppercase mb-4 tracking-widest text-slate-900 leading-tight"
           >
-            {{ partner.attributes?.name || partner.name }}
+            {{ partner.name }}
           </h3>
 
           <!-- Описание (shortDescription) -->
           <p
             class="text-slate-500 text-[14px] leading-[1.6] mb-10 grow font-light"
           >
-            {{
-              partner.attributes?.shortDescription || partner.shortDescription
-            }}
+            {{ partner.shortDescription }}
           </p>
 
           <!-- Группа кнопок -->
           <div class="flex items-center gap-2 w-full mt-auto">
-            <button 
-            @click="activePartner = partner"
-            class="w-full bg-renome-gradient text-white py-3.5 rounded-full text-[12px] font-bold uppercase hover:bg-emerald-900 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
-          >
-            Узнать подробнее
-          </button>
+            <button
+              @click="activePartner = partner"
+              class="w-full bg-renome-gradient text-white py-3.5 rounded-full text-[12px] font-bold uppercase hover:bg-emerald-900 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+            >
+              Узнать подробнее
+            </button>
           </div>
         </div>
       </div>
     </div>
-     <PartnerModal 
-  :partner="activePartner" 
-  :is-open="!!activePartner" 
-  @close="activePartner = null" 
-/>
+    <PartnerModal
+      :partner="activePartner"
+      :is-open="!!activePartner"
+      @close="activePartner = null"
+    />
   </section>
 </template>
