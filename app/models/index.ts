@@ -59,3 +59,9 @@ export type QuickPrice = StrapiModel & {
   description: string;
   price: number;
 };
+
+export type Project = StrapiModel & {
+  name: string;
+  description: string;
+  screenshot: StrapiImage;
+};
