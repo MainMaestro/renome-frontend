@@ -12,7 +12,7 @@ const companyName = computed(() =>
 const description = "Профессиональные консультации и ИТ-решения";
 
 useSeoMeta({
-  title: companyName,
+  title: "Реноме консалтинг",
   ogTitle: companyName,
   description: description,
   ogDescription: description,

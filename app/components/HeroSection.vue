@@ -34,7 +34,7 @@ const scrollToSection = (id: string) => {
     <div class="container mx-auto relative z-10 px-6">
       <div v-if="hero?.data" class="max-w-175">
         <h1
-          class="leading-[110%] uppercase mb-6 text-renome-title font-normal text-[46px] pt-20"
+          class="leading-[110%] uppercase mb-6 text-renome-title font-normal text-[46px] pt-40"
         >
           {{ hero.data.title }}
         </h1>
@@ -48,7 +48,7 @@ const scrollToSection = (id: string) => {
         <button
     @click="isContactModalOpen = true"
 
-          class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
+          class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer hover:brightness-110"
         >
           Получить план внедрения
         </button>
@@ -56,7 +56,7 @@ const scrollToSection = (id: string) => {
         <button
 
   @click.prevent="scrollToSection('services')"
-          class="border-2 border-renomerenome text-renome px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome hover:text-white transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
+          class="border-2 border-renome text-renome px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome hover:text-white transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           Наши услуги
         </button>

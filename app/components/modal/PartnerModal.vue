@@ -92,19 +92,9 @@ const scrollToSection = (id: string) => {
 
         <button
           @click="emit('close')"
-          class="absolute top-6 right-6 z-50 text-gray-400 hover:text-black transition-colors"
+          class="absolute top-4 right-4 md:top-6 md:right-6 z-50 p-2 md:p-3 text-gray-400 hover:text-black transition-all duration-300 hover:rotate-90 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 rounded-xl cursor-pointer"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path d="M18 6L6 18M6 6l12 12" ) />
-            >
-          </svg>
+          <span class="text-3xl md:text-3xl leading-none font-light">✕</span>
         </button>
 
         <div class="relative z-10 p-8 md:p-12 overflow-y-auto no-scrollbar">
@@ -231,7 +221,7 @@ const scrollToSection = (id: string) => {
           <div class="mt-12 flex justify-end">
             <button
               @click="isContactModalOpen = true"
-              class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95"
+              class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95 hover:brightness-110"
             >
               Заказать
             </button>

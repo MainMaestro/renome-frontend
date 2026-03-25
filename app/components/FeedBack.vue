@@ -144,7 +144,7 @@ const submitForm = async () => {
 
         <!-- ПРАВАЯ ЧАСТЬ: Контакты -->
         <div
-          class="w-full lg:w-1/2 flex flex-col items-center lg:items-end text-center lg:text-right justify-between self-stretch py-4"
+          class="w-full lg:w-1/2 flex flex-col items-center justify-center lg:items-end text-center lg:text-right self-stretch py-4"
         >
           <!-- Лого -->
           <div class="mb-12 lg:mb-20">
@@ -152,7 +152,7 @@ const submitForm = async () => {
               <img
                 :src="logoUrl"
                 alt="Renome Logo"
-                class="h-20 md:h-30 w-auto object-contain transition-transform group-hover:scale-105 "
+                class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105 "
               />
             </NuxtLink>
           </div>

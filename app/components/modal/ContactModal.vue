@@ -91,8 +91,16 @@ const submitForm = async () => {
 
       <!-- Modal Content -->
       <div
-        class="relative w-full max-w-175 max-h-[95dvh] flex flex-col overflow-y-auto rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
+        class="relative w-full max-w-175 max-h-[95dvh] flex flex-col  rounded-3xl md:rounded-4xl shadow-2xl no-scrollbar border border-white/20 bg-white"
       >
+        <!-- Кнопка закрытия -->
+
+        <button
+          @click="emit('close')"
+          class="absolute top-4 right-4 md:top-6 md:right-6 z-50 p-2 md:p-3 text-gray-400 hover:text-black transition-all duration-300 hover:rotate-90 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 rounded-xl cursor-pointer"
+        >
+          <span class="text-3xl md:text-3xl leading-none font-light">✕</span>
+        </button>
         <div class="fixed inset-0 z-0 pointer-events-none">
           <img
             src="/bg.png"
@@ -102,15 +110,7 @@ const submitForm = async () => {
         </div>
 
         <!-- Контентная часть -->
-        <div class="relative z-10 p-6 md:p-12 flex flex-col min-h-full">
-          <!-- Кнопка закрытия -->
-          <button
-            @click="emit('close')"
-            class="absolute top-4 right-4 md:top-6 md:right-6 text-gray-400 hover:text-black transition-colors text-xl md:text-2xl z-50 cursor-pointer"
-          >
-            ✕
-          </button>
-
+        <div class="relative z-10 p-6 md:p-12 flex flex-col min-h-full overflow-y-auto">
           <!-- Верх контента (Logo + Headers) -->
           <div class="flex-1">
             <div class="flex flex-col items-center text-center mb-6 md:mb-10">
@@ -215,7 +215,7 @@ const submitForm = async () => {
               <p class="font-bold">{{ company?.email }}</p>
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex gap-4 mb-6">
               <!-- Telegram -->
               <a
                 :href="tgLink"

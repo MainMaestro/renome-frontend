@@ -77,7 +77,7 @@ const scrollWithOffset = (id: string) => {
           alt="Renome Logo"
           :class="[
             'w-auto object-contain transition-all duration-500',
-            isScrolled || isMobileMenuOpen ? 'h-8 md:h-10 brightness-0' : 'h-10 md:h-14',
+            isScrolled || isMobileMenuOpen ? 'h-12 md:h-20 brightness-0' : 'h-20 md:h-25',
           ]"
         />
       </NuxtLink>
