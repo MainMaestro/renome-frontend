@@ -10,7 +10,7 @@ export type Response<T> = {
   };
 };
 
-export type ListResponse<T extends Array<any>> = Required<Response<T>>;
+export type ListResponse<T> = Required<Response<T[]>>;
 
 export type StrapiModel = { id: number };
 
@@ -28,4 +28,10 @@ export type TeamMember = StrapiModel & {
 export type CompanySection = StrapiModel & {
   title: string;
   description: string;
+};
+
+export type Application = StrapiModel & {
+  name: string;
+  description: string;
+  screenshot: StrapiImage;
 };

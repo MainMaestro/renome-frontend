@@ -9,7 +9,7 @@ import type {
 const { data: companyData } = await useApi<Response<CompanySection>>(
   "/company-section?populate=*",
 );
-const { data: teamResponse } = await useApi<ListResponse<TeamMember[]>>(
+const { data: teamResponse } = await useApi<ListResponse<TeamMember>>(
   "/team-members?populate=*",
 );
 const allMembers = computed(() => teamResponse.value?.data || []);
