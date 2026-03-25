@@ -78,3 +78,9 @@ export type Service = StrapiModel & {
   description: string;
   picture?: StrapiImage;
 };
+
+export type TechStackSection = StrapiModel & {
+  image: StrapiImage;
+  title: string;
+  description: string;
+};
