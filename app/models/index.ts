@@ -35,3 +35,10 @@ export type Application = StrapiModel & {
   description: string;
   screenshot: StrapiImage;
 };
+
+export type LeadRequest = {
+  name: string;
+  phone: string;
+  comment: string;
+  personalDataConfirmation: boolean;
+};

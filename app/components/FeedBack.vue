@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, reactive, inject } from "vue";
-const logoUrl = inject<string>('logoUrl');
-const tgLink = inject<string>('tgLink');
-const company = inject<any>('companyInfo');
+import type { LeadRequest } from "~/models";
+const logoUrl = inject<string>("logoUrl");
+const tgLink = inject<string>("tgLink");
+const company = inject<any>("companyInfo"); // TODO: fix later
 
-const name = ref("");
-const phone = ref("");
-const comment = ref("");
-const personalDataConfirmation = ref(false);
+const form = ref<LeadRequest>({
+  name: "",
+  phone: "",
+  comment: "",
+  personalDataConfirmation: false,
+});
 const loading = ref(false);
 
 const toast = reactive({
@@ -26,9 +28,9 @@ const triggerToast = (msg: string, error = false) => {
 };
 
 const submitForm = async () => {
-  if (!personalDataConfirmation.value) return;
+  if (!form.value.personalDataConfirmation) return;
   const phoneRegex = /^[+]?[0-9]{10,15}$/;
-  if (!phoneRegex.test(phone.value.replace(/\D/g, ""))) {
+  if (!phoneRegex.test(form.value.phone.replace(/\D/g, ""))) {
     triggerToast("Введите корректный номер телефона", true);
     return;
   }
@@ -37,19 +39,16 @@ const submitForm = async () => {
     await useApi("/leads", {
       method: "POST",
       body: {
-        data: {
-          name: name.value,
-          phone: phone.value,
-          comment: comment.value,
-          personalDataConfirmation: true,
-        },
+        data: form.value,
       },
     });
 
-    name.value = "";
-    phone.value = "";
-    comment.value = "";
-    personalDataConfirmation.value = false;
+    form.value = {
+      name: "",
+      phone: "",
+      comment: "",
+      personalDataConfirmation: false,
+    };
 
     triggerToast("Заявка успешно отправлена!");
   } catch (e) {
@@ -58,7 +57,6 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
-
 </script>
 <template>
   <section
@@ -87,7 +85,7 @@ const submitForm = async () => {
             class="bg-white p-6 md:p-10 rounded-3xl md:rounded-4xl shadow-xl space-y-4 md:space-y-5 border border-gray-50"
           >
             <input
-              v-model="name"
+              v-model="form.name"
               type="text"
               placeholder="Имя"
               required
@@ -95,7 +93,7 @@ const submitForm = async () => {
             />
 
             <input
-              v-model="phone"
+              v-model="form.phone"
               type="tel"
               placeholder="Телефон"
               required
@@ -103,7 +101,7 @@ const submitForm = async () => {
             />
 
             <textarea
-              v-model="comment"
+              v-model="form.comment"
               placeholder="Комментарий"
               rows="4"
               class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all resize-none text-base"
@@ -111,7 +109,7 @@ const submitForm = async () => {
 
             <div class="flex items-start gap-4 py-2">
               <input
-                v-model="personalDataConfirmation"
+                v-model="form.personalDataConfirmation"
                 type="checkbox"
                 id="agree_footer"
                 required
@@ -152,7 +150,7 @@ const submitForm = async () => {
               <img
                 :src="logoUrl"
                 alt="Renome Logo"
-                class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105 "
+                class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105"
               />
             </NuxtLink>
           </div>
@@ -217,7 +215,8 @@ const submitForm = async () => {
               {{ company?.companyAddress }}
             </p>
             <p>
-              ИНН: {{ company?.companyInn }} / КПП: {{ company?.companyKpp }}{{ tgLink }}
+              ИНН: {{ company?.companyInn }} / КПП: {{ company?.companyKpp
+              }}{{ tgLink }}
             </p>
             <p>ОГРН: {{ company?.companyOgrn }}</p>
             <p class="text-gray-600">
