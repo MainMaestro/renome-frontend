@@ -48,10 +48,45 @@ export type HeroSection = StrapiModel & {
   description: string;
 };
 
+export type ParnerTarif = StrapiModel & {
+  name: string;
+  description: string;
+  price: number;
+};
+
+// export type StrapiParagraphType = "paragraph" | "text" | "heading";
+
+export type StrapiRtfItem =
+  | {
+      type: "heading";
+      children: StrapiRtfItem[];
+      level: number;
+    }
+  | {
+      type: "paragraph";
+      children: StrapiRtfItem[];
+      level?: number;
+    }
+  | {
+      type: "text";
+      text: string;
+    }
+  | {
+      type: "list";
+      format: "unordered" | "ordered";
+      children: StrapiRtfItem[];
+    }
+  | { type: "list-item"; children: StrapiRtfItem[] };
+
 export type Partner = StrapiModel & {
   name: string;
   shortDescription: string;
   logo: StrapiImage;
+  anotation: string;
+  tarifs: ParnerTarif[];
+  tarifDescription?: string;
+  // abilities?: string;
+  description: StrapiRtfItem[];
 };
 
 export type QuickPrice = StrapiModel & {
