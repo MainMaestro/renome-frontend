@@ -92,8 +92,7 @@ const stats = [
             class="aspect-square bg-gray-100 rounded-t-xl overflow-hidden relative border-x border-t border-gray-100"
           >
             <img
-              v-if="member.avatar"
-              :src="`http://79.174.80.177:1337${member.avatar.url}`"
+              :src="useImageUrl(member.avatar)"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           </div>

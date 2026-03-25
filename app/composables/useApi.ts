@@ -1,3 +1,5 @@
+import type { StrapiImage } from "~/models";
+
 // useApi.ts
 export const useApi = <T>(endpoint: string, opts = {}) => {
   const config = useRuntimeConfig(); // Должно быть только здесь!
@@ -9,4 +11,10 @@ export const useApi = <T>(endpoint: string, opts = {}) => {
     },
     ...opts,
   });
+};
+
+export const useImageUrl = (image: StrapiImage) => {
+  const config = useRuntimeConfig();
+
+  return `${config.public.strapiUrl}${image.url}`;
 };
