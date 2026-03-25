@@ -13,7 +13,9 @@ export const useApi = <T>(endpoint: string, opts = {}) => {
   });
 };
 
-export const useImageUrl = (image: StrapiImage) => {
+export const useImageUrl = (image: StrapiImage | undefined) => {
+  if (!image) return "";
+
   const config = useRuntimeConfig();
 
   return `${config.public.strapiUrl}${image.url}`;

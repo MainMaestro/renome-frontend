@@ -124,3 +124,23 @@ export type Integration = StrapiModel & {
   logo: StrapiImage;
   name: string;
 };
+
+export type Link = {
+  name: "telegram";
+  url: string;
+};
+
+export type SiteInfo = StrapiModel & {
+  address: string;
+  phone: string;
+  email: string;
+  companyName: string;
+  companyAddress: string;
+  companyInn: string;
+  companyKpp: string;
+  companyOgrn: string;
+  companyOkved: string;
+  logo: StrapiImage;
+  logoWithText: StrapiImage;
+  links: Link[];
+};

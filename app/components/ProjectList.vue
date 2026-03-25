@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Project, ListResponse } from "~/models";
+import type { Project, ListResponse, SiteInfo } from "~/models";
 
-const logoWithoutText = inject<string>("logoWithoutText");
+const siteInfo = inject<SiteInfo>("companyInfo");
 
 const { data: projectsResponse } = await useApi<ListResponse<Project>>(
   "/projects?populate=*",
@@ -31,7 +31,7 @@ const { data: projectsResponse } = await useApi<ListResponse<Project>>(
                 class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
               >
                 <img
-                  :src="logoWithoutText"
+                  :src="useImageUrl(siteInfo?.logo)"
                   alt="Icon"
                   class="w-6 h-6 object-contain"
                 />

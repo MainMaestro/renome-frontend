@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const isContactModalOpen = ref(false);
-const logoWithoutText = inject<string>("logoWithoutText");
+const siteInfo = inject<SiteInfo>("companyInfo");
 
-import type { ListResponse, Application } from "~/models";
+import type { ListResponse, Application, SiteInfo } from "~/models";
 
 const { data: appsResponse } = await useApi<ListResponse<Application>>(
   "/applications?populate=*",
@@ -31,7 +31,7 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
                 class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
               >
                 <img
-                  :src="logoWithoutText"
+                  :src="useImageUrl(siteInfo?.logo)"
                   alt="App Icon"
                   class="w-6 h-6 md:w-8 md:h-8 object-contain"
                 />

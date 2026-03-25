@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { LeadRequest } from "~/models";
-const logoUrl = inject<string>("logoUrl");
-const tgLink = inject<string>("tgLink");
-const company = inject<any>("companyInfo"); // TODO: fix later
+import type { LeadRequest, SiteInfo } from "~/models";
+const tgLink = inject<string>("tgLink"); // TODO: ASAP remove hardcoded social link
+const company = inject<SiteInfo>("companyInfo"); // TODO: fix later
 
 const form = ref<LeadRequest>({
   name: "",
@@ -148,7 +147,7 @@ const submitForm = async () => {
           <div class="mb-12 lg:mb-20">
             <NuxtLink to="/" class="group">
               <img
-                :src="logoUrl"
+                :src="useImageUrl(company?.logoWithText)"
                 alt="Renome Logo"
                 class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105"
               />
@@ -185,7 +184,7 @@ const submitForm = async () => {
             </a>
             <div class="w-px h-6 bg-gray-300"></div>
             <a
-              :href="`tel:${company.phone}`"
+              :href="`tel:${company?.phone}`"
               class="text-renome hover:opacity-80 transition-opacity"
             >
               <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LeadRequest } from "~/models";
-const company = inject<any>("companyInfo");
+import type { LeadRequest, SiteInfo } from "~/models";
+const company = inject<SiteInfo>("companyInfo");
 const tgLink = inject<string>("tgLink");
 
 const props = defineProps<{
@@ -228,7 +228,7 @@ const submitForm = async () => {
               </a>
               <!-- Email (SVG Почты) -->
               <a
-                :href="`mailto:${company.email}`"
+                :href="`mailto:${company?.email}`"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg
@@ -243,7 +243,7 @@ const submitForm = async () => {
               </a>
               <!-- Phone -->
               <a
-                :href="`tel:${company.phone}`"
+                :href="`tel:${company?.phone}`"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
