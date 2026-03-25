@@ -21,7 +21,7 @@ const scrollToSection = (id: string) => {
 </script>
 
 <template>
-  <section class="relative w-full h-193.25 flex items-center overflow-hidden">
+  <section class="relative w-full  flex items-center overflow-hidden">
     <div class="absolute inset-0 z-0">
       <img
         src="/hero-bg.png"
