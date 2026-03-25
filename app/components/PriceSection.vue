@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { data: quickPriceResponse } = await useApi<any>(
+import type { ListResponse, QuickPrice } from "~/models";
+
+const { data: quickPriceResponse } = await useApi<ListResponse<QuickPrice>>(
   "/quick-prices?populate=*",
 );
 const quickPrices = computed(() => quickPriceResponse.value?.data || []);
@@ -37,7 +39,7 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
           <div
             class="font-bold group-even:text-[48px] group-even:text-white text-[40px] text-renome"
           >
-            от {{ item.price }} &#8381
+            {{ formatPrice(item.price, { priceFrom: true }) }}
           </div>
         </div>
       </div>

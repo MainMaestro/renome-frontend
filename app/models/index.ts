@@ -53,3 +53,9 @@ export type Partner = StrapiModel & {
   shortDescription: string;
   logo: StrapiImage;
 };
+
+export type QuickPrice = StrapiModel & {
+  name: string;
+  description: string;
+  price: number;
+};
