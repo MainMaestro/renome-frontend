@@ -65,3 +65,9 @@ export type Project = StrapiModel & {
   description: string;
   screenshot: StrapiImage;
 };
+
+export type Recomendation = StrapiModel & {
+  title: string;
+  text: string;
+  author: string;
+};
