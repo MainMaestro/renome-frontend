@@ -71,3 +71,10 @@ export type Recomendation = StrapiModel & {
   text: string;
   author: string;
 };
+
+export type Service = StrapiModel & {
+  icon: StrapiImage;
+  name: string;
+  description: string;
+  picture?: StrapiImage;
+};
