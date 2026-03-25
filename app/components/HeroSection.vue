@@ -21,7 +21,7 @@ const scrollToSection = (id: string) => {
 </script>
 
 <template>
-  <section class="relative w-full  flex items-center overflow-hidden">
+  <section class="relative w-full min-h-screen flex items-center pt-25 overflow-hidden">
     <div class="absolute inset-0 z-0">
       <img
         src="/hero-bg.png"
@@ -34,7 +34,7 @@ const scrollToSection = (id: string) => {
     <div class="container mx-auto relative z-10 px-6">
       <div v-if="hero?.data" class="max-w-175">
         <h1
-          class="leading-[110%] uppercase mb-6 text-renome-title font-normal text-[46px] pt-40"
+          class="leading-[110%] uppercase mb-6 text-renome-title font-normal text-[46px]"
         >
           {{ hero.data.title }}
         </h1>
