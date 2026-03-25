@@ -1,13 +1,23 @@
 <script setup lang="ts">
-const { data: companyData } = await useApi<any>("/company-section?populate=*");
-const { data: teamResponse } = await useApi<any>("/team-members?populate=*");
+import type {
+  CompanySection,
+  ListResponse,
+  TeamMember,
+  Response,
+} from "~/models";
+
+const { data: companyData } = await useApi<Response<CompanySection>>(
+  "/company-section?populate=*",
+);
+const { data: teamResponse } = await useApi<ListResponse<TeamMember[]>>(
+  "/team-members?populate=*",
+);
+const allMembers = computed(() => teamResponse.value?.data || []);
 const displayMembers = computed(() => {
-  const members = [...(allMembers.value || [])];
+  const members = allMembers.value || [];
 
   return members.slice(0, 6); // Берем строго первые 6
 });
-
-const allMembers = computed(() => teamResponse.value?.data || []);
 
 const stats = [
   { value: "5 +", label: "лет опыта" },
@@ -18,7 +28,10 @@ const stats = [
 </script>
 
 <template>
-  <section id="about" class="relative py-24 font-sans text-black overflow-hidden">
+  <section
+    id="about"
+    class="relative py-24 font-sans text-black overflow-hidden"
+  >
     <!-- ФОНОВАЯ КАРТИНКА ВСЕГО БЛОКА -->
 
     <div class="container mx-auto px-6 max-w-300 z-10 relative">
@@ -26,7 +39,7 @@ const stats = [
       <h2
         class="text-renome text-[36px] font-medium leading-[140%] uppercase mb-10 tracking-wide"
       >
-        О КОМПАНИИ
+        {{ companyData?.data.title }}
       </h2>
 
       <!-- ОПИСАНИЕ -->
@@ -35,16 +48,9 @@ const stats = [
         <div
           class="w-full lg:w-[55%] text-[18px] leading-[140%] font-book text-black"
         >
-          <div v-if="companyData?.data" class="whitespace-pre-line">
+          <div v-if="companyData" class="whitespace-pre-line">
             {{ companyData.data.description }}
           </div>
-
-          <p
-            v-if="companyData?.data?.task"
-            class="mt-6 font-medium text-renome"
-          >
-            {{ companyData.data.task }}
-          </p>
         </div>
 
         <!-- ПРАВАЯ ЧАСТЬ: КАРТОЧКИ С ЦИФРАМИ -->
@@ -90,7 +96,6 @@ const stats = [
               :src="`http://79.174.80.177:1337${member.avatar.url}`"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            
           </div>
 
           <!-- Инфо-блок (фиксируем высоту, чтобы все карточки были в ряд) -->
