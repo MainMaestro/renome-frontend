@@ -144,3 +144,17 @@ export type SiteInfo = StrapiModel & {
   logoWithText: StrapiImage;
   links: Link[];
 };
+export type Price = {
+  id: number;
+  name: string;
+  description: string;
+  anotation: string;
+  price: number;
+  isPriceFrom: boolean;
+};
+export type PriceCategory = {
+  id: number;
+  name: string;
+  longName: string;
+  prices: Price[];
+};

@@ -1,24 +1,11 @@
 <script setup lang="ts">
-type Price = {
-  id: number;
-  name: string;
-  description: string;
-  anotation: string;
-  price: number;
-  isPriceFrom: boolean;
-};
-type Category = {
-  id: number;
-  name: string;
-  longName: string;
-  prices: Price[];
-};
+import type { ListResponse, PriceCategory } from "~/models";
 
 const isContactModalOpen = ref(false);
 
-const { data: response } = await useApi<{
-  data: Category[];
-}>("/price-categories?populate=*");
+const { data: response } = await useApi<ListResponse<PriceCategory>>(
+  "/price-categories?populate=*",
+);
 
 const router = useRouter();
 const route = useRoute();
@@ -32,17 +19,12 @@ const activeCategoryId = computed(
 const currentCategory = computed(() =>
   categories.value.find((c) => c.id === activeCategoryId.value || 0),
 );
-const navigateToCategory = (category: Category) => {
+const navigateToCategory = (category: PriceCategory) => {
   router.push({ path: route.path, query: { category: category.id } });
 };
 
-const getSortedPrices = (category: Category) =>
+const getSortedPrices = (category: PriceCategory) =>
   category.prices.toSorted((a, b) => a.price - b.price);
-
-const formatPrice = (price: number) => {
-  if (price === 0) return "Бесплатно";
-  return new Intl.NumberFormat("ru-RU").format(price) + " ₽";
-};
 
 const scrollToSection = (id: string) => {
   const element = document.getElementById(id);
