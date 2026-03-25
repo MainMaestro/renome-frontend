@@ -65,28 +65,26 @@ const scrollWithOffset = (id: string) => {
 <template>
   <header
     :class="[
-      'fixed top-0 left-0 w-full z-100 transition-all duration-500',
-      isScrolled || isMobileMenuOpen
-        ? 'bg-white shadow-lg py-3'
-        : 'bg-transparent py-5',
-    ]"
+    'fixed top-0 left-0 w-full z-100 transition-all duration-500',
+    isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg' : 'bg-transparent',
+  ]"
+  class="h-20 md:h-24 flex items-center" 
   >
     <div
-      class="container mx-auto px-4 md:px-6 flex items-center justify-between"
+      class="container mx-auto flex items-center justify-between"
     >
       <!-- Лого -->
-      <NuxtLink to="/" class="flex items-center z-110" @click="closeMobileMenu">
-        <img
-          :src="logoUrl"
-          alt="Renome Logo"
-          :class="[
-            'w-auto object-contain transition-all duration-500',
-            isScrolled || isMobileMenuOpen
-              ? 'h-12 md:h-20 brightness-0'
-              : 'h-20 md:h-25',
-          ]"
-        />
-      </NuxtLink>
+      <NuxtLink to="/" class="flex items-center z-110 px-4" @click="closeMobileMenu">
+  <img
+    :src="logoUrl"
+    alt="Renome Logo"
+    class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left"
+    :style="{ 
+      transform: isScrolled ? 'scale(0.8)' : 'scale(1)',
+      filter: isScrolled || isMobileMenuOpen ? 'brightness(0)' : 'none' 
+    }"
+  />
+</NuxtLink>
 
       <!-- Десктопное меню -->
       <nav class="hidden lg:flex items-center gap-10">

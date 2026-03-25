@@ -82,7 +82,7 @@ provide("logoWithoutText", logoWithoutText);
   <div class="relative z-10 flex flex-col min-h-screen">
     <AppHeader />
     <!-- Обертка для контента, которая заставляет футер быть внизу -->
-    <main class="flex-grow">
+    <main class="grow">
       <NuxtPage />
     </main>
     <FeedBack />
@@ -139,5 +139,9 @@ body {
 /* 4. Плавный скролл */
 html {
   scroll-behavior: smooth;
+}
+header {
+  will-change: transform, background-color;
+  transform: translateZ(0); /* Принудительный запуск GPU */
 }
 </style>
