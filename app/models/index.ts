@@ -84,3 +84,8 @@ export type TechStackSection = StrapiModel & {
   title: string;
   description: string;
 };
+
+export type Integration = StrapiModel & {
+  logo: StrapiImage;
+  name: string;
+};
