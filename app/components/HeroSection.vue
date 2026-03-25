@@ -12,16 +12,18 @@ const { data: hero } = await useApi<StrapiResponse>("/hero-section?populate=*");
 const scrollToSection = (id: string) => {
   const element = document.getElementById(id);
   if (element) {
-    element.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     });
   }
 };
 </script>
 
 <template>
-  <section class="relative w-full min-h-screen flex items-center pt-25 overflow-hidden">
+  <section
+    class="relative w-full min-h-dvh flex items-center pt-25 overflow-hidden"
+  >
     <div class="absolute inset-0 z-0">
       <img
         src="/hero-bg.png"
@@ -46,25 +48,25 @@ const scrollToSection = (id: string) => {
       </div>
       <div class="mt-10 flex flex-wrap gap-4">
         <button
-    @click="isContactModalOpen = true"
-
+          @click="isContactModalOpen = true"
           class="bg-renome-gradient text-white px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer hover:brightness-110"
         >
           Получить план внедрения
         </button>
 
         <button
-
-  @click.prevent="scrollToSection('services')"
+          @click.prevent="scrollToSection('services')"
           class="border-2 border-renome text-renome px-8 py-4 rounded-full font-medium text-[16px] hover:bg-renome hover:text-white transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           Наши услуги
         </button>
       </div>
     </div>
+    <Teleport to="body">
+      <ContactModal
+        :isOpen="isContactModalOpen"
+        @close="isContactModalOpen = false"
+      />
+    </Teleport>
   </section>
-  <ContactModal 
-    :isOpen="isContactModalOpen" 
-    @close="isContactModalOpen = false" 
-  />
 </template>
