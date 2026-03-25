@@ -1,5 +1,15 @@
 <script setup lang="ts">
+onMounted(() => {
+  const fixHeight = () => {
+    // Берем реальную высоту в пикселях один раз
+    const doc = document.documentElement;
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+  };
 
+  fixHeight();
+  // Пересчитываем только при повороте экрана, а не при каждом скролле
+  window.addEventListener('orientationchange', fixHeight);
+});
 
 
 // Если в Strapi есть описание (например, поле description), подставьте его сюда
@@ -69,10 +79,20 @@ provide('logoWithoutText', logoWithoutText);
 </script>
 
 <template>
-  <div 
-  class="fixed -inset-px -z-10 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat"
-  style="height: 101dvh; min-height: -webkit-fill-available; will-change: transform;"
-></div>
+<div 
+    class="fixed -z-10 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat"
+    :class="[
+      'inset-0 md:top-0 md:left-0 md:right-0 md:bottom-0', // На десктопе (md) строго по краям
+      '-top-[5%] -left-[5%] -right-[5%] -bottom-[5%]'         // На мобилках запас
+    ]"
+    :style="{ 
+      height: 'var(--app-height, 115%)', 
+      width: '110%',
+      minHeight: '100%',
+      willChange: 'transform', 
+      transform: 'translateZ(0)' 
+    }"
+  ></div>
   <div class="relative z-10">
     <AppHeader />
     <NuxtPage /> 
