@@ -12,7 +12,7 @@ defineProps<{
   </p>
   <h3
     v-if="item.type == 'heading'"
-    class="text-renome font-black text-sm uppercase mb-5 tracking-wider"
+    class="text-renome font-black text-sm uppercase my-5 tracking-wider"
   >
     <RtfItem v-for="child in item.children" :item="child"></RtfItem>
   </h3>
