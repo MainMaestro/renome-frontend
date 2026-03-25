@@ -42,3 +42,8 @@ export type LeadRequest = {
   comment: string;
   personalDataConfirmation: boolean;
 };
+
+export type HeroSection = StrapiModel & {
+  title: string;
+  description: string;
+};
