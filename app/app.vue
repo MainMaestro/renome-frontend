@@ -8,11 +8,15 @@ const description = "Профессиональные консультации �
 
 
 useHead({
+  meta: [
+    // Это заставит фон "затекать" под системные индикаторы
+    { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' }
+  ],
   link: [
     { rel: 'icon', type: 'image/png', href: '/favicon.png' }
   ],
   bodyAttrs: {
-    class: 'bg-cover bg-center bg-fixed min-h-screen font-sans'
+    class: 'min-h-[100dvh] m-0 p-0 overflow-x-hidden'
   }
 });
 const config = useRuntimeConfig();
@@ -67,9 +71,9 @@ provide('logoWithoutText', logoWithoutText);
 
 <template>
    <div 
-      class="fixed inset-0 -z-10 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat"
-      style="will-change: transform;"
-    ></div>
+  class="fixed inset-0 -z-10 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat"
+  style="height: 100dvh; min-height: -webkit-fill-available; will-change: transform;"
+></div>
   <div class="relative z-10">
     <AppHeader />
     <NuxtPage /> 
@@ -79,5 +83,5 @@ provide('logoWithoutText', logoWithoutText);
 
 <style>
 html { scroll-behavior: smooth; }
-body { margin: 0; padding: 0; }
+body { margin: 0; padding: 0; overscroll-behavior-y: none;}
 </style>
