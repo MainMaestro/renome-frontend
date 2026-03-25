@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, inject } from "vue";
-const logoUrl = inject<string>('logoUrl');
+const logoUrl = inject<string>("logoUrl");
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false); // Состояние мобильного меню
@@ -35,12 +35,12 @@ const menuItems = [
 
 const handleMenuClick = async (link: string) => {
   closeMobileMenu(); // Закрываем шторку при переходе
-  
-  if (link.startsWith('#')) {
+
+  if (link.startsWith("#")) {
     const targetId = link.substring(1);
-    if (route.path !== '/') {
-      await router.push('/');
-      setTimeout(() => scrollWithOffset(targetId), 400); 
+    if (route.path !== "/") {
+      await router.push("/");
+      setTimeout(() => scrollWithOffset(targetId), 400);
     } else {
       scrollWithOffset(targetId);
     }
@@ -57,7 +57,7 @@ const scrollWithOffset = (id: string) => {
     const offsetPosition = elementPosition + window.pageYOffset - offset;
 
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-    window.history.replaceState(null, '', window.location.pathname);
+    window.history.replaceState(null, "", window.location.pathname);
   }
 };
 </script>
@@ -66,10 +66,14 @@ const scrollWithOffset = (id: string) => {
   <header
     :class="[
       'fixed top-0 left-0 w-full z-100 transition-all duration-500',
-      isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg py-3' : 'bg-transparent py-5',
+      isScrolled || isMobileMenuOpen
+        ? 'bg-white shadow-lg py-3'
+        : 'bg-transparent py-5',
     ]"
   >
-    <div class="container mx-auto px-4 md:px-6 flex items-center justify-between">
+    <div
+      class="container mx-auto px-4 md:px-6 flex items-center justify-between"
+    >
       <!-- Лого -->
       <NuxtLink to="/" class="flex items-center z-110" @click="closeMobileMenu">
         <img
@@ -77,7 +81,9 @@ const scrollWithOffset = (id: string) => {
           alt="Renome Logo"
           :class="[
             'w-auto object-contain transition-all duration-500',
-            isScrolled || isMobileMenuOpen ? 'h-12 md:h-20 brightness-0' : 'h-20 md:h-25',
+            isScrolled || isMobileMenuOpen
+              ? 'h-12 md:h-20 brightness-0'
+              : 'h-20 md:h-25',
           ]"
         />
       </NuxtLink>
@@ -105,13 +111,28 @@ const scrollWithOffset = (id: string) => {
         </button>
 
         <!-- Бургер-иконка -->
-        <button 
+        <button
           @click="isMobileMenuOpen = !isMobileMenuOpen"
           class="lg:hidden flex flex-col gap-1.5 z-110 p-2"
         >
-          <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></span>
-          <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></span>
-          <span :class="['w-6 h-0.5 bg-renome transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></span>
+          <span
+            :class="[
+              'w-6 h-0.5 bg-renome transition-all',
+              isMobileMenuOpen ? 'rotate-45 translate-y-2' : '',
+            ]"
+          ></span>
+          <span
+            :class="[
+              'w-6 h-0.5 bg-renome transition-all',
+              isMobileMenuOpen ? 'opacity-0' : '',
+            ]"
+          ></span>
+          <span
+            :class="[
+              'w-6 h-0.5 bg-renome transition-all',
+              isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '',
+            ]"
+          ></span>
         </button>
       </div>
     </div>
@@ -125,9 +146,10 @@ const scrollWithOffset = (id: string) => {
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-full"
     >
-      <div 
-        v-if="isMobileMenuOpen" 
+      <div
+        v-if="isMobileMenuOpen"
         class="fixed inset-0 bg-white z-100 lg:hidden flex flex-col items-center justify-center gap-8"
+        style="height: 100dvh; min-height: -webkit-fill-available"
       >
         <a
           v-for="item in menuItems"
@@ -139,8 +161,11 @@ const scrollWithOffset = (id: string) => {
           {{ item.name }}
         </a>
         <button
-          @click="isContactModalOpen = true; closeMobileMenu()"
-          class="bg-renome-gradient px-10 py-4 rounded-full text-white text-xl font-bold "
+          @click="
+            isContactModalOpen = true;
+            closeMobileMenu();
+          "
+          class="bg-renome-gradient px-10 py-4 rounded-full text-white text-xl font-bold"
         >
           Связаться
         </button>
@@ -148,8 +173,10 @@ const scrollWithOffset = (id: string) => {
     </Transition>
   </header>
 
+ <Teleport to="body">
   <ContactModal 
     :isOpen="isContactModalOpen" 
     @close="isContactModalOpen = false" 
   />
+</Teleport>
 </template>

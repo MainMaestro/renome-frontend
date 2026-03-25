@@ -9,7 +9,6 @@ const description = "Профессиональные консультации �
 
 useHead({
   meta: [
-    // Это заставит фон "затекать" под системные индикаторы
     { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' }
   ],
   link: [
@@ -70,9 +69,9 @@ provide('logoWithoutText', logoWithoutText);
 </script>
 
 <template>
-   <div 
-  class="fixed inset-0 -z-10 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat"
-  style="height: 100dvh; min-height: -webkit-fill-available; will-change: transform;"
+  <div 
+  class="fixed -inset-px -z-10 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat"
+  style="height: 101dvh; min-height: -webkit-fill-available; will-change: transform;"
 ></div>
   <div class="relative z-10">
     <AppHeader />
