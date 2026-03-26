@@ -12,23 +12,7 @@ onMounted(() => {
   fixHeight();
   window.addEventListener("orientationchange", fixHeight);
 
-  // Исправленный блок загрузки Битрикс24
-  const scriptUrl =
-    "https://cdn-ru.bitrix24.ru/b28300996/crm/site_button/loader_1_pi8qgd.js";
-  const s = document.createElement("script");
-  s.async = true;
-  s.src = scriptUrl + "?" + ((Date.now() / 60000) | 0);
-
-  // Ищем первый скрипт на странице
-  const firstScript = document.getElementsByTagName("script")[0];
-
-  // Безопасная вставка: если есть скрипт — вставляем перед ним,
-  // если нет (маловероятно) — в конец head или body
-  if (firstScript && firstScript.parentNode) {
-    firstScript.parentNode.insertBefore(s, firstScript);
-  } else {
-    document.head.appendChild(s);
-  }
+ 
 });
 
 useHead({

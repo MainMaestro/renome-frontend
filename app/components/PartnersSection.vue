@@ -72,6 +72,7 @@ const activePartner = ref<any>(null);
       </div>
     </div>
     <PartnerModal
+    v-if="activePartner" 
       :partner="activePartner"
       :is-open="!!activePartner"
       @close="activePartner = null"

@@ -10,5 +10,6 @@
     <PartnersSection />
     <RecomendSection />
     <ProjectList />
+    <BlogSection />
   </main>
 </template>

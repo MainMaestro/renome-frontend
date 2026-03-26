@@ -158,3 +158,24 @@ export type PriceCategory = {
   longName: string;
   prices: Price[];
 };
+
+export type Author = StrapiModel & {
+  firstName: string;
+  surname: string;
+  avatar: StrapiImage;
+};
+
+export type Post = StrapiModel & {
+  title: string;
+  text: StrapiRtfItem[];
+  image: StrapiImage;
+  author: Author;
+  url: string;
+  blog: Blog;
+  publishedAt: string;
+};
+
+export type Blog = StrapiModel & {
+  title: string;
+  posts: Post[];
+};

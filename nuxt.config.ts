@@ -3,6 +3,12 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ]
+    },
     plugins: [tailwindcss()],
   },
   css: ["./app/assets/css/main.css"],
@@ -29,6 +35,11 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
+    head: {
+      script: [
+        { src: 'https://code.jquery.com/jquery-3.6.0.min.js' }
+      ]
+    }
   },
   router: {
     options: {
