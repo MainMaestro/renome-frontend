@@ -93,6 +93,7 @@ const stats = [
           >
             <img
               :src="useImageUrl(member.avatar)"
+              :alt="member.name"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           </div>

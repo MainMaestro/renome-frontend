@@ -112,6 +112,7 @@ const scrollWithOffset = (id: string) => {
 
         <!-- Бургер-иконка -->
         <button
+          title="Открыть меню"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
           class="lg:hidden flex flex-col gap-1.5 z-110 p-2"
         >

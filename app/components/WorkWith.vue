@@ -45,7 +45,7 @@ const row2 = computed(() =>
             >
               <img
                 v-if="partner.logo"
-                :src="`useImageUrl(partner.logo)`"
+                :src="useImageUrl(partner.logo)"
                 :alt="'Логотип ' + partner.name"
                 class="max-w-full max-h-full object-contain pointer-events-none block"
               />
@@ -74,7 +74,8 @@ const row2 = computed(() =>
             >
               <img
                 v-if="partner.logo"
-                :src="`http://79.174.80.177:1337${partner.logo.url}`"
+                :src="useImageUrl(partner.logo)"
+                :alt="'Логотип ' + partner.name"
                 class="max-w-full max-h-full object-contain pointer-events-none block"
               />
               <span
