@@ -217,6 +217,7 @@ const submitForm = async () => {
               <!-- Telegram -->
               <a
                 :href="tgLink"
+                title="Написать в Telegram"
                 target="_blank"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
@@ -229,6 +230,7 @@ const submitForm = async () => {
               <!-- Email (SVG Почты) -->
               <a
                 :href="`mailto:${company?.email}`"
+                title="Написать письмо"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg
@@ -244,6 +246,7 @@ const submitForm = async () => {
               <!-- Phone -->
               <a
                 :href="`tel:${company?.phone}`"
+                title="Позвонить"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-renome bg-white transition-all shadow-md group hover:scale-110"
               >
                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">

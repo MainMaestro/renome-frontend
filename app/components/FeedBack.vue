@@ -116,7 +116,7 @@ const submitForm = async () => {
               />
               <label
                 for="agree_footer"
-                class="text-[10px] md:text-[11px] text-gray-400 leading-tight cursor-pointer"
+                class="text-[10px] md:text-[11px] text-gray-600 leading-tight cursor-pointer"
               >
                 Нажимая кнопку «Отправить», я даю свое согласие на обработку
                 моих персональных данных, в соответствии с Федеральным законом
@@ -148,7 +148,7 @@ const submitForm = async () => {
             <NuxtLink to="/" class="group">
               <img
                 :src="useImageUrl(company?.logoWithText)"
-                alt="Renome Logo"
+                alt="Логотип Реноме консалтинг"
                 class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105"
               />
             </NuxtLink>
@@ -175,6 +175,7 @@ const submitForm = async () => {
               :href="tgLink"
               target="_blank"
               class="text-renome hover:opacity-80 transition-opacity"
+              title="Написать в Telegram"
             >
               <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path
@@ -186,6 +187,7 @@ const submitForm = async () => {
             <a
               :href="`tel:${company?.phone}`"
               class="text-renome hover:opacity-80 transition-opacity"
+              title="Позвонить"
             >
               <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path
@@ -196,6 +198,7 @@ const submitForm = async () => {
             <div class="w-px h-6 bg-gray-300"></div>
             <a
               :href="`mailto:${company?.email}`"
+              title="Написать письмо"
               class="text-renome hover:opacity-80 transition-opacity"
             >
               <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">

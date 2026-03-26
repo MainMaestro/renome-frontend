@@ -39,6 +39,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
                 <img
                   v-if="mainService.icon"
                   :src="useImageUrl(mainService.icon)"
+                  :alt="'Иконка услуги ' + mainService.name"
                   class="w-full h-full object-contain"
                 />
               </div>
@@ -74,6 +75,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
           >
             <img
               v-if="mainService.picture"
+              alt="Иллюстрация для услуги"
               :src="useImageUrl(mainService.picture)"
               class="max-h-50 md:max-h-full w-auto object-contain"
             />
@@ -93,6 +95,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
               <img
                 v-if="service.icon"
                 :src="useImageUrl(service.icon)"
+                :alt="'Иконка услуги ' + service.name"
                 class="w-full h-full object-contain"
               />
             </div>

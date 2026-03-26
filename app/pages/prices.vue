@@ -84,7 +84,7 @@ const scrollToSection = (id: string) => {
           :class="[
             activeCategoryId === cat.id
               ? 'bg-renome-gradient text-white shadow-lg'
-              : 'text-gray-400 hover:bg-gray-50',
+              : 'text-gray-600 hover:bg-gray-50',
           ]"
         >
           {{ cat.name }}
@@ -109,11 +109,11 @@ const scrollToSection = (id: string) => {
             class="flex flex-col md:flex-row md:items-center justify-between p-1 bg-[#f1f5f9] rounded-2xl overflow-hidden group hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100"
           >
             <div class="px-6 py-4 lg:pl-8 lg:py-4">
-              <h4 class="font-bold text-black text-[16px]">
+              <h3 class="font-bold text-black text-[16px]">
                 {{ price.name }}
-              </h4>
+              </h3>
               <p
-                class="text-gray-400 text-[13px] mt-1"
+                class="text-gray-600 text-[13px] mt-1"
                 v-if="price.description"
               >
                 {{ price.description }}

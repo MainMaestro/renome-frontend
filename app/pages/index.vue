@@ -1,14 +1,14 @@
 <template>
-    <main>
-        <HeroSection />
+  <main>
+    <HeroSection />
     <AboutSection />
     <ServicesSection />
-    <WorkWith/>
-    <PriceSection/>
-    <TechStack/>
-    <AppList/>
-    <PartnersSection/>
-    <RecomendSection/>
-    <ProjectList/>
-    </main>
+    <WorkWith />
+    <PriceSection />
+    <TechStack />
+    <AppList />
+    <PartnersSection />
+    <RecomendSection />
+    <ProjectList />
+  </main>
 </template>
