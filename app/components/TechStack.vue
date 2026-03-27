@@ -134,11 +134,7 @@ const isContactModalOpen = ref(false);
           <span class="text-[12px] uppercase font-bold tracking-widest"
             >Оставить заявку</span
           >
-          <div
-            class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white"
-          >
-            <span class="text-lg">→</span>
-          </div>
+          
         </button>
       </div>
     </div>

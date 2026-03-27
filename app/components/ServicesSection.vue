@@ -61,11 +61,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
               <span class="text-[14px] font-medium uppercase tracking-wider"
                 >Узнать подробнее</span
               >
-              <div
-                class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
-              >
-                →
-              </div>
+             
             </button>
           </div>
 
@@ -115,11 +111,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             <span class="text-[12px] uppercase font-bold tracking-wider"
               >Узнать подробнее</span
             >
-            <div
-              class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"
-            >
-              →
-            </div>
+           
           </button>
         </div>
       </div>

@@ -125,8 +125,10 @@ export type Integration = StrapiModel & {
   name: string;
 };
 
+export type LinkName = "telegram" | "whatsapp";
+
 export type Link = {
-  name: "telegram";
+  name: LinkName;
   url: string;
 };
 
@@ -163,6 +165,7 @@ export type Author = StrapiModel & {
   firstName: string;
   surname: string;
   avatar: StrapiImage;
+  url: string;
 };
 
 export type Post = StrapiModel & {

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { LeadRequest, SiteInfo } from "~/models";
-const tgLink = inject<string>("tgLink"); // TODO: ASAP remove hardcoded social link
-const company = inject<SiteInfo>("companyInfo"); // TODO: fix later
+const tgLink = inject<string>("tgLink");
+const whatsappLink = inject<string>("whatsappLink");
+
+const company = inject<SiteInfo>("companyInfo");
 
 const form = ref<LeadRequest>({
   name: "",
@@ -134,7 +136,11 @@ const submitForm = async () => {
               <span class="text-[13px] uppercase font-bold tracking-widest">
                 {{ loading ? "Отправка..." : "Отправить" }}
               </span>
-              <span class="text-xl">→</span>
+              <div
+                class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white"
+              >
+                <span class="text-lg">→</span>
+              </div>
             </button>
           </form>
         </div>
@@ -185,6 +191,30 @@ const submitForm = async () => {
             </a>
             <div class="w-px h-6 bg-gray-300"></div>
             <a
+              v-if="whatsappLink"
+              :href="whatsappLink"
+              target="_blank"
+              class="text-renome hover:opacity-80 transition-opacity"
+              title="Написать в WhatsApp"
+            >
+              <svg
+                class="w-6 h-6 fill-current"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.014 8.006c.114-.904 1.289-2.132 2.221-1.996l-.002-.001c.907.172 1.625 1.734 2.03 2.436.287.51.1 1.026-.167 1.244-.361.29-.926.692-.807 1.095.21.717 2.71 3.217 3.94 3.927.465.27.803-.44 1.091-.803.21-.28.726-.447 1.234-.171.76.442 1.475.956 2.136 1.534.33.276.408.684.18 1.115-.403.76-1.569 1.76-2.415 1.557-1.478-.355-7.454-2.672-9.374-9.384-.108-.318-.08-.438-.066-.552z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M12 23c-1.224 0-1.901-.131-3-.5L6.894 23.553C5.565 24.218 4 23.25 4 21.764V19.5C1.847 17.492 1 15.177 1 12 1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11zm-6-4.37l-.636-.593C3.69 16.477 3 14.733 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9-4.03 9-9 9c-.986 0-1.448-.089-2.364-.396l-.788-.264-2.848 1.424v-3.134z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+            <div class="w-px h-6 bg-gray-300"></div>
+
+            <a
               :href="`tel:${company?.phone}`"
               class="text-renome hover:opacity-80 transition-opacity"
               title="Позвонить"
@@ -217,8 +247,7 @@ const submitForm = async () => {
               {{ company?.companyAddress }}
             </p>
             <p>
-              ИНН: {{ company?.companyInn }} / КПП: {{ company?.companyKpp
-              }}{{ tgLink }}
+              ИНН: {{ company?.companyInn }} / КПП: {{ company?.companyKpp }}
             </p>
             <p>ОГРН: {{ company?.companyOgrn }}</p>
             <p class="text-gray-600">

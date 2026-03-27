@@ -114,7 +114,7 @@ const scrollWithOffset = (id: string) => {
         <button
           title="Открыть меню"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="lg:hidden flex flex-col gap-1.5 z-110 p-2"
+          class="lg:hidden flex flex-col gap-1.5 z-110 p-2 cursor-pointer"
         >
           <span
             :class="[
