@@ -30,16 +30,7 @@
               <h4 class="text-renome font-bold text-lg mb-4 uppercase">
                 {{ block.title }}
               </h4>
-              <ul class="space-y-2">
-                <li
-                  v-for="(item, idx) in block.text"
-                  :key="idx"
-                  class="flex gap-3 text-[14px] leading-snug"
-                >
-                  <span class="text-renome font-bold">•</span>
-                  <span>{{ item.children[0].text }}</span>
-                </li>
-              </ul>
+              <RtfText :text="block.text" />
             </div>
           </div>
 
@@ -62,16 +53,7 @@
               <h4 class="text-black font-bold text-lg mb-4">
                 {{ block.title }}
               </h4>
-              <ul class="space-y-3">
-                <li
-                  v-for="(item, idx) in block.text"
-                  :key="idx"
-                  class="flex gap-3 text-[14px] leading-snug"
-                >
-                  <span class="text-renome font-bold">■</span>
-                  <span class="font-light">{{ item.children[0].text }}</span>
-                </li>
-              </ul>
+              <RtfText :text="block.text" />
             </div>
           </div>
         </div>
@@ -107,7 +89,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   isOpen: boolean;
-  service: any; 
+  service: any;
 }>();
 
 const emit = defineEmits(["close", "order"]);
@@ -116,4 +98,3 @@ const emit = defineEmits(["close", "order"]);
 const leftBlocks = computed(() => props.service?.infoBlocks?.slice(0, 2) || []);
 const rightBlocks = computed(() => props.service?.infoBlocks?.slice(2) || []);
 </script>
-
