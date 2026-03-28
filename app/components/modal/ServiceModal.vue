@@ -48,42 +48,58 @@
             <div
               v-for="block in rightBlocks"
               :key="block.title"
-              class="bg-white p-2"
+              class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
             >
               <h4 class="text-black font-bold text-lg mb-4">
                 {{ block.title }}
               </h4>
               <RtfText :text="block.text" />
+              <div
+                class="lg:col-span-3 space-y-6 bg-renome-gradient p-8 mt-5 rounded-[40px] text-white self-start"
+              >
+                <div class="space-y-4">
+                  <!-- Заголовок из innerTitle -->
+                  <h4
+                    class="text-[20px] font-bold leading-tight border-b border-white/20 pb-4 mb-4"
+                  >
+                    {{ service.innerTitle }}
+                  </h4>
+
+                  <!-- Текст из innerText -->
+                  <div class="text-[13px] opacity-90 leading-snug prose-invert">
+                    <RtfText :text="service.innerText" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Футер с кнопками (как на скрине) -->
         <div class="mt-16 flex flex-wrap gap-4 justify-end">
-          <button
-            class="flex items-center gap-4 bg-black text-white px-8 py-4 rounded-full font-bold uppercase text-[12px] tracking-widest hover:bg-gray-800 transition-all"
+          <NuxtLink
+            to="/prices"
+            class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
           >
             Перейти к прайсу
-            <span
-              class="bg-white text-black rounded-full w-6 h-6 flex items-center justify-center"
-              >→</span
-            >
-          </button>
+          </NuxtLink>
 
           <button
-            @click="$emit('order')"
-            class="flex items-center gap-4 bg-renome-gradient text-white px-8 py-4 rounded-full font-bold uppercase text-[12px] tracking-widest shadow-lg hover:brightness-110 transition-all"
+            @click="isContactModalOpen = true"
+            class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
           >
             Заказать услугу
-            <span
-              class="bg-white text-black rounded-full w-6 h-6 flex items-center justify-center"
-              >→</span
-            >
           </button>
         </div>
       </div>
     </template>
   </ModalDialog>
+  <Teleport to="body">
+    <ContactModal
+      :isOpen="isContactModalOpen"
+      @close="isContactModalOpen = false"
+    />
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -91,10 +107,16 @@ const props = defineProps<{
   isOpen: boolean;
   service: any;
 }>();
+import type { ListResponse, Service } from "~/models";
+const { data: servicesResponse } = await useApi<ListResponse<Service>>(
+  "/services?populate=*",
+);
 
 const emit = defineEmits(["close", "order"]);
 
 // Распределяем блоки
 const leftBlocks = computed(() => props.service?.infoBlocks?.slice(0, 2) || []);
 const rightBlocks = computed(() => props.service?.infoBlocks?.slice(2) || []);
+
+const isContactModalOpen = ref(false);
 </script>

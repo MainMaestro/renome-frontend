@@ -150,6 +150,8 @@ export type Service = StrapiModel & {
     title: string;
     text: StrapiRtfItem[];
   }[];
+  innerText: StrapiRtfItem[];
+  innerTitle: string;
 };
 
 export type TechStackSection = StrapiModel & {

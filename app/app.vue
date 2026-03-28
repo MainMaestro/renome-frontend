@@ -137,4 +137,11 @@ header {
   will-change: transform, background-color;
   transform: translateZ(0); /* Принудительный запуск GPU */
 }
+body.modal-open {
+  overflow: hidden !important;
+  height: 100vh;
+  /* Чтобы страница не прыгала из-за исчезновения скроллбара */
+  padding-right: var(--scrollbar-width, 0px); 
+}
+
 </style>

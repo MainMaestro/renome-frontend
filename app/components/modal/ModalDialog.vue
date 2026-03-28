@@ -54,23 +54,29 @@ watch(
   () => props.isOpen,
   (val) => {
     if (typeof document !== 'undefined') {
-      // 'hidden' убирает скролл, 'auto' возвращает
       document.body.style.overflow = val ? "hidden" : "";
     }
-  },
-  { immediate: true } // Важно, если модалка открыта при загрузке
+  }
 );
+
 const handleEsc = (e: KeyboardEvent) => {
   if (e.key === "Escape" && props.isOpen) emit("close");
 };
 
 onMounted(() => {
   window.addEventListener("keydown", handleEsc);
+  // Если модалка открыта сразу при монтировании, блокируем скролл здесь
+  if (props.isOpen) {
+    document.body.style.overflow = "hidden";
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleEsc);
-  document.body.style.overflow = "auto";
+  // Принудительно возвращаем скролл, когда компонент уничтожается
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = "";
+  }
 });
 </script>
 
