@@ -9,78 +9,92 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
 );
 </script>
 <template>
-  <section id="applications" class="py-12 md:py-24">
-    <div class="container mx-auto px-4 md:px-6 max-w-300">
+  <section id="applications" class="py-24 font-sans">
+    <div class="container mx-auto px-6 max-w-300">
       <h2
-        class="text-renome text-[28px] md:text-[32px] font-bold uppercase mb-10 md:mb-16 tracking-tight text-center md:text-left"
+        class="text-renome text-[36px] font-bold uppercase mb-16 tracking-tight text-center md:text-left"
       >
         НАШИ ПРИЛОЖЕНИЯ
       </h2>
 
-      <div class="flex flex-col gap-6 md:gap-12">
+      <div class="flex flex-col gap-10">
         <!-- Карточка приложения -->
         <div
           v-for="app in appsResponse?.data"
           :key="app.id"
-          class="bg-white rounded-[2.5rem] md:rounded-[40px] p-6 md:p-14 shadow-sm border border-gray-100 flex flex-col lg:flex-row gap-10 md:gap-16 items-center overflow-hidden"
+          class="bg-white rounded-4xl p-8 md:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col gap-8 md:gap-12"
         >
-          <!-- Контентная часть -->
-          <div class="flex-[1.3] space-y-6 md:space-y-8 w-full">
-            <div class="flex items-center md:items-start gap-4 md:gap-6">
-              <div
-                class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
-              >
-                <img
-                  :src="useImageUrl(siteInfo?.logo)"
-                  alt="App Icon"
-                  class="w-6 h-6 md:w-8 md:h-8 object-contain"
-                />
+          <!-- Верхний ряд: Текст + Скриншот -->
+          <div
+            class="flex flex-col lg:flex-row gap-10 items-center lg:items-start"
+          >
+            <!-- Левая часть: Контент -->
+            <div class="flex-1 space-y-6 w-full flex flex-col items-start">
+              <div class="flex gap-5 items-center">
+                <div
+                  class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center shadow-inner"
+                >
+                  <img
+                    :src="useImageUrl(siteInfo?.logo)"
+                    alt="App Icon"
+                    class="w-6 h-6 object-contain"
+                  />
+                </div>
+                <h3
+                  class="text-[22px] font-bold text-renome uppercase leading-tight tracking-tight"
+                >
+                  <a
+                    v-if="app.url"
+                    :href="app.url"
+                    target="_blank"
+                    class="hover:opacity-80 transition-opacity flex items-center gap-2"
+                  >
+                    {{ app.name }}
+                    <!-- Опционально: иконка внешней ссылки -->
+                    <span class="text-[14px] normal-case font-normal opacity-50"
+                      >↗</span
+                    >
+                  </a>
+                  <span v-else>{{ app.name }}</span>
+                </h3>
               </div>
-              <h3
-                class="text-[28px] md:text-[42px] font-bold text-black leading-[1.1] tracking-tighter"
+
+              <p
+                class="text-black text-[15px] leading-[1.7] font-light whitespace-pre-line"
               >
-                {{ app.name }}
-              </h3>
+                {{ app.description }}
+              </p>
             </div>
 
-            <p
-              class="text-[#4b5563] text-[15px] md:text-[17px] leading-[1.6] md:leading-[1.7] font-light max-w-2xl whitespace-pre-line"
-            >
-              {{ app.description }}
-            </p>
-
-            <div class="pt-2 md:pt-4">
-              <button
-                @click="isContactModalOpen = true"
-                class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
+            <!-- Правая часть: Скриншот -->
+            <div class="flex-1 w-full">
+              <div
+                class="rounded-xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-gray-100 bg-white"
               >
-              
-                Оставить заявку
-                
-              </button>
-              
+                <img
+                  v-if="useImageUrl(app.screenshot)"
+                  :src="useImageUrl(app.screenshot)"
+                  class="w-full h-auto object-cover"
+                  alt="App Interface"
+                />
+                <div
+                  v-else
+                  class="aspect-video bg-gray-50 flex items-center justify-center text-gray-300 italic"
+                >
+                  Нет скриншота
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Скриншот (адаптивный масштаб) -->
-          <div class="flex-1 w-full relative mt-4 lg:mt-0">
-            <div v-if="useImageUrl(app.screenshot)" class="relative group">
-              <!-- Декоративный фон под скриншотом для объема на десктопе -->
-              <div
-                class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-4xl blur-2xl hidden lg:block"
-              ></div>
-              <img
-                :src="useImageUrl(app.screenshot)"
-                class="relative w-full h-auto object-contain rounded-2xl shadow-xl lg:scale-110 lg:translate-y-3 transition-transform duration-500 group-hover:scale-115"
-                alt="App Interface"
-              />
-            </div>
-            <div
-              v-else
-              class="text-gray-300 italic text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed"
+          <!-- Нижний ряд: Кнопка (всегда внизу) -->
+          <div class="flex justify-start">
+            <button
+              @click="isContactModalOpen = true"
+              class="w-full md:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
             >
-              Нет скриншота
-            </div>
+              Оставить заявку
+            </button>
           </div>
         </div>
       </div>

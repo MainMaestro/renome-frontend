@@ -34,6 +34,7 @@ export type Application = StrapiModel & {
   name: string;
   description: string;
   screenshot: StrapiImage;
+  url?: string;
 };
 
 export type LeadRequest = {
