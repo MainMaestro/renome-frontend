@@ -70,6 +70,11 @@ export type StrapiRtfItem =
   | {
       type: "text";
       text: string;
+      bold?: boolean;
+      italic?: boolean;
+      underline?: boolean;
+      strikethrough?: boolean;
+      code?: boolean;
     }
   | {
       type: "list";
@@ -77,6 +82,33 @@ export type StrapiRtfItem =
       children: StrapiRtfItem[];
     }
   | { type: "list-item"; children: StrapiRtfItem[] };
+
+const text: StrapiRtfItem[] = [
+  {
+    type: "list",
+    format: "unordered",
+    children: [
+      {
+        type: "list-item",
+        children: [
+          {
+            type: "text",
+            text: "Диагностика процессов",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: "paragraph",
+    children: [
+      {
+        type: "text",
+        text: "Анализируем текущую систему работы компании и выявляем слабые места",
+      },
+    ],
+  },
+];
 
 export type Partner = StrapiModel & {
   name: string;
