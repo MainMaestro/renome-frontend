@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LeadRequest, SiteInfo } from "~/models";
+const { triggerToast } = useAppToast()
 const tgLink = inject<string>("tgLink");
 const whatsappLink = inject<string>("whatsappLink");
 
@@ -13,20 +14,7 @@ const form = ref<LeadRequest>({
 });
 const loading = ref(false);
 
-const toast = reactive({
-  show: false,
-  message: "",
-  isError: false,
-});
 
-const triggerToast = (msg: string, error = false) => {
-  toast.message = msg;
-  toast.isError = error;
-  toast.show = true;
-  setTimeout(() => {
-    toast.show = false;
-  }, 4000);
-};
 
 const submitForm = async () => {
   if (!form.value.personalDataConfirmation) return;
@@ -37,25 +25,18 @@ const submitForm = async () => {
   }
   loading.value = true;
   try {
-    await useApi("/leads", {
-      method: "POST",
-      body: {
-        data: form.value,
-      },
-    });
-
+    await useApi("/leads", { method: "POST", body: { data: form.value } });
+    triggerToast("Заявка успешно отправлена!");
+  } catch (e) {
+    triggerToast("Ошибка сервера", true);
+  } finally {
+    loading.value = false;
     form.value = {
       name: "",
       phone: "",
       comment: "",
       personalDataConfirmation: false,
     };
-
-    triggerToast("Заявка успешно отправлена!");
-  } catch (e) {
-    triggerToast("Ошибка сервера", true);
-  } finally {
-    loading.value = false;
   }
 };
 </script>
@@ -257,18 +238,6 @@ const submitForm = async () => {
         </div>
       </div>
     </div>
-    <!-- Тост-уведомление -->
-    <Transition name="slide-up">
-      <div
-        v-if="toast.show"
-        :class="[
-          'fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl shadow-2xl text-white font-bold',
-          toast.isError ? 'bg-red-500' : 'bg-emerald-600',
-        ]"
-      >
-        {{ toast.message }}
-      </div>
-    </Transition>
   </section>
 </template>
 

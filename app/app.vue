@@ -11,8 +11,6 @@ onMounted(() => {
 
   fixHeight();
   window.addEventListener("orientationchange", fixHeight);
-
- 
 });
 
 useHead({
@@ -53,20 +51,20 @@ useSeoMeta({
  * @deprecated Remove ASAP, change links display to v-for list
  */
 const tgLink = computed(() => {
-  return companyData.value?.links?.find((l: any) => l.url?.includes("t.me"))?.url;
+  return companyData.value?.links?.find((l: any) => l.url?.includes("t.me"))
+    ?.url;
 });
 
 const whatsappLink = computed(() => {
   // Ищем либо по имени, либо по характерной ссылке wa.me
-  return companyData.value?.links?.find((l: any) => 
-    l.name === "whatsapp" || l.url?.includes("wa.me")
+  return companyData.value?.links?.find(
+    (l: any) => l.name === "whatsapp" || l.url?.includes("wa.me"),
   )?.url;
 });
 
 provide("companyInfo", companyData);
 provide("tgLink", tgLink);
 provide("whatsappLink", whatsappLink);
-
 </script>
 
 <template>
@@ -79,6 +77,7 @@ provide("whatsappLink", whatsappLink);
       <NuxtPage />
     </main>
     <FeedBack />
+    <ToastComponent />
   </div>
 </template>
 
