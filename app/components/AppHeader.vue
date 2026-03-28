@@ -70,7 +70,9 @@ const scrollWithOffset = (id: string) => {
     ]"
     class="h-20 md:h-24 flex items-center"
   >
-    <div class="container mx-auto flex items-center justify-between">
+    <div
+      class="mx-auto flex grow px-5 md:px-10 items-center justify-between gap-10"
+    >
       <!-- Лого -->
       <NuxtLink
         to="/"
@@ -114,7 +116,7 @@ const scrollWithOffset = (id: string) => {
         <button
           title="Открыть меню"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="lg:hidden flex flex-col gap-1.5 z-110 p-2 cursor-pointer"
+          class="lg:hidden z-20 flex flex-col gap-1.5 p-3 cursor-pointer"
         >
           <span
             :class="[
@@ -149,7 +151,7 @@ const scrollWithOffset = (id: string) => {
     >
       <div
         v-if="isMobileMenuOpen"
-        class="fixed inset-0 bg-white z-100 lg:hidden flex flex-col items-center justify-center gap-8"
+        class="fixed inset-0 bg-white z-10 lg:hidden flex flex-col items-center justify-center gap-8"
         style="height: 100dvh; min-height: -webkit-fill-available"
       >
         <a

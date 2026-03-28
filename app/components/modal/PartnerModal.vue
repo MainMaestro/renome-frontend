@@ -10,161 +10,115 @@ const props = defineProps<{
 
 const emit = defineEmits(["close"]);
 
-// 2. Доступ к данным
 const data = computed(() => props.partner || {});
 
-// 4. Тарифы
 const tarifs = computed(() => {
   return data.value.tarifs || [];
 });
 
 console.log(props.partner?.description);
-
-watch(
-  () => props.isOpen,
-  (newValue) => {
-    if (process.client) {
-      if (newValue) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "auto";
-      }
-    }
-  },
-  { immediate: true },
-);
-
-const handleEsc = (e: KeyboardEvent) => {
-  if (e.key === "Escape" && props.isOpen) emit("close");
-};
-
-onMounted(() => {
-  window.addEventListener("keydown", handleEsc);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keydown", handleEsc);
-  document.body.style.overflow = "auto";
-});
 </script>
 
 <template>
-  <Transition name="fade">
-    <div
-      v-if="isOpen"
-      class="fixed inset-0 z-100 flex items-center justify-center p-4"
-    >
-      <div
-        class="absolute inset-0 bg-black/30 backdrop-blur-sm"
-        @click="emit('close')"
-      ></div>
-
-      <div
-        class="relative bg-[#EDF2F6] w-full max-w-262.5 max-h-[95vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col"
-      >
-        <div class="absolute top-0 right-0 w-full h-full pointer-events-none">
+  <ModalDialog :isOpen="props.isOpen" @close="emit('close')">
+    <template #header>
+      <div class="flex items-center gap-5">
+        <div class="bg-white p-3 rounded-2xl shadow-sm border border-white">
           <img
-            src="/partners.png"
-            alt=""
-            class="w-full h-full object-cover object-top-right opacity-60"
+            :src="useImageUrl(data.logo)"
+            class="h-15 w-auto object-contain"
           />
         </div>
-
-        <button
-          @click="emit('close')"
-          class="absolute top-4 right-4 md:top-6 md:right-6 z-50 p-2 md:p-3 text-gray-400 hover:text-black transition-all duration-300 hover:rotate-90 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 rounded-xl cursor-pointer"
+        <h2
+          class="text-3xl md:text-4xl font-black text-renome uppercase tracking-tight"
         >
-          <span class="text-3xl md:text-3xl leading-none font-light">✕</span>
-        </button>
+          ВНЕДРЕНИЕ {{ data.name }}
+        </h2>
+      </div>
+    </template>
 
-        <div class="relative z-10 p-8 md:p-12 overflow-y-auto no-scrollbar">
-          <div class="flex items-center gap-5 mb-8">
-            <div class="bg-white p-3 rounded-2xl shadow-sm border border-white">
-              <img
-                :src="useImageUrl(data.logo)"
-                class="h-15 w-auto object-contain"
-              />
-            </div>
-            <h2
-              class="text-3xl md:text-4xl font-black text-renome uppercase tracking-tight"
+    <template #content>
+      <div class="absolute top-0 right-0 w-full h-full pointer-events-none">
+        <img
+          src="/partners.png"
+          alt=""
+          class="w-full h-full object-cover object-top-right opacity-60 rounded-4xl"
+        />
+      </div>
+
+      <div class="relative h-full">
+        <!-- Описание -->
+        <div
+          class="text-[#455A64] text-[15px] leading-relaxed mb-10 max-w-4xl font-medium"
+        >
+          <p>{{ data.anotation }}</p>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12 bg-white p-6 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex-col justify-center border border-white/50 hover:shadow-lg transition-all"
+        >
+          <div v-if="data.description">
+            <RtfText :text="data.description" />
+          </div>
+        </div>
+
+        <div v-if="tarifs.length > 0">
+          <h3 class="text-3xl font-black text-renome mb-8 tracking-tight">
+            Тарифы:
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div
+              v-for="tarif in tarifs"
+              :key="tarif.id"
+              class="bg-white p-6 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col border border-white/50 hover:shadow-lg transition-all justify-between"
             >
-              ВНЕДРЕНИЕ {{ data.name }}
-            </h2>
-          </div>
-
-          <!-- Описание -->
-          <div
-            class="text-[#455A64] text-[15px] leading-relaxed mb-10 max-w-4xl font-medium"
-          >
-            <p>{{ data.anotation }}</p>
-          </div>
-
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12 bg-white p-6 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex-col justify-center border border-white/50 hover:shadow-lg transition-all"
-          >
-            <div v-if="data.description">
-              <RtfText :text="data.description" />
-            </div>
-          </div>
-
-          <div v-if="tarifs.length > 0">
-            <h3 class="text-3xl font-black text-renome mb-8 tracking-tight">
-              Тарифы:
-            </h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div
-                v-for="tarif in tarifs"
-                :key="tarif.id"
-                class="bg-white p-6 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col border border-white/50 hover:shadow-lg transition-all justify-between"
-              >
-                <div>
-                  <!-- Заголовок тарифа -->
-                  <div class="font-bold text-[#263238] text-[17px] mb-1">
-                    {{ tarif.name }}
-                  </div>
-
-                  <!-- ПРОВЕРКА: Показываем блок "Включает", только если описание не пустое -->
-                  <div v-if="tarif.description">
-                    <div class="text-[14px] text-[#78909C] font-semibold mb-2">
-                      Включает:
-                    </div>
-
-                    <!-- Список пунктов -->
-                    <div
-                      v-for="line in (tarif.description || '').split('\n')"
-                      :key="line"
-                      class="flex items-start gap-2 text-[13px] text-[#455A64] leading-snug mb-1"
-                    >
-                      <span
-                        class="w-1.5 h-1.5 bg-[#009688] mt-1.5 shrink-0"
-                      ></span>
-                      <span>{{ line }}</span>
-                    </div>
-                  </div>
+              <div>
+                <!-- Заголовок тарифа -->
+                <div class="font-bold text-[#263238] text-[17px] mb-1">
+                  {{ tarif.name }}
                 </div>
 
-                <!-- Цена внизу -->
-                <div class="text-xl text-renome mt-6">
-                  {{ formatPrice(tarif.price) }}
-                  / в месяц
+                <!-- ПРОВЕРКА: Показываем блок "Включает", только если описание не пустое -->
+                <div v-if="tarif.description">
+                  <div class="text-[14px] text-[#78909C] font-semibold mb-2">
+                    Включает:
+                  </div>
+
+                  <!-- Список пунктов -->
+                  <div
+                    v-for="line in (tarif.description || '').split('\n')"
+                    :key="line"
+                    class="flex items-start gap-2 text-[13px] text-[#455A64] leading-snug mb-1"
+                  >
+                    <span
+                      class="w-1.5 h-1.5 bg-[#009688] mt-1.5 shrink-0"
+                    ></span>
+                    <span>{{ line }}</span>
+                  </div>
                 </div>
+              </div>
+
+              <!-- Цена внизу -->
+              <div class="text-xl text-renome mt-6">
+                {{ formatPrice(tarif.price) }}
+                / в месяц
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="mt-12 flex justify-end">
-            <button
-              @click="isContactModalOpen = true"
-              class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95 hover:brightness-110"
-            >
-              Заказать
-            </button>
-          </div>
+        <div class="mt-12 flex justify-end">
+          <button
+            @click="isContactModalOpen = true"
+            class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95 hover:brightness-110"
+          >
+            Заказать
+          </button>
         </div>
       </div>
-    </div>
-  </Transition>
+    </template>
+  </ModalDialog>
   <ContactModal
     :isOpen="isContactModalOpen"
     @close="isContactModalOpen = false"

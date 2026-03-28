@@ -1,6 +1,15 @@
 <template>
   <main>
     <HeroSection />
+    <button
+      @click="isOpen = true"
+      :class="isOpen ? 'bg-amber-700' : 'active:bg-green-700'"
+    >
+      Open
+    </button>
+    <ModalDialog :isOpen="isOpen" @close="isOpen = false">
+      Coooooool
+    </ModalDialog>
     <AboutSection />
     <ServicesSection />
     <WorkWith />
@@ -13,3 +22,7 @@
     <BlogSection />
   </main>
 </template>
+
+<script setup lang="ts">
+const isOpen = ref(false);
+</script>
