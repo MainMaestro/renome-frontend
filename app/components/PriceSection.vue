@@ -8,7 +8,7 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
 </script>
 
 <template>
-  <section id="price" class="py-24 relative z-10 font-sans">
+  <section id="price" class="py-12 relative z-10 font-sans">
     <div class="container mx-auto px-6 max-w-300">
       <h2
         class="text-renome text-[36px] font-medium uppercase mb-12 tracking-wide"
