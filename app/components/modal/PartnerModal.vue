@@ -117,7 +117,7 @@ console.log(props.partner?.description);
           </button>
         </div>
       </div>
-    </template>
+    </template>ModalDialog
   </ModalDialog>
   <ContactModal
     :isOpen="isContactModalOpen"

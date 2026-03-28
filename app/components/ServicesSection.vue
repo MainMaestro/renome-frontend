@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import type { ListResponse, Service } from "~/models";
 
-const isContactModalOpen = ref(false);
+const IsServiceModalOpen = ref(false);
+const selectedService = ref<Service | null>(null);
+  // Функция для открытия модалки
+const openService = (service: Service) => {
+  selectedService.value = service;
+  IsServiceModalOpen.value = true;
+};
 
 const { data: servicesResponse } = await useApi<ListResponse<Service>>(
   "/services?populate=*",
@@ -55,13 +61,12 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
               {{ mainService.description }}
             </p>
             <button
-              @click="isContactModalOpen = true"
+              @click="openService(mainService)"
               class="w-full md:w-auto flex items-center justify-center md:justify-start gap-4 bg-renome-gradient text-white px-8 py-4 rounded-full hover:opacity-90 transition-all hover:brightness-110 shadow-lg active:scale-95 cursor-pointer"
             >
               <span class="text-[14px] font-medium uppercase tracking-wider"
                 >Узнать подробнее</span
               >
-             
             </button>
           </div>
 
@@ -105,21 +110,22 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             {{ service.description }}
           </p>
           <button
-            @click="isContactModalOpen = true"
+            @click="openService(service)"
             class="flex items-center justify-between bg-renome-gradient text-white px-6 py-3 rounded-full w-full sm:w-fit gap-4 hover:opacity-90 transition-all hover:brightness-110 cursor-pointer shadow-md active:scale-95"
           >
             <span class="text-[12px] uppercase font-bold tracking-wider"
               >Узнать подробнее</span
             >
-           
           </button>
         </div>
       </div>
     </div>
     <Teleport to="body">
-      <ContactModal
-        :isOpen="isContactModalOpen"
-        @close="isContactModalOpen = false"
+      <ServiceModal
+        v-if="selectedService"
+        :service="selectedService"
+        :is-open="IsServiceModalOpen"
+        @close="IsServiceModalOpen = false"
       />
     </Teleport>
   </section>

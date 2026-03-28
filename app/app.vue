@@ -125,6 +125,7 @@ body {
   body {
     /* Запрещаем системный "отскок" страницы */
     overscroll-behavior-y: none;
+    scrollbar-gutter: stable;
   }
 }
 

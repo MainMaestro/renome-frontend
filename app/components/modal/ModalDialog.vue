@@ -1,31 +1,40 @@
 <template>
   <Transition name="fade">
     <div
-      class="z-100 top-0 left-0 bottom-0 right-0 p-2 md:p-20 fixed w-full h-dvh backdrop-blur-3xl flex"
+      class="z-100 top-0 left-0 bottom-0 right-0 p-2 md:p-20 fixed w-full h-dvh backdrop-blur-3xl flex items-center justify-center"
       v-if="isOpen"
       @click.self="emit('close')"
     >
+      <!-- Основной белый контейнер (теперь relative) -->
       <div
-        class="z-200 bg-white rounded-4xl h-full w-full drop-shadow-2xl flex flex-col pb-3 md:gap-10 md:py-10 grow"
+        class="relative z-200 bg-white rounded-4xl h-full w-full drop-shadow-2xl flex flex-col overflow-hidden"
       >
-        <div
-          class="flex bg-white md:bg-transparent z-300 flex-row justify-between p-2 md:px-10 rounded-t-4xl drop-shadow-2xl"
-        >
-          <slot name="header" />
-          <div>
-            <button
-              @click="emit('close')"
-              title="Закрыть"
-              class="p-2 z-400 md:p-3 text-gray-400 hover:text-black transition-all duration-300 hover:rotate-90 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 rounded-xl cursor-pointer"
-            >
-              <span class="text-3xl md:text-3xl leading-none font-light"
-                >✕</span
-              >
-            </button>
-          </div>
+        <!-- Фоновое изображение (теперь внутри relative контейнера) -->
+        <div class="absolute inset-0 pointer-events-none">
+          <img
+            src="/bg.png"
+            alt=""
+            class="w-full h-full object-cover object-right-top opacity-50 rounded-4xl"
+          />
         </div>
+
+        <!-- Кнопка закрытия (фиксирована справа сверху относительно модалки) -->
+        <button
+          @click="emit('close')"
+          title="Закрыть"
+          class="absolute top-4 right-4 md:top-8 md:right-8 z-500 p-2 md:p-3 text-gray-400 hover:text-black transition-all duration-300 hover:rotate-90 active:scale-90 focus:outline-none rounded-xl cursor-pointer"
+        >
+          <span class="text-3xl leading-none font-light">✕</span>
+        </button>
+
+        <!-- Заголовок (если нужен) -->
+        <div class="relative z-300 flex flex-row justify-between p-2 md:px-10 rounded-t-4xl">
+          <slot name="header" />
+        </div>
+
+        <!-- Контентная часть (только она скроллится) -->
         <div
-          class="flex grow justify-center items-center overflow-y-auto h-full px-3 md:px-10"
+          class="relative z-10 flex grow justify-center items-start overflow-y-auto h-full px-3 md:px-10 py-10"
         >
           <slot name="content" />
         </div>
@@ -35,6 +44,7 @@
 </template>
 
 <script setup lang="ts">
+import { watch, onMounted, onUnmounted } from 'vue'; 
 const props = defineProps<{
   isOpen: boolean;
 }>();
@@ -43,10 +53,12 @@ const emit = defineEmits(["close"]);
 watch(
   () => props.isOpen,
   (val) => {
-    if (import.meta.client) {
-      document.body.style.overflow = val ? "hidden" : "auto";
+    if (typeof document !== 'undefined') {
+      // 'hidden' убирает скролл, 'auto' возвращает
+      document.body.style.overflow = val ? "hidden" : "";
     }
   },
+  { immediate: true } // Важно, если модалка открыта при загрузке
 );
 const handleEsc = (e: KeyboardEvent) => {
   if (e.key === "Escape" && props.isOpen) emit("close");

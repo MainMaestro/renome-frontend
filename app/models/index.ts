@@ -144,6 +144,12 @@ export type Service = StrapiModel & {
   name: string;
   description: string;
   picture?: StrapiImage;
+  background: StrapiImage;
+  annotation: string;
+  infoBlocks: {
+    title: string;
+    text: StrapiRtfItem[];
+  }[];
 };
 
 export type TechStackSection = StrapiModel & {
