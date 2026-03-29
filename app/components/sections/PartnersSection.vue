@@ -38,9 +38,9 @@ const activePartner = ref<any>(null);
           <div
             class="h-32 mb-8 rounded-full border border-gray-50 flex items-center justify-center p-6 shadow-inner bg-white overflow-hidden"
           >
-            <img
-              :src="useImageUrl(partner.logo)"
-              :alt="partner.name"
+            <StrapiImg
+              :src="partner.logo"
+              :alt="'Логотип ' + partner.name"
               class="max-w-full max-h-full object-contain rounded-full"
             />
           </div>
@@ -72,7 +72,7 @@ const activePartner = ref<any>(null);
       </div>
     </div>
     <PartnerModal
-    v-if="activePartner" 
+      v-if="activePartner"
       :partner="activePartner"
       :is-open="!!activePartner"
       @close="activePartner = null"

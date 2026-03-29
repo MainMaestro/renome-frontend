@@ -1,29 +1,31 @@
+<script setup lang="ts">
+// import AboutSection from "~/components/sections/AboutSection.vue";
+// import TeamSection from "~/components/sections/TeamSection.vue";
+// import ApplicationsSection from "~/components/sections/ApplicationsSection.vue";
+// import IntegrationsSection from "~/components/sections/IntegrationsSection.vue";
+// import PartnersSection from "~/components/sections/PartnersSection.vue";
+// import RecomendSection from "~/components/sections/RecomendSection.vue";
+// import ProjectList from "~/components/sections/ProjectList.vue";
+// import BlogSection from "~/components/sections/BlogSection.vue";
+// import HeroSection from "~/components/sections/HeroSection.vue";
+// import PriceSection from "~/components/sections/PriceSection.vue";
+// import TechStackSection from "~/components/sections/TechStackSection.vue";
+// import ServicesSection from "~/components/sections/ServicesSection.vue";
+</script>
 <template>
   <main>
     <HeroSection />
-    <button
-      @click="isOpen = true"
-      :class="isOpen ? 'bg-amber-700' : 'active:bg-green-700'"
-    >
-      Open
-    </button>
-    <ModalDialog :isOpen="isOpen" @close="isOpen = false">
-      Coooooool
-    </ModalDialog>
     <AboutSection />
+    <TeamSection />
     <ServicesSection />
-    <WorkWith />
+    <IntegrationsSection />
     <PriceSection />
-    <TechStack />
-    <AppList />
+    <TechStackSection />
+    <ApplicationsSection />
     <PartnersSection />
     <RecomendSection />
     <ProjectList />
     <BlogSection />
-    <FeedBack sourceName="Подвал главной страницы" />
+    <TheFooter sourceName="Подвал главной страницы" />
   </main>
 </template>
-
-<script setup lang="ts">
-const isOpen = ref(false);
-</script>

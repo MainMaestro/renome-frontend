@@ -71,7 +71,7 @@ provide("whatsappLink", whatsappLink);
   <div class="fixed-bg-layer"></div>
 
   <div class="relative z-10 flex flex-col min-h-screen">
-    <AppHeader />
+    <TheHeader />
     <!-- Обертка для контента, которая заставляет футер быть внизу -->
     <main class="grow">
       <NuxtPage />

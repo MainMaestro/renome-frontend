@@ -38,8 +38,9 @@ const company = inject<SiteInfo>("companyInfo");
           <!-- Лого -->
           <div class="mb-12 lg:mb-20">
             <NuxtLink to="/" class="group">
-              <img
-                :src="useImageUrl(company?.logoWithText)"
+              <StrapiImg
+                v-if="company"
+                :src="company?.logoWithText"
                 alt="Логотип Реноме консалтинг"
                 class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105"
               />

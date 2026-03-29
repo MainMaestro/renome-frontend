@@ -30,9 +30,9 @@ const { data: projectsResponse } = await useApi<ListResponse<Project>>(
               <div
                 class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
               >
-                <img
-                  :src="useImageUrl(siteInfo?.logo)"
-                  alt="Icon"
+                <StrapiImg
+                  v-if="siteInfo"
+                  :src="siteInfo.logo"
                   class="w-6 h-6 object-contain"
                 />
               </div>
@@ -53,9 +53,9 @@ const { data: projectsResponse } = await useApi<ListResponse<Project>>(
             <div
               class="rounded-xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-gray-100 bg-white"
             >
-              <img
-                v-if="useImageUrl(project.screenshot)"
-                :src="useImageUrl(project.screenshot)"
+              <StrapiImg
+                v-if="project.screenshot"
+                :src="project.screenshot"
                 class="w-full h-auto object-cover"
                 alt="Project Screenshot"
               />

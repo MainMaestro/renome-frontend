@@ -4,22 +4,22 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   vite: {
     optimizeDeps: {
-      include: [
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
-      ]
+      include: ["@vue/devtools-core", "@vue/devtools-kit"],
     },
     plugins: [tailwindcss()],
   },
   css: ["./app/assets/css/main.css"],
   devtools: { enabled: true },
   modules: ["@nuxtjs/google-fonts"],
-  components: [
-    { path: "~/components/modal", pathPrefix: false }, // Сканировать подпапку modal
-    "~/components",
-  ],
+  components: {
+    dirs: [
+      "~/components/modal",
+      "~/components/rtf",
+      "~/components/sections",
+      "~/components",
+    ],
+  },
   runtimeConfig: {
-    // Эта часть доступна только на сервере (SSR)
     strapiToken: process.env.STRAPI_TOKEN,
     public: {
       strapiUrl: `${process.env.STRAPI_URL}`,
@@ -36,10 +36,8 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
-      script: [
-        { src: 'https://code.jquery.com/jquery-3.6.0.min.js' }
-      ]
-    }
+      script: [{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }],
+    },
   },
   router: {
     options: {

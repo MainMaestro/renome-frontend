@@ -24,10 +24,7 @@ console.log(props.partner?.description);
     <template #header>
       <div class="flex items-center gap-5">
         <div class="bg-white p-3 rounded-2xl shadow-sm border border-white">
-          <img
-            :src="useImageUrl(data.logo)"
-            class="h-15 w-auto object-contain"
-          />
+          <StrapiImg :src="data.logo" class="h-15 w-auto object-contain" />
         </div>
         <h2
           class="text-3xl md:text-4xl font-black text-renome uppercase tracking-tight"
@@ -116,10 +113,11 @@ console.log(props.partner?.description);
             Заказать
           </button>
         </div>
-      </div>
-    </template>ModalDialog
+      </div> </template
+    >ModalDialog
   </ModalDialog>
   <ContactModal
+    :sourceName="'Диалог партнёра ' + partner.name"
     :isOpen="isContactModalOpen"
     @close="isContactModalOpen = false"
   />

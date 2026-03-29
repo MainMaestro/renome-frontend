@@ -13,7 +13,7 @@
         <div class="absolute inset-0 pointer-events-none">
           <img
             src="/bg.png"
-            alt=""
+            alt="Фоновое изображение"
             class="w-full h-full object-cover object-top-right opacity-50 rounded-4xl"
           />
         </div>
@@ -28,7 +28,9 @@
         </button>
 
         <!-- Заголовок (если нужен) -->
-        <div class="relative z-300 flex flex-row justify-between p-2 md:px-10 rounded-t-4xl">
+        <div
+          class="relative z-300 flex flex-row justify-between p-2 md:px-10 rounded-t-4xl"
+        >
           <slot name="header" />
         </div>
 
@@ -44,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted } from 'vue'; 
+import { watch, onMounted, onUnmounted } from "vue";
 const props = defineProps<{
   isOpen: boolean;
 }>();
@@ -53,10 +55,10 @@ const emit = defineEmits(["close"]);
 watch(
   () => props.isOpen,
   (val) => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       document.body.style.overflow = val ? "hidden" : "";
     }
-  }
+  },
 );
 
 const handleEsc = (e: KeyboardEvent) => {
@@ -74,7 +76,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keydown", handleEsc);
   // Принудительно возвращаем скролл, когда компонент уничтожается
-  if (typeof document !== 'undefined') {
+  if (typeof document !== "undefined") {
     document.body.style.overflow = "";
   }
 });

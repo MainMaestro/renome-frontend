@@ -44,7 +44,7 @@ const scrollToSection = (id: string) => {
     >
       <img
         src="/price.png"
-        alt="Hero Background"
+        alt="Фоновое изображение"
         class="w-full h-full object-contain object-top-right lg:object-top-right opacity-40 lg:opacity-90"
       />
     </div>
@@ -155,7 +155,7 @@ const scrollToSection = (id: string) => {
       />
     </Teleport>
   </section>
-  <FeedBack sourceName="Подвал страницы цен" />
+  <TheFooter sourceName="Подвал страницы цен" />
 </template>
 
 <style scoped>

@@ -79,9 +79,10 @@ const scrollWithOffset = (id: string) => {
         class="flex items-center z-110 px-4"
         @click="closeMobileMenu"
       >
-        <img
-          :src="useImageUrl(siteInfo?.logoWithText)"
-          alt="Renome Logo"
+        <StrapiImg
+          v-if="siteInfo"
+          :src="siteInfo.logoWithText"
+          alt="Логотип Реноме консалтинг"
           class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left"
           :style="{
             transform: isScrolled ? 'scale(0.8)' : 'scale(1)',
@@ -178,6 +179,7 @@ const scrollWithOffset = (id: string) => {
 
   <Teleport to="body">
     <ContactModal
+      sourceName="Панель навигации"
       :isOpen="isContactModalOpen"
       @close="isContactModalOpen = false"
     />

@@ -36,8 +36,8 @@
 
           <!-- Центральная колонка (Иллюстрация) -->
           <div class="lg:col-span-6 flex justify-center py-6">
-            <img
-              :src="useImageUrl(service.background)"
+            <StrapiImg
+              :src="service.background"
               class="w-full max-w-125 h-auto object-contain"
               alt="Service Illustration"
             />

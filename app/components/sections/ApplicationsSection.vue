@@ -30,9 +30,9 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
               <div
                 class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
               >
-                <img
-                  :src="useImageUrl(siteInfo?.logo)"
-                  alt="App Icon"
+                <StrapiImg
+                  v-if="siteInfo"
+                  :src="siteInfo?.logo"
                   class="w-6 h-6 md:w-8 md:h-8 object-contain"
                 />
               </div>
@@ -54,11 +54,8 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
                 @click="isContactModalOpen = true"
                 class="w-full md:w-auto bg-renome-gradient text-white px-8 md:px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
               >
-              
                 Оставить заявку
-                
               </button>
-              
             </div>
           </div>
 
@@ -69,8 +66,8 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
               <div
                 class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-4xl blur-2xl hidden lg:block"
               ></div>
-              <img
-                :src="useImageUrl(app.screenshot)"
+              <StrapiImg
+                :src="app.screenshot"
                 class="relative w-full h-auto object-contain rounded-2xl shadow-xl lg:scale-110 lg:translate-y-3 transition-transform duration-500 group-hover:scale-115"
                 alt="App Interface"
               />
@@ -88,6 +85,7 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
   </section>
 
   <ContactModal
+    sourceName="Список приложений"
     :isOpen="isContactModalOpen"
     @close="isContactModalOpen = false"
   />

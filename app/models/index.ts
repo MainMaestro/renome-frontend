@@ -14,9 +14,29 @@ export type ListResponse<T> = Required<Response<T[]>>;
 
 export type StrapiModel = { id: number };
 
-export type StrapiImage = StrapiModel & {
+export type StrapiImageData = {
   url: string;
+  width: number;
+  height: number;
 };
+
+export type StrapiImageFormat = {
+  /** Before 156 */
+  thumbnail?: StrapiImageData;
+  /** Before 500 */
+  small?: StrapiImageData;
+  /** Before 750 */
+  medium?: StrapiImageData;
+  /** Before 1000 */
+  large?: StrapiImageData;
+};
+
+export type StrapiImage = StrapiModel &
+  StrapiImageData & {
+    alternativeText?: string;
+    caption?: string;
+    formats?: StrapiImageFormat;
+  };
 
 export type TeamMember = StrapiModel & {
   avatar: StrapiImage;

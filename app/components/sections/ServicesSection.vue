@@ -3,7 +3,7 @@ import type { ListResponse, Service } from "~/models";
 
 const IsServiceModalOpen = ref(false);
 const selectedService = ref<Service | null>(null);
-  // Функция для открытия модалки
+// Функция для открытия модалки
 const openService = (service: Service) => {
   selectedService.value = service;
   IsServiceModalOpen.value = true;
@@ -42,9 +42,9 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
               <div
                 class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center shrink-0"
               >
-                <img
+                <StrapiImg
                   v-if="mainService.icon"
-                  :src="useImageUrl(mainService.icon)"
+                  :src="mainService.icon"
                   :alt="'Иконка услуги ' + mainService.name"
                   class="w-full h-full object-contain"
                 />
@@ -74,10 +74,9 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
           <div
             class="order-1 md:order-2 w-full md:w-80 lg:w-96 shrink-0 flex justify-center"
           >
-            <img
+            <StrapiImg
               v-if="mainService.picture"
-              alt="Иллюстрация для услуги"
-              :src="useImageUrl(mainService.picture)"
+              :src="mainService.picture"
               class="max-h-50 md:max-h-full w-auto object-contain"
             />
           </div>
@@ -93,9 +92,9 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
             <div
               class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shrink-0"
             >
-              <img
+              <StrapiImg
                 v-if="service.icon"
-                :src="useImageUrl(service.icon)"
+                :src="service.icon"
                 :alt="'Иконка услуги ' + service.name"
                 class="w-full h-full object-contain"
               />

@@ -33,7 +33,7 @@ watch(
           <div class="flex flex-col items-center text-center mb-6 md:mb-10">
             <img
               src="/logo.png"
-              alt="Renome"
+              alt="Логотип Реноме консалтинг"
               class="h-16 md:h-24 mb-4 md:mb-6 object-contain"
             />
             <h2
