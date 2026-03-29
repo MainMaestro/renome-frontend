@@ -54,20 +54,21 @@
                 {{ block.title }}
               </h4>
               <RtfText :text="block.text" />
-              <div v-if="block.innerText && block.innerTitle"
+              <div
+                v-if="block.innerText && block.innerTitle"
                 class="lg:col-span-3 space-y-6 bg-renome-gradient p-8 mt-5 rounded-[40px] text-white self-start"
               >
-                <div >
+                <div>
                   <!-- Заголовок из innerTitle -->
                   <h4
-                    class="text-[20px]  font-bold leading-tight border-white/20 pb-1 mb-4"
+                    class="text-[20px] font-bold leading-tight border-white/20 pb-1 mb-4"
                   >
                     {{ block.innerTitle }}
                   </h4>
 
                   <!-- Текст из innerText -->
-                  <div class="text-[13px] text-gray-100  ">
-                    <RtfText :text="block.innerText" :useAccentColor="false"/>
+                  <div class="text-[13px] text-gray-100">
+                    <RtfText :text="block.innerText" :useAccentColor="false" />
                   </div>
                 </div>
               </div>
@@ -96,6 +97,7 @@
   </ModalDialog>
   <Teleport to="body">
     <ContactModal
+      :sourceName="'Окно услуги ' + service.name"
       :isOpen="isContactModalOpen"
       @close="isContactModalOpen = false"
     />
@@ -103,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Service } from '~/models';
+import type { Service } from "~/models";
 
 const props = defineProps<{
   isOpen: boolean;

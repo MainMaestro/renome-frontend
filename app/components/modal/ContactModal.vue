@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { LeadRequest, SiteInfo } from "~/models";
+import type { SiteInfo } from "~/models";
 const company = inject<SiteInfo>("companyInfo");
 const tgLink = inject<string>("tgLink");
 const whatsappLink = inject<string>("whatsappLink");
 
 const props = defineProps<{
   isOpen: boolean;
+  sourceName: string;
 }>();
 
 const emit = defineEmits(["close"]);
@@ -19,7 +20,6 @@ watch(
     }
   },
 );
-
 </script>
 <template>
   <ModalDialog :isOpen="props.isOpen" @close="emit('close')">
@@ -47,8 +47,7 @@ watch(
               Напишите нам, мы поможем
             </h3>
           </div>
-          <LeadForm />
-        
+          <LeadForm :sourceName="sourceName" />
         </div>
 
         <!-- Футер (Контакты + SVG) -->

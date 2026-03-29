@@ -76,7 +76,6 @@ provide("whatsappLink", whatsappLink);
     <main class="grow">
       <NuxtPage />
     </main>
-    <FeedBack />
     <ToastComponent />
   </div>
 </template>
@@ -141,7 +140,6 @@ body.modal-open {
   overflow: hidden !important;
   height: 100vh;
   /* Чтобы страница не прыгала из-за исчезновения скроллбара */
-  padding-right: var(--scrollbar-width, 0px); 
+  padding-right: var(--scrollbar-width, 0px);
 }
-
 </style>

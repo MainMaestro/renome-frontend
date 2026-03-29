@@ -149,11 +149,13 @@ const scrollToSection = (id: string) => {
     </div>
     <Teleport to="body">
       <ContactModal
+        :sourceName="'Страница цен: ' + currentCategory?.name"
         :isOpen="isContactModalOpen"
         @close="isContactModalOpen = false"
       />
     </Teleport>
   </section>
+  <FeedBack sourceName="Подвал страницы цен" />
 </template>
 
 <style scoped>

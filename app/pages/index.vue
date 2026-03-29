@@ -20,6 +20,7 @@
     <RecomendSection />
     <ProjectList />
     <BlogSection />
+    <FeedBack sourceName="Подвал главной страницы" />
   </main>
 </template>
 

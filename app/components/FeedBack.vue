@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LeadRequest, SiteInfo } from "~/models";
-const { triggerToast } = useAppToast()
+defineProps<{ sourceName: string }>();
+import type { SiteInfo } from "~/models";
 const tgLink = inject<string>("tgLink");
 const whatsappLink = inject<string>("whatsappLink");
 
@@ -28,7 +28,7 @@ const company = inject<SiteInfo>("companyInfo");
             </h3>
           </div>
 
-        <LeadForm />
+          <LeadForm :sourceName="sourceName" />
         </div>
 
         <!-- ПРАВАЯ ЧАСТЬ: Контакты -->
