@@ -14,7 +14,7 @@
           <img
             src="/bg.png"
             alt=""
-            class="w-full h-full object-cover object-right-top opacity-50 rounded-4xl"
+            class="w-full h-full object-cover object-top-right opacity-50 rounded-4xl"
           />
         </div>
 

@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import type { StrapiRtfItem } from "~/models";
 
-defineProps<{
-  text: StrapiRtfItem[];
-}>();
+withDefaults(
+  defineProps<{
+    text: StrapiRtfItem[];
+    useAccentColor?: boolean;
+  }>(),
+  { useAccentColor: true },
+);
 </script>
 <template>
-  <RtfItem v-for="item in text" :item="item" />
+  <RtfItem v-for="item in text" :item="item" :useAccentColor="useAccentColor" />
 </template>

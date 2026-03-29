@@ -149,9 +149,9 @@ export type Service = StrapiModel & {
   infoBlocks: {
     title: string;
     text: StrapiRtfItem[];
+    innerText?: StrapiRtfItem[];
+    innerTitle?: string;
   }[];
-  innerText: StrapiRtfItem[];
-  innerTitle: string;
 };
 
 export type TechStackSection = StrapiModel & {

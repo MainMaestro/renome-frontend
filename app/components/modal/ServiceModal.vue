@@ -38,7 +38,7 @@
           <div class="lg:col-span-6 flex justify-center py-6">
             <img
               :src="useImageUrl(service.background)"
-              class="w-full max-w-[500px] h-auto object-contain"
+              class="w-full max-w-125 h-auto object-contain"
               alt="Service Illustration"
             />
           </div>
@@ -54,20 +54,20 @@
                 {{ block.title }}
               </h4>
               <RtfText :text="block.text" />
-              <div
+              <div v-if="block.innerText && block.innerTitle"
                 class="lg:col-span-3 space-y-6 bg-renome-gradient p-8 mt-5 rounded-[40px] text-white self-start"
               >
-                <div class="space-y-4">
+                <div >
                   <!-- Заголовок из innerTitle -->
                   <h4
-                    class="text-[20px] font-bold leading-tight border-b border-white/20 pb-4 mb-4"
+                    class="text-[20px]  font-bold leading-tight border-white/20 pb-1 mb-4"
                   >
-                    {{ service.innerTitle }}
+                    {{ block.innerTitle }}
                   </h4>
 
                   <!-- Текст из innerText -->
-                  <div class="text-[13px] opacity-90 leading-snug prose-invert">
-                    <RtfText :text="service.innerText" />
+                  <div class="text-[13px] text-gray-100  ">
+                    <RtfText :text="block.innerText" :useAccentColor="false"/>
                   </div>
                 </div>
               </div>
@@ -103,14 +103,12 @@
 </template>
 
 <script setup lang="ts">
+import type { Service } from '~/models';
+
 const props = defineProps<{
   isOpen: boolean;
-  service: any;
+  service: Service;
 }>();
-import type { ListResponse, Service } from "~/models";
-const { data: servicesResponse } = await useApi<ListResponse<Service>>(
-  "/services?populate=*",
-);
 
 const emit = defineEmits(["close", "order"]);
 
