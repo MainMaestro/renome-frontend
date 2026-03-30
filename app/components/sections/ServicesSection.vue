@@ -110,7 +110,7 @@ const otherServices = computed(() => allServices.value.slice(1, 4));
           </p>
           <button
             @click="openService(service)"
-            class="flex items-center justify-between bg-renome-gradient text-white px-6 py-3 rounded-full w-full sm:w-fit gap-4 hover:opacity-90 transition-all hover:brightness-110 cursor-pointer shadow-md active:scale-95"
+            class="flex items-center justify-center bg-renome-gradient text-white px-6 py-3 rounded-full w-full sm:w-fit gap-4 hover:opacity-90 transition-all hover:brightness-110 cursor-pointer shadow-md active:scale-95"
           >
             <span class="text-[12px] uppercase font-bold tracking-wider"
               >Узнать подробнее</span

@@ -137,4 +137,8 @@ const breakpoints = {
 button:active {
   transform: scale(0.95);
 }
+:deep(.swiper-slide) {
+  display: flex;
+  height: auto; /* Позволяет слайду тянуться */
+}
 </style>

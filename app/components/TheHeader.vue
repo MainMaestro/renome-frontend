@@ -34,20 +34,27 @@ const menuItems = [
 ];
 
 const handleMenuClick = async (link: string) => {
-  closeMobileMenu(); // Закрываем шторку при переходе
+  closeMobileMenu();
 
   if (link.startsWith("#")) {
     const targetId = link.substring(1);
-    if (route.path !== "/") {
-      await router.push("/");
-      setTimeout(() => scrollWithOffset(targetId), 400);
-    } else {
+    
+    // Если мы уже на главной, просто скроллим
+    if (route.path === "/") {
       scrollWithOffset(targetId);
+    } else {
+      // Если на другой странице, переходим на главную с хешем
+      // Vue Router сам подставит /#price в URL
+      await router.push({ path: "/", hash: link });
+      
+      // Небольшая задержка, чтобы страница успела отрендериться
+      setTimeout(() => scrollWithOffset(targetId), 100);
     }
   } else {
     await router.push(link);
   }
 };
+
 
 const scrollWithOffset = (id: string) => {
   const element = document.getElementById(id);

@@ -16,13 +16,13 @@
   <main>
     <HeroSection />
     <AboutSection />
-    <TeamSection />
     <ServicesSection />
     <IntegrationsSection />
     <PriceSection />
     <TechStackSection />
     <ApplicationsSection />
     <PartnersSection />
+    <TeamSection />
     <RecomendSection />
     <ProjectList />
     <BlogSection />

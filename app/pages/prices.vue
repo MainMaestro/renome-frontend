@@ -37,6 +37,8 @@ const scrollToSection = (id: string) => {
 };
 </script>
 <template>
+  <div>
+
   <section class="relative pt-20 lg:pt-32 pb-20 lg:pb-40 overflow-hidden">
     <!-- Фоновое изображение: скрываем на мобилках или уменьшаем видимость -->
     <div
@@ -156,6 +158,8 @@ const scrollToSection = (id: string) => {
     </Teleport>
   </section>
   <TheFooter sourceName="Подвал страницы цен" />
+  </div>
+
 </template>
 
 <style scoped>
