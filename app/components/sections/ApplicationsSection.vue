@@ -24,17 +24,39 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
           :key="app.id"
           class="bg-white rounded-4xl p-8 md:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col gap-8 md:gap-12"
         >
-          <!-- Контентная часть -->
-          <div class="flex-[1.3] space-y-6 md:space-y-8 w-full">
-            <div class="flex items-center md:items-start gap-4 md:gap-6">
-              <div
-                class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center text-2xl shadow-inner"
-              >
-                <StrapiImg
-                  v-if="siteInfo"
-                  :src="siteInfo?.logo"
-                  class="w-6 h-6 md:w-8 md:h-8 object-contain"
-                />
+          <!-- Верхний ряд: Текст + Скриншот -->
+          <div
+            class="flex flex-col lg:flex-row gap-10 items-center lg:items-start"
+          >
+            <!-- Левая часть: Контент -->
+            <div class="flex-1 space-y-6 w-full flex flex-col items-start">
+              <div class="flex gap-5 items-center">
+                <div
+                  class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center shadow-inner"
+                >
+                  <img
+                    :src="useImageUrl(siteInfo?.logo)"
+                    alt="App Icon"
+                    class="w-6 h-6 object-contain"
+                  />
+                </div>
+                <h3
+                  class="text-[22px] font-bold text-renome uppercase leading-tight tracking-tight"
+                >
+                  <a
+                    v-if="app.url"
+                    :href="app.url"
+                    target="_blank"
+                    class="hover:opacity-80 transition-opacity flex items-center gap-2"
+                  >
+                    {{ app.name }}
+                    <!-- Опционально: иконка внешней ссылки -->
+                    <span class="text-[14px] normal-case font-normal opacity-50"
+                      >↗</span
+                    >
+                  </a>
+                  <span v-else>{{ app.name }}</span>
+                </h3>
               </div>
 
               <p
@@ -49,27 +71,27 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
               <div
                 class="rounded-xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-gray-100 bg-white"
               >
-                Оставить заявку
-              </button>
+                <img
+                  v-if="useImageUrl(app.screenshot)"
+                  :src="useImageUrl(app.screenshot)"
+                  class="w-full h-auto object-cover"
+                  alt="App Interface"
+                />
+                <div
+                  v-else
+                  class="aspect-video bg-gray-50 flex items-center justify-center text-gray-300 italic"
+                >
+                  Нет скриншота
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Скриншот (адаптивный масштаб) -->
-          <div class="flex-1 w-full relative mt-4 lg:mt-0">
-            <div v-if="useImageUrl(app.screenshot)" class="relative group">
-              <!-- Декоративный фон под скриншотом для объема на десктопе -->
-              <div
-                class="absolute -inset-4 bg-renome-gradient opacity-5 rounded-4xl blur-2xl hidden lg:block"
-              ></div>
-              <StrapiImg
-                :src="app.screenshot"
-                class="relative w-full h-auto object-contain rounded-2xl shadow-xl lg:scale-110 lg:translate-y-3 transition-transform duration-500 group-hover:scale-115"
-                alt="App Interface"
-              />
-            </div>
-            <div
-              v-else
-              class="text-gray-300 italic text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed"
+          <!-- Нижний ряд: Кнопка (всегда внизу) -->
+          <div class="flex justify-start">
+            <button
+              @click="isContactModalOpen = true"
+              class="w-full md:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
             >
               Оставить заявку
             </button>
