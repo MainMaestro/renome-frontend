@@ -70,16 +70,19 @@ const scrollWithOffset = (id: string) => {
     ]"
     class="h-20 md:h-24 flex items-center"
   >
-    <div class="container mx-auto flex items-center justify-between">
+    <div
+      class="mx-auto flex grow px-5 md:px-10 items-center justify-between gap-10"
+    >
       <!-- Лого -->
       <NuxtLink
         to="/"
         class="flex items-center z-110 px-4"
         @click="closeMobileMenu"
       >
-        <img
-          :src="useImageUrl(siteInfo?.logoWithText)"
-          alt="Renome Logo"
+        <StrapiImg
+          v-if="siteInfo"
+          :src="siteInfo.logoWithText"
+          alt="Логотип Реноме консалтинг"
           class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left"
           :style="{
             transform: isScrolled ? 'scale(0.8)' : 'scale(1)',
@@ -114,7 +117,7 @@ const scrollWithOffset = (id: string) => {
         <button
           title="Открыть меню"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="lg:hidden flex flex-col gap-1.5 z-110 p-2 cursor-pointer"
+          class="lg:hidden z-20 flex flex-col gap-1.5 p-3 cursor-pointer"
         >
           <span
             :class="[
@@ -149,7 +152,7 @@ const scrollWithOffset = (id: string) => {
     >
       <div
         v-if="isMobileMenuOpen"
-        class="fixed inset-0 bg-white z-100 lg:hidden flex flex-col items-center justify-center gap-8"
+        class="fixed inset-0 bg-white z-10 lg:hidden flex flex-col items-center justify-center gap-8"
         style="height: 100dvh; min-height: -webkit-fill-available"
       >
         <a
@@ -176,6 +179,7 @@ const scrollWithOffset = (id: string) => {
 
   <Teleport to="body">
     <ContactModal
+      sourceName="Панель навигации"
       :isOpen="isContactModalOpen"
       @close="isContactModalOpen = false"
     />

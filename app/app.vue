@@ -71,12 +71,11 @@ provide("whatsappLink", whatsappLink);
   <div class="fixed-bg-layer"></div>
 
   <div class="relative z-10 flex flex-col min-h-screen">
-    <AppHeader />
+    <TheHeader />
     <!-- Обертка для контента, которая заставляет футер быть внизу -->
     <main class="grow">
       <NuxtPage />
     </main>
-    <FeedBack />
     <ToastComponent />
   </div>
 </template>
@@ -125,6 +124,7 @@ body {
   body {
     /* Запрещаем системный "отскок" страницы */
     overscroll-behavior-y: none;
+    scrollbar-gutter: stable;
   }
 }
 
@@ -135,5 +135,11 @@ html {
 header {
   will-change: transform, background-color;
   transform: translateZ(0); /* Принудительный запуск GPU */
+}
+body.modal-open {
+  overflow: hidden !important;
+  height: 100vh;
+  /* Чтобы страница не прыгала из-за исчезновения скроллбара */
+  padding-right: var(--scrollbar-width, 0px);
 }
 </style>

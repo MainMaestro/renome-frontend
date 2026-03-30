@@ -62,6 +62,7 @@ const scrollToSection = (id: string) => {
     </div>
     <Teleport to="body">
       <ContactModal
+        sourceName="Hero-секция"
         :isOpen="isContactModalOpen"
         @close="isContactModalOpen = false"
       />

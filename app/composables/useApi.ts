@@ -1,4 +1,4 @@
-import type { StrapiImage } from "~/models";
+import type { StrapiImage, StrapiImageData } from "~/models";
 
 // useApi.ts
 export const useApi = <T>(endpoint: string, opts = {}) => {
@@ -13,7 +13,7 @@ export const useApi = <T>(endpoint: string, opts = {}) => {
   });
 };
 
-export const useImageUrl = (image: StrapiImage | undefined) => {
+export const useImageUrl = (image: StrapiImageData | undefined) => {
   if (!image) return "";
 
   const config = useRuntimeConfig();

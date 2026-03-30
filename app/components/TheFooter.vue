@@ -1,44 +1,10 @@
 <script setup lang="ts">
-import type { LeadRequest, SiteInfo } from "~/models";
-const { triggerToast } = useAppToast()
+defineProps<{ sourceName: string }>();
+import type { SiteInfo } from "~/models";
 const tgLink = inject<string>("tgLink");
 const whatsappLink = inject<string>("whatsappLink");
 
 const company = inject<SiteInfo>("companyInfo");
-
-const form = ref<LeadRequest>({
-  name: "",
-  phone: "",
-  comment: "",
-  personalDataConfirmation: false,
-});
-const loading = ref(false);
-
-
-
-const submitForm = async () => {
-  if (!form.value.personalDataConfirmation) return;
-  const phoneRegex = /^[+]?[0-9]{10,15}$/;
-  if (!phoneRegex.test(form.value.phone.replace(/\D/g, ""))) {
-    triggerToast("Введите корректный номер телефона", true);
-    return;
-  }
-  loading.value = true;
-  try {
-    await useApi("/leads", { method: "POST", body: { data: form.value } });
-    triggerToast("Заявка успешно отправлена!");
-  } catch (e) {
-    triggerToast("Ошибка сервера", true);
-  } finally {
-    loading.value = false;
-    form.value = {
-      name: "",
-      phone: "",
-      comment: "",
-      personalDataConfirmation: false,
-    };
-  }
-};
 </script>
 <template>
   <section
@@ -62,68 +28,7 @@ const submitForm = async () => {
             </h3>
           </div>
 
-          <form
-            @submit.prevent="submitForm"
-            class="bg-white p-6 md:p-10 rounded-3xl md:rounded-4xl shadow-xl space-y-4 md:space-y-5 border border-gray-50"
-          >
-            <input
-              v-model="form.name"
-              type="text"
-              placeholder="Имя"
-              required
-              class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all text-base"
-            />
-
-            <input
-              v-model="form.phone"
-              type="tel"
-              placeholder="Телефон"
-              required
-              class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all text-base"
-            />
-
-            <textarea
-              v-model="form.comment"
-              placeholder="Комментарий"
-              rows="4"
-              class="w-full p-4 md:p-5 rounded-xl md:rounded-2xl bg-[#f8fafc] border border-gray-100 outline-none focus:border-emerald-500 transition-all resize-none text-base"
-            ></textarea>
-
-            <div class="flex items-start gap-4 py-2">
-              <input
-                v-model="form.personalDataConfirmation"
-                type="checkbox"
-                id="agree_footer"
-                required
-                class="mt-1 w-5 h-5 shrink-0 accent-renome"
-              />
-              <label
-                for="agree_footer"
-                class="text-[10px] md:text-[11px] text-gray-600 leading-tight cursor-pointer"
-              >
-                Нажимая кнопку «Отправить», я даю свое согласие на обработку
-                моих персональных данных, в соответствии с Федеральным законом
-                от 27.07.2006 года №152-ФЗ «О персональных данных», на условиях
-                и для целей, определенных в Согласии на обработку персональных
-                данных *
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              :disabled="loading"
-              class="w-full lg:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full flex items-center justify-center gap-8 hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
-            >
-              <span class="text-[13px] uppercase font-bold tracking-widest">
-                {{ loading ? "Отправка..." : "Отправить" }}
-              </span>
-              <div
-                class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white"
-              >
-                <span class="text-lg">→</span>
-              </div>
-            </button>
-          </form>
+          <LeadForm :sourceName="sourceName" />
         </div>
 
         <!-- ПРАВАЯ ЧАСТЬ: Контакты -->
@@ -133,8 +38,9 @@ const submitForm = async () => {
           <!-- Лого -->
           <div class="mb-12 lg:mb-20">
             <NuxtLink to="/" class="group">
-              <img
-                :src="useImageUrl(company?.logoWithText)"
+              <StrapiImg
+                v-if="company"
+                :src="company?.logoWithText"
                 alt="Логотип Реноме консалтинг"
                 class="h-40 md:h-50 w-auto object-contain transition-transform group-hover:scale-105"
               />

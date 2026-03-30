@@ -43,10 +43,11 @@ const row2 = computed(() =>
               :key="'row1-' + group + '-' + partner.id"
               class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-xl md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
-              <img
+              <StrapiImg
                 v-if="partner.logo"
-                :src="useImageUrl(partner.logo)"
+                :src="partner.logo"
                 :alt="'Логотип ' + partner.name"
+                format="thumbnail"
                 class="max-w-full max-h-full object-contain pointer-events-none block"
               />
               <span
@@ -72,10 +73,11 @@ const row2 = computed(() =>
               :key="'row2-' + group + '-' + partner.id"
               class="bg-white h-14 md:h-17.5 w-32 md:w-40 p-4 rounded-xl md:rounded-[14px] flex items-center justify-center border border-gray-100 shadow-sm shrink-0"
             >
-              <img
+              <StrapiImg
                 v-if="partner.logo"
-                :src="useImageUrl(partner.logo)"
+                :src="partner.logo"
                 :alt="'Логотип ' + partner.name"
+                format="thumbnail"
                 class="max-w-full max-h-full object-contain pointer-events-none block"
               />
               <span

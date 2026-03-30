@@ -73,48 +73,6 @@ const stats = [
           </div>
         </div>
       </div>
-
-      <h3
-        class="text-renome text-[36px] font-medium leading-[140%] uppercase mt-12 tracking-wide"
-      >
-        КОМАНДА
-      </h3>
-
-      <!-- СЕТКА КОМАНДЫ -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-        <div
-          v-for="member in displayMembers"
-          :key="member.id"
-          class="flex flex-col group w-full h-full"
-        >
-          <!-- Квадратный контейнер для фото -->
-          <div
-            class="aspect-square bg-gray-100 rounded-t-xl overflow-hidden relative border-x border-t border-gray-100"
-          >
-            <img
-              :src="useImageUrl(member.avatar)"
-              :alt="member.name"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-          </div>
-
-          <!-- Инфо-блок (фиксируем высоту, чтобы все карточки были в ряд) -->
-          <div
-            class="p-5 bg-renome-gradient rounded-b-xl flex flex-col justify-center items-center min-h-25 h-fit sm:h-25"
-          >
-            <h4
-              class="text-sm font-medium uppercase text-white leading-tight text-center tracking-tight"
-            >
-              {{ member.name }}
-            </h4>
-            <p
-              class="text-xs text-white/70 mt-1 leading-tight text-center tracking-widest lowercase text-balance"
-            >
-              {{ member.position }}
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </template>

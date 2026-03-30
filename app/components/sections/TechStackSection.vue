@@ -9,8 +9,6 @@ const techData = computed(
   () => techStackResponse.value?.data || ({} as TechStackSection),
 );
 
-const imageUrl = computed(() => useImageUrl(techData.value.image));
-
 const isContactModalOpen = ref(false);
 </script>
 
@@ -81,8 +79,8 @@ const isContactModalOpen = ref(false);
         >
           <div class="absolute inset-0 bg-renome/5 rounded-full blur-3xl"></div>
 
-          <img
-            :src="imageUrl"
+          <StrapiImg
+            :src="techData.image"
             alt="Tech Circle"
             class="w-full h-full object-contain relative z-10 hover:scale-105 transition-transform duration-700 animate-float"
           />
@@ -134,12 +132,12 @@ const isContactModalOpen = ref(false);
           <span class="text-[12px] uppercase font-bold tracking-widest"
             >Оставить заявку</span
           >
-          
         </button>
       </div>
     </div>
 
     <ContactModal
+      sourceName="Секция технологического стека"
       :isOpen="isContactModalOpen"
       @close="isContactModalOpen = false"
     />

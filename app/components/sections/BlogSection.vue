@@ -86,9 +86,9 @@ const breakpoints = {
               v-if="post.image"
               class="w-full h-64 rounded-3xl overflow-hidden mb-6"
             >
-              <img
-                :src="useImageUrl(post.image)"
-                :alt="post.title"
+              <StrapiImg
+                :src="post.image"
+                :alt="'Иллюстрация к публикаци: ' + post.title"
                 class="w-full h-full object-cover transition-transform duration-500"
               />
             </div>
