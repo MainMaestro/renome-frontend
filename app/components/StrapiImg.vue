@@ -7,6 +7,7 @@ const props = defineProps<{
   src: StrapiImage;
   alt?: string;
   format?: keyof StrapiImageFormat;
+  loading?: 'lazy' | 'eager';
 }>();
 
 const usedImage = computed(() => {
@@ -26,5 +27,6 @@ const usedImage = computed(() => {
     :width="usedImage?.width"
     :height="usedImage?.height"
     :alt="alt ?? src.alternativeText ?? src.caption ?? NO_ALT"
+    :loading="loading || 'lazy'" 
   />
 </template>

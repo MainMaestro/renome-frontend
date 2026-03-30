@@ -79,7 +79,7 @@ const breakpoints = {
         <swiper-slide v-for="post in posts" :key="post.id" class="h-auto">
           <!-- Добавил min-h-[500px] для стабильной высоты карточки -->
           <div
-            class="bg-white p-6 rounded-4xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-50 flex flex-col h-full min-h-130 hover:shadow-lg transition-shadow"
+            class="bg-white p-6 rounded-4xl shadow-2xl border border-gray-50 flex flex-col h-full min-h-130 hover:shadow-lg transition-shadow"
           >
             <!-- Изображение чуть выше (h-64) -->
             <div
