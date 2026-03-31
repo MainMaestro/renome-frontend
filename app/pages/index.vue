@@ -16,6 +16,7 @@
   <main>
     <HeroSection />
     <AboutSection />
+    <RecomendSection />
     <ServicesSection />
     <IntegrationsSection />
     <PriceSection />
@@ -23,7 +24,6 @@
     <ApplicationsSection />
     <PartnersSection />
     <TeamSection />
-    <RecomendSection />
     <ProjectList />
     <BlogSection />
     <TheFooter sourceName="Подвал главной страницы" />

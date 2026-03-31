@@ -155,9 +155,11 @@ export type Project = StrapiModel & {
 };
 
 export type Recomendation = StrapiModel & {
-  title: string;
-  text: string;
-  author: string;
+  title?: string;
+  text?: string;
+  author?: string;
+  link?: string;
+  image?: StrapiImage,
 };
 
 export type Service = StrapiModel & {
