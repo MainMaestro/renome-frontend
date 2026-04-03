@@ -56,19 +56,19 @@ const stats = [
         <!-- ПРАВАЯ ЧАСТЬ: КАРТОЧКИ С ЦИФРАМИ -->
         <div class="w-full lg:w-[45%] grid grid-cols-2 gap-6">
           <div
-            v-for="stat in stats"
-            :key="stat.label"
+            v-for="stat in companyData?.data.characteristics"
+            :key="stat.title"
             class="bg-gray-50 rounded-2xl flex flex-col justify-center border border-gray-100 shadow-2xl transition-all hover:shadow-md"
           >
             <span
               class="text-[46px] font-normal leading-none text-renome mb-2 text-center"
             >
-              {{ stat.value }}
+              {{ stat.title }}
             </span>
             <span
               class="text-[14px] font-medium uppercase opacity-60 leading-tight text-black text-center"
             >
-              {{ stat.label }}
+              {{ stat.text }}
             </span>
           </div>
         </div>

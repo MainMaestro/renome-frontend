@@ -43,34 +43,7 @@ const isContactModalOpen = ref(false);
         <div
           class="z-10 w-full lg:w-87.5 bg-white rounded-3xl md:rounded-4xl p-6 md:p-8 shadow-sm border border-gray-100 order-2 lg:order-1"
         >
-          <p
-            class="text-renome font-bold text-[15px] mb-6 leading-tight uppercase tracking-wide"
-          >
-            Технологии:
-          </p>
-          <ul class="space-y-4">
-            <li class="flex items-start gap-3">
-              <span class="text-renome mt-1 text-[10px]">■</span>
-              <p class="text-[14px] text-gray-600">
-                <strong class="text-black">Node.js</strong> — для
-                высоконагруженных API-сервисов
-              </p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-renome mt-1 text-[10px]">■</span>
-              <p class="text-[14px] text-gray-600">
-                <strong class="text-black">PHP</strong> — для разработки
-                приложений и интеграций Битрикс24
-              </p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="text-renome mt-1 text-[10px]">■</span>
-              <p class="text-[14px] text-gray-600">
-                <strong class="text-black">REST API и OAuth 2.0</strong> — для
-                безопасного обмена данными
-              </p>
-            </li>
-          </ul>
+          <RtfText :text="techData.leftText" />
         </div>
 
         <!-- Центральный круг (Изображение из Strapi) -->
@@ -90,37 +63,7 @@ const isContactModalOpen = ref(false);
         <div
           class="z-10 w-full lg:w-87.5 bg-white rounded-3xl md:rounded-4xl p-6 md:p-8 shadow-sm border border-gray-100 order-3"
         >
-          <p
-            class="text-renome font-bold text-[15px] mb-6 leading-tight uppercase tracking-wide"
-          >
-            Безопасность:
-          </p>
-          <ul class="space-y-4 mb-8">
-            <li class="flex items-start gap-3 text-[14px] text-gray-600">
-              <span class="text-renome mt-1 text-[10px]">■</span>
-              <span
-                >Соединения защищены
-                <strong class="text-black">HTTPS</strong></span
-              >
-            </li>
-            <li class="flex items-start gap-3 text-[14px] text-gray-600">
-              <span class="text-renome mt-1 text-[10px]">■</span>
-              <span
-                >Данные передаются в формате
-                <strong class="text-black">JSON</strong></span
-              >
-            </li>
-            <li class="flex items-start gap-3 text-[14px] text-gray-600">
-              <span class="text-renome mt-1 text-[10px]">■</span>
-              Критическая информация шифруется на стороне сервера
-            </li>
-          </ul>
-          <p
-            class="text-[13px] md:text-[14px] text-black font-medium leading-relaxed border-t pt-6 border-gray-50 italic"
-          >
-            Это позволяет автоматизировать процессы, снизить количество ручных
-            операций и повысить эффективность.
-          </p>
+          <RtfText :text="techData.rightText" />
         </div>
       </div>
 
