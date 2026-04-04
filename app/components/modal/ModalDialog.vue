@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade">
     <div
-      class="z-100 top-0 left-0 bottom-0 right-0 p-2 md:p-20 fixed w-full h-dvh backdrop-blur-3xl flex items-center justify-center"
+      class="z-100 top-0 left-0 bottom-0 right-0 p-2 md:p-5 fixed w-full h-dvh backdrop-blur-3xl flex items-center justify-center drop-shadow-2xl"
       v-if="isOpen"
       @click.self="emit('close')"
     >

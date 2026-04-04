@@ -1,13 +1,30 @@
 <script setup lang="ts">
+import { ref, computed, inject } from "vue"; // Добавили импорты
+import type { ListResponse, Application, SiteInfo } from "~/models";
+
 const isContactModalOpen = ref(false);
 const siteInfo = inject<SiteInfo>("companyInfo");
 
-import type { ListResponse, Application, SiteInfo } from "~/models";
+// Состояние для лимита
+const isExpanded = ref(false);
+const LIMIT = 2;
 
 const { data: appsResponse } = await useApi<ListResponse<Application>>(
   "/applications?populate=*",
 );
+
+// Вычисляем список для рендера
+const displayedApps = computed(() => {
+  const allApps = appsResponse.value?.data || [];
+  return isExpanded.value ? allApps : allApps.slice(0, LIMIT);
+});
+
+// Проверяем, нужно ли показывать кнопку
+const hasMoreApps = computed(() => {
+  return (appsResponse.value?.data?.length || 0) > LIMIT;
+});
 </script>
+
 <template>
   <section id="applications" class="py-24 font-sans">
     <div class="container mx-auto px-6 max-w-300">
@@ -18,25 +35,24 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
       </h2>
 
       <div class="flex flex-col gap-10">
-        <!-- Карточка приложения -->
+        <!-- Меняем appsResponse?.data на displayedApps -->
         <div
-          v-for="app in appsResponse?.data"
+          v-for="app in displayedApps"
           :key="app.id"
           class="bg-white rounded-4xl p-8 md:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col gap-8 md:gap-12"
         >
-          <!-- Верхний ряд: Текст + Скриншот -->
+          <!-- ... (внутренности карточки остаются прежними) ... -->
           <div
             class="flex flex-col lg:flex-row gap-10 items-center lg:items-start"
           >
-            <!-- Левая часть: Контент -->
             <div class="flex-1 space-y-6 w-full flex flex-col items-start">
               <div class="flex gap-5 items-center">
                 <div
                   class="w-12 h-12 shrink-0 mt-1 bg-slate-50 rounded-2xl flex items-center justify-center shadow-inner"
                 >
-                  <img
-                    :src="useImageUrl(siteInfo?.logo)"
-                    alt="App Icon"
+                  <StrapiImg
+                    v-if="siteInfo?.logo"
+                    :src="siteInfo.logo"
                     class="w-6 h-6 object-contain"
                   />
                 </div>
@@ -50,7 +66,6 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
                     class="hover:opacity-80 transition-opacity flex items-center gap-2"
                   >
                     {{ app.name }}
-                    <!-- Опционально: иконка внешней ссылки -->
                     <span class="text-[14px] normal-case font-normal opacity-50"
                       >↗</span
                     >
@@ -58,7 +73,6 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
                   <span v-else>{{ app.name }}</span>
                 </h3>
               </div>
-
               <p
                 class="text-black text-[15px] leading-[1.7] font-light whitespace-pre-line"
               >
@@ -66,16 +80,14 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
               </p>
             </div>
 
-            <!-- Правая часть: Скриншот -->
             <div class="flex-1 w-full">
               <div
                 class="rounded-xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-gray-100 bg-white"
               >
-                <img
-                  v-if="useImageUrl(app.screenshot)"
-                  :src="useImageUrl(app.screenshot)"
+                <StrapiImg
+                  v-if="app.screenshot"
+                  :src="app.screenshot"
                   class="w-full h-auto object-cover"
-                  alt="App Interface"
                 />
                 <div
                   v-else
@@ -87,7 +99,6 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
             </div>
           </div>
 
-          <!-- Нижний ряд: Кнопка (всегда внизу) -->
           <div class="flex justify-start">
             <button
               @click="isContactModalOpen = true"
@@ -97,6 +108,16 @@ const { data: appsResponse } = await useApi<ListResponse<Application>>(
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- Кнопка управления списком -->
+      <div v-if="hasMoreApps" class="mt-16 flex justify-center">
+        <button
+          @click="isExpanded = !isExpanded"
+          class="px-10 py-4 border-2 border-renome text-renome font-bold uppercase rounded-full hover:bg-renome hover:text-white transition-colors duration-300"
+        >
+          {{ isExpanded ? "Скрыть лишние" : "Смотреть все приложения" }}
+        </button>
       </div>
     </div>
   </section>

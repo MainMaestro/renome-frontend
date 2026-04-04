@@ -105,7 +105,7 @@ console.log(props.partner?.description);
           </div>
         </div>
 
-        <div class="mt-12 flex justify-end">
+        <div class="py-12 flex justify-end">
           <button
             @click="isContactModalOpen = true"
             class="bg-renome-gradient text-white px-12 py-3.5 rounded-full text-base font-bold cursor-pointer transition-all shadow-xl active:scale-95 hover:brightness-110"
@@ -113,8 +113,8 @@ console.log(props.partner?.description);
             Заказать
           </button>
         </div>
-      </div> </template
-    >ModalDialog
+      </div>
+    </template>
   </ModalDialog>
   <ContactModal
     :sourceName="'Диалог партнёра ' + partner.name"

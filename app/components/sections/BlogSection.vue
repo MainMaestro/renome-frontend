@@ -4,12 +4,9 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import type { ListResponse, Post } from "~/models";
+import type { ListResponse, Post, Response, Blog } from "~/models";
 
-const { data: postsResponse } = await useApi<ListResponse<Post>>(
-  "/blog-posts?populate=*",
-);
-const posts = computed(() => postsResponse.value?.data ?? []);
+const { data } = await useApi<Response<Blog>>("/blog-section?populate=*");
 
 const modules = [Navigation, Autoplay];
 
@@ -76,7 +73,11 @@ const breakpoints = {
         :autoplay="{ delay: 5000, disableOnInteraction: true }"
         class="blog-swiper overflow-visible!"
       >
-        <swiper-slide v-for="post in posts" :key="post.id" class="h-auto">
+        <swiper-slide
+          v-for="post in data?.data.posts"
+          :key="post.id"
+          class="h-auto"
+        >
           <!-- Добавил min-h-[500px] для стабильной высоты карточки -->
           <div
             class="bg-white p-6 rounded-4xl shadow-2xl border border-gray-50 flex flex-col h-full min-h-130 hover:shadow-lg transition-shadow"

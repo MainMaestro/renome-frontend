@@ -10,6 +10,14 @@ export type Response<T> = {
   };
 };
 
+let a: Response<{
+  value: number;
+}> = {
+  data: {
+    value: 12,
+  },
+};
+
 export type ListResponse<T> = Required<Response<T[]>>;
 
 export type StrapiModel = { id: number };
