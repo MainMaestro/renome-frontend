@@ -1,13 +1,45 @@
 <script setup lang="ts">
 import type { ListResponse, Partner } from "~/models";
 
+const route = useRoute();
+const router = useRouter();
+
 const { data: partnersResponse } = await useApi<ListResponse<Partner>>(
   "/partners?populate=*",
 );
 
 // Состояние для модалки
-const activePartner = ref<any>(null);
+const activePartner = ref<Partner | null>(null);
+
+// 1. Следим за изменением ?partner=ID в URL
+watch(
+  () => route.query.partner,
+  (newId) => {
+    if (newId && partnersResponse.value?.data) {
+      // Ищем партнера в загруженном списке по ID
+      const found = partnersResponse.value.data.find(p => p.id === Number(newId));
+      if (found) {
+        activePartner.value = found;
+      }
+    } else {
+      activePartner.value = null;
+    }
+  },
+  { immediate: true } // Проверка при первой загрузке страницы
+);
+
+// 2. Функции для открытия и закрытия через URL
+const openPartner = (partner: Partner) => {
+  router.push({ query: { ...route.query, partner: partner.id } });
+};
+
+const closePartner = () => {
+  // Убираем параметр из URL, сохраняя остальные (если есть)
+  const { partner, ...restQuery } = route.query;
+  router.push({ query: restQuery });
+};
 </script>
+
 
 <template>
   <section id="partners" class="py-24 font-sans">
@@ -62,7 +94,7 @@ const activePartner = ref<any>(null);
           <!-- Группа кнопок -->
           <div class="flex items-center gap-2 w-full mt-auto">
             <button
-              @click="activePartner = partner"
+               @click="openPartner(partner)"
               class="w-full bg-renome-gradient text-white py-3.5 rounded-full text-[12px] font-bold uppercase hover:bg-emerald-900 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               Узнать подробнее
@@ -75,7 +107,7 @@ const activePartner = ref<any>(null);
       v-if="activePartner"
       :partner="activePartner"
       :is-open="!!activePartner"
-      @close="activePartner = null"
+      @close="closePartner"
     />
   </section>
 </template>
