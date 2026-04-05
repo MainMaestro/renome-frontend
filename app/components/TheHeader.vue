@@ -38,7 +38,7 @@ const handleMenuClick = async (link: string) => {
 
   if (link.startsWith("#")) {
     const targetId = link.substring(1);
-    
+
     // Если мы уже на главной, просто скроллим
     if (route.path === "/") {
       scrollWithOffset(targetId);
@@ -46,7 +46,7 @@ const handleMenuClick = async (link: string) => {
       // Если на другой странице, переходим на главную с хешем
       // Vue Router сам подставит /#price в URL
       await router.push({ path: "/", hash: link });
-      
+
       // Небольшая задержка, чтобы страница успела отрендериться
       setTimeout(() => scrollWithOffset(targetId), 100);
     }
@@ -54,7 +54,6 @@ const handleMenuClick = async (link: string) => {
     await router.push(link);
   }
 };
-
 
 const scrollWithOffset = (id: string) => {
   const element = document.getElementById(id);
@@ -100,15 +99,20 @@ const scrollWithOffset = (id: string) => {
 
       <!-- Десктопное меню -->
       <nav class="hidden lg:flex items-center gap-10">
-        <a
-          v-for="item in menuItems"
-          :key="item.name"
-          href="#"
-          @click.prevent="handleMenuClick(item.link)"
-          class="font-medium text-renome transition-all duration-300 hover:text-emerald-500"
-        >
-          {{ item.name }}
-        </a>
+        <ul class="hidden lg:flex items-center gap-10">
+          <li
+            v-for="item in menuItems"
+            class="font-medium text-renome transition-all duration-300 hover:text-emerald-500"
+          >
+            <NuxtLink
+              :key="item.name"
+              to="#"
+              @click.prevent="handleMenuClick(item.link)"
+            >
+              {{ item.name }}
+            </NuxtLink>
+          </li>
+        </ul>
       </nav>
 
       <div class="flex items-center gap-4">
@@ -122,10 +126,12 @@ const scrollWithOffset = (id: string) => {
 
         <!-- Бургер-иконка -->
         <button
-          title="Открыть меню"
+          aria-label="Меню"
+          title="Меню сайта"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
           class="lg:hidden z-20 flex flex-col gap-1.5 p-3 cursor-pointer"
         >
+          <span hidden>Меню</span>
           <span
             :class="[
               'w-6 h-0.5 bg-renome transition-all',
@@ -157,20 +163,20 @@ const scrollWithOffset = (id: string) => {
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-full"
     >
-      <div
+      <ul
         v-if="isMobileMenuOpen"
         class="fixed inset-0 bg-white z-10 lg:hidden flex flex-col items-center justify-center gap-8"
         style="height: 100dvh; min-height: -webkit-fill-available"
       >
-        <a
+        <li
+          class="text-2xl font-semibold text-renome hover:text-emerald-500"
           v-for="item in menuItems"
           :key="item.name"
-          href="#"
-          @click.prevent="handleMenuClick(item.link)"
-          class="text-2xl font-semibold text-renome hover:text-emerald-500"
         >
-          {{ item.name }}
-        </a>
+          <NuxtLink href="#" @click.prevent="handleMenuClick(item.link)">
+            {{ item.name }}
+          </NuxtLink>
+        </li>
         <button
           @click="
             isContactModalOpen = true;
@@ -180,7 +186,7 @@ const scrollWithOffset = (id: string) => {
         >
           Связаться
         </button>
-      </div>
+      </ul>
     </Transition>
   </header>
 
