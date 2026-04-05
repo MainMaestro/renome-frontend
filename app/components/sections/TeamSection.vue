@@ -37,6 +37,7 @@ const displayMembers = computed(() => {
           >
             <StrapiImg
               :src="member.avatar"
+              :format="'small'"
               :alt="'Фотография члена команды: ' + member.name"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
