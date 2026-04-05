@@ -109,13 +109,13 @@ const scrollToSection = (id: string) => {
             {{ currentCategory.longName }}
           </h2>
 
-          <div class="space-y-4">
+          <div class="flex flex-col gap-4">
             <div
               v-for="price in getSortedPrices(currentCategory)"
               :key="price.id"
-              class="flex flex-col md:flex-row md:items-center justify-between p-1 bg-[#f1f5f9] rounded-2xl overflow-hidden group hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100"
+              class="flex flex-col md:flex-row md:items-center justify-between p-1 bg-[#f1f5f9] rounded-2xl overflow-hidden group hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-gray-100 shadow-md gap-4 md:gap-0 px-6 md:px-1"
             >
-              <div class="px-6 py-4 lg:pl-8 lg:py-4">
+              <div class="py-4 lg:pl-8 lg:py-4">
                 <h3 class="font-bold text-black text-[16px]">
                   {{ price.name }}
                 </h3>
@@ -129,7 +129,7 @@ const scrollToSection = (id: string) => {
 
               <button
                 @click="isContactModalOpen = true"
-                class="bg-renome-gradient text-white px-6 lg:px-10 py-4 lg:py-5 min-w-full md:min-w-45 text-center rounded-xl whitespace-nowrap hover:brightness-110 transition-all shadow-lg active:scale-95 mt-4 md:mt-0 cursor-pointer"
+                class="rounded-xl bg-renome-gradient text-white px-6 lg:px-10 py-4 lg:py-5 md:min-w-45 text-center whitespace-nowrap hover:brightness-110 transition-all h-max flex flex-col shadow-lg active:scale-95 mb-4 md:mb-0"
               >
                 <div class="text-[16px] lg:text-[18px] font-bold">
                   {{ price.isPriceFrom ? "от" : "" }}
