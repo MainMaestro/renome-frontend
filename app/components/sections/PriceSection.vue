@@ -52,11 +52,11 @@ const quickPrices = computed(() => quickPriceResponse.value?.data || []);
           <span class="text-[12px] uppercase font-bold tracking-widest"
             >Смотреть полный прайс</span
           >
-          <div
+          <span
             class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform"
           >
             →
-          </div>
+          </span>
         </NuxtLink>
       </div>
     </div>
