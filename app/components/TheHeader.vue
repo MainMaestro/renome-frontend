@@ -119,7 +119,7 @@ const scrollWithOffset = (id: string) => {
         <!-- Кнопка "Связаться" (скрыта на совсем маленьких экранах или уменьшена) -->
         <button
           @click="isContactModalOpen = true"
-          class="hidden sm:block bg-renome-gradient px-6 md:px-8 py-2 md:py-2.5 rounded-full text-white text-sm md:text-[17px] font-medium hover:brightness-110 transition-all active:scale-95 cursor-pointer"
+          class="hidden sm:block btn-renome btn-sm"
         >
           Связаться
         </button>
@@ -182,7 +182,7 @@ const scrollWithOffset = (id: string) => {
             isContactModalOpen = true;
             closeMobileMenu();
           "
-          class="bg-renome-gradient px-10 py-4 rounded-full text-white text-xl font-bold"
+          class="btn-renome btn-xl"
         >
           Связаться
         </button>

@@ -31,7 +31,7 @@ const hasMoreApps = computed(() => {
       <h2
         class="text-renome text-[36px] font-bold uppercase mb-16 tracking-tight text-center md:text-left"
       >
-        НАШИ ПРИЛОЖЕНИЯ
+        Наши приложения
       </h2>
 
       <div class="flex flex-col gap-10">
@@ -102,7 +102,7 @@ const hasMoreApps = computed(() => {
           <div class="flex justify-start">
             <button
               @click="isContactModalOpen = true"
-              class="w-full md:w-auto bg-renome-gradient text-white px-10 py-4 rounded-full font-bold text-[13px] md:text-[14px] uppercase tracking-wider hover:brightness-110 transition-all shadow-lg active:scale-95 cursor-pointer"
+              class="w-full md:w-auto btn-renome btn-md uppercase tracking-wider"
             >
               Оставить заявку
             </button>

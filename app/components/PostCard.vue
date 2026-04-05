@@ -33,11 +33,7 @@ defineProps<{
       </h3>
     </div>
     <div class="flex items-center gap-3 mt-auto">
-      <a
-        :href="post.url"
-        target="_blank"
-        class="bg-renome-gradient text-white px-8 py-4 rounded-full text-[14px] font-bold hover:brightness-110 transition-all shadow-lg cursor-pointer"
-      >
+      <a :href="post.url" target="_blank" class="btn-renome btn-md">
         Узнать подробнее
       </a>
     </div>

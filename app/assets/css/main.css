@@ -1,21 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans:
-    "Fira Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --color-renome: #0a4436;
-  --color-renome-title: var(
-    --color-renome
-  ); /* TODO: Rename to --color-renome ASAP!!!! */
-  --background-image-renome-gradient: linear-gradient(
-    135deg,
-    #034432 0%,
-    #0f654d 50%,
-    #023b2b 100%
-  );
+    --font-sans:
+        "Fira Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --color-renome: #0a4436;
+    --color-renome-title: var(--color-renome);
+    /* TODO: Rename to --color-renome ASAP!!!! */
+    --background-image-renome-gradient: linear-gradient(135deg,
+            #034432 0%,
+            #0f654d 50%,
+            #023b2b 100%);
 }
 
 .container {
-  @apply p-8 max-w-300;
+    @apply p-8 max-w-300;
+}
+
+.btn-sm {
+    @apply px-6 md:px-8 py-2 md:py-2.5 text-sm md:text-[17px];
+}
+
+.btn-md {
+    @apply px-8 py-4 text-sm;
+}
+
+.btn-xl {
+    @apply px-8 py-4 text-xl;
+}
+
+.btn-renome {
+    @apply bg-renome-gradient rounded-full text-white font-medium hover:brightness-120 transition-all active:scale-95 duration-150 shadow-lg;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
 }
