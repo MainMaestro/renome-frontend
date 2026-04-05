@@ -124,7 +124,7 @@ const breakpoints = {
                 </div>
                 <div class="mb-3">
                   <NuxtLink v-if="post.author?.url" :to="`${post.author.url}`">
-                    <span class="text-gray-400 text-[14px] font-medium uppercase tracking-wider">
+                    <span class="text-gray-400 hover:text-renome transition-colors text-[14px] font-medium uppercase tracking-wider">
                       {{ post.author?.firstName }} {{ post.author?.surname }}
                     </span>
                   </NuxtLink>
@@ -135,7 +135,7 @@ const breakpoints = {
                   </h3>
                 </div>
                 <div class="flex items-center gap-3 mt-auto">
-                  <a :href="post.url" target="_blank" class="bg-renome-gradient text-white px-8 py-4 rounded-full text-[14px] font-bold">
+                  <a :href="post.url" target="_blank" class="bg-renome-gradient text-white px-8 py-4 rounded-full text-[14px] font-bold hover:brightness-110 transition-all shadow-lg cursor-pointer">
                     Узнать подробнее
                   </a>
                 </div>
