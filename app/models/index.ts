@@ -10,6 +10,14 @@ export type Response<T> = {
   };
 };
 
+let a: Response<{
+  value: number;
+}> = {
+  data: {
+    value: 12,
+  },
+};
+
 export type ListResponse<T> = Required<Response<T[]>>;
 
 export type StrapiModel = { id: number };
@@ -48,6 +56,7 @@ export type TeamMember = StrapiModel & {
 export type CompanySection = StrapiModel & {
   title: string;
   description: string;
+  characteristics: { title: string; text: string }[];
 };
 
 export type Application = StrapiModel & {
@@ -159,7 +168,7 @@ export type Recomendation = StrapiModel & {
   text?: string;
   author?: string;
   link?: string;
-  image?: StrapiImage,
+  image?: StrapiImage;
 };
 
 export type Service = StrapiModel & {
@@ -181,6 +190,8 @@ export type TechStackSection = StrapiModel & {
   image: StrapiImage;
   title: string;
   description: string;
+  leftText: StrapiRtfItem[];
+  rightText: StrapiRtfItem[];
 };
 
 export type Integration = StrapiModel & {
@@ -188,7 +199,7 @@ export type Integration = StrapiModel & {
   name: string;
 };
 
-export type LinkName = "telegram" | "whatsapp";
+export type LinkName = "telegram" | "whatsapp" | "max" | "yandex-messenger";
 
 export type Link = {
   name: LinkName;

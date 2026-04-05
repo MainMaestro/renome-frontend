@@ -16,7 +16,7 @@ const allServices = computed(() => servicesResponse.value?.data || []);
 // Первая услуга (Автоматизация)
 const mainService = computed(() => allServices.value[0]);
 // Остальные три
-const otherServices = computed(() => allServices.value.slice(1, 4));
+const otherServices = computed(() => allServices.value.slice(1, 5));
 </script>
 <template>
   <section

@@ -21,13 +21,13 @@
         <!-- Центральная сетка (3 колонки: Блоки - Картинка - Блоки) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <!-- Левая колонка (первые два инфо-блока) -->
-          <div class="lg:col-span-3 space-y-10">
+          <div class="lg:col-span-4 space-y-10">
             <div
               v-for="block in leftBlocks"
               :key="block.title"
-              class="bg-gray-50/50 border border-gray-100 p-6 rounded-2xl shadow-sm"
+              class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm"
             >
-              <h4 class="text-renome font-bold text-lg mb-4 uppercase">
+              <h4 class="text-renome font-bold text-lg mb-4">
                 {{ block.title }}
               </h4>
               <RtfText :text="block.text" />
@@ -35,7 +35,7 @@
           </div>
 
           <!-- Центральная колонка (Иллюстрация) -->
-          <div class="lg:col-span-6 flex justify-center py-6">
+          <div class="lg:col-span-4 flex justify-center py-6">
             <StrapiImg
               :src="service.background"
               class="w-full max-w-125 h-auto object-contain"
@@ -44,7 +44,7 @@
           </div>
 
           <!-- Правая колонка (оставшиеся инфо-блоки) -->
-          <div class="lg:col-span-3 space-y-10">
+          <div class="lg:col-span-4 space-y-10">
             <div
               v-for="block in rightBlocks"
               :key="block.title"
@@ -56,7 +56,7 @@
               <RtfText :text="block.text" />
               <div
                 v-if="block.innerText && block.innerTitle"
-                class="lg:col-span-3 space-y-6 bg-renome-gradient p-8 mt-5 rounded-[40px] text-white self-start"
+                class="lg:col-span-3 space-y-6 bg-renome-gradient p-8 mt-5 rounded-xl text-white self-start"
               >
                 <div>
                   <!-- Заголовок из innerTitle -->

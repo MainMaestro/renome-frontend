@@ -32,7 +32,7 @@ const selectedImage = ref<string | null>(null);
             
             <div class="mt-6 pt-4 border-t border-gray-200 flex justify-end">
               <div class="text-right flex items-center gap-3">
-                <p class="text-[12px] font-bold leading-tight max-w-[150px]">{{ item.author }}</p>
+                <p class="text-[12px] font-bold leading-tight max-w-37.5">{{ item.author }}</p>
                 <div class="w-0.5 h-8 bg-renome"></div>
               </div>
             </div>
@@ -42,7 +42,7 @@ const selectedImage = ref<string | null>(null);
           <div 
             v-else-if="item.image"
             @click="selectedImage = useImageUrl(item.image)" 
-            class="group relative cursor-pointer overflow-hidden rounded-2xl border border-gray-100 aspect-[3/4] bg-white transition-all hover:shadow-2xl"
+            class="group relative cursor-pointer overflow-hidden rounded-2xl border border-gray-100 aspect-3/4 bg-white transition-all hover:shadow-2xl"
           >
             <StrapiImg 
               :src="item.image" 
@@ -68,7 +68,7 @@ const selectedImage = ref<string | null>(null);
     <Transition name="fade">
       <div 
         v-if="selectedImage" 
-        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-6"
+        class="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-6"
         @click="selectedImage = null"
       >
         <img :src="selectedImage" class="max-w-full max-h-full object-contain shadow-2xl" />
