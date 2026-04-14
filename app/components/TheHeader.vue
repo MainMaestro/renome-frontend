@@ -2,6 +2,7 @@
 import type { SiteInfo } from "~/models";
 const siteInfo = inject<SiteInfo>("companyInfo");
 
+
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false); // Состояние мобильного меню
 const isContactModalOpen = ref(false);
@@ -69,46 +70,26 @@ const scrollWithOffset = (id: string) => {
 </script>
 
 <template>
-  <header
-    :class="[
-      'fixed top-0 left-0 w-full z-100 transition-all duration-500',
-      isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg' : 'bg-transparent',
-    ]"
-    class="h-20 md:h-24 flex items-center"
-  >
-    <div
-      class="mx-auto flex grow px-5 md:px-10 items-center justify-between gap-10"
-    >
+  <header :class="[
+    'fixed top-0 left-0 w-full z-100 transition-all duration-500',
+    isScrolled || isMobileMenuOpen ? 'bg-white shadow-lg' : 'bg-transparent',
+  ]" class="h-20 md:h-24 flex items-center">
+    <div class="mx-auto flex grow px-5 md:px-10 items-center justify-between gap-10">
       <!-- Лого -->
-      <NuxtLink
-        to="/"
-        class="flex items-center z-110 px-4"
-        @click="closeMobileMenu"
-      >
-        <StrapiImg
-          v-if="siteInfo"
-          :src="siteInfo.logoWithText"
-          alt="Логотип Реноме консалтинг"
-          class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left"
-          :style="{
+      <NuxtLink to="/" class="flex items-center z-110 px-4" @click="closeMobileMenu">
+        <StrapiImg v-if="siteInfo" :src="siteInfo.logoWithText" alt="Логотип Реноме консалтинг"
+          class="w-auto h-16 md:h-20 object-contain transition-all duration-500 origin-left" :style="{
             transform: isScrolled ? 'scale(0.8)' : 'scale(1)',
             filter: isScrolled || isMobileMenuOpen ? 'brightness(0)' : 'none',
-          }"
-        />
+          }" />
       </NuxtLink>
 
       <!-- Десктопное меню -->
       <nav class="hidden lg:flex items-center gap-10">
         <ul class="hidden lg:flex items-center gap-10">
-          <li
-            v-for="item in menuItems"
-            class="font-medium text-renome transition-all duration-300 hover:text-emerald-500"
-          >
-            <NuxtLink
-              :key="item.name"
-              to="#"
-              @click.prevent="handleMenuClick(item.link)"
-            >
+          <li v-for="item in menuItems"
+            class="font-medium text-renome transition-all duration-300 hover:text-emerald-500">
+            <NuxtLink :key="item.name" to="#" @click.prevent="handleMenuClick(item.link)">
               {{ item.name }}
             </NuxtLink>
           </li>
@@ -116,74 +97,71 @@ const scrollWithOffset = (id: string) => {
       </nav>
 
       <div class="flex items-center gap-4">
+        <div class="hidden lg:block"> <!-- Скроем на мобилках, если есть бургер, или оставим -->
+          <a :href="`tel:+${siteInfo?.phone}`"
+            class="flex flex-col  items-center  font-medium text-renome hover:text-emerald-500 transition-colors">
+            <!-- Можно добавить иконку трубки -->
+
+            <span class="flex">
+              <svg xmlns="http://w3.org" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19.95 21q-3.125 0-6.175-1.362t-5.55-3.863q-2.5-2.5-3.862-5.55T3 4.05q0-.45.3-.75t.75-.3H8.1q.35 0 .625.238t.325.562l.65 3.5q.05.4-.025.675t-.225.475L7.1 10.7q.7 1.175 1.713 2.213.1.1.1.212t-1.037.212q1.038 1.013 2.213 1.713l2.35-2.35q.225-.225.5-.325t.65-.025l3.5.7q.35.075.575.338T19.95 15.9v4.05q0 .45-.3.75t-.75.3Z" />
+              </svg> Позвонить
+
+            </span>
+            <span>
+              {{ siteInfo?.phone }}
+            </span>
+          </a>
+        </div>
         <!-- Кнопка "Связаться" (скрыта на совсем маленьких экранах или уменьшена) -->
-        <button
-          @click="isContactModalOpen = true"
-          class="hidden sm:block btn-renome btn-sm"
-        >
+        <button @click="isContactModalOpen = true" class="hidden sm:block btn-renome btn-sm">
           Связаться
         </button>
 
         <!-- Бургер-иконка -->
-        <button
-          aria-label="Меню"
-          title="Меню сайта"
-          @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="lg:hidden z-20 flex flex-col gap-1.5 p-3 cursor-pointer"
-        >
+        <button aria-label="Меню" title="Меню сайта" @click="isMobileMenuOpen = !isMobileMenuOpen"
+          class="lg:hidden z-20 flex flex-col gap-1.5 p-3 cursor-pointer">
           <span hidden>Меню</span>
-          <span
-            :class="[
-              'w-6 h-0.5 bg-renome transition-all',
-              isMobileMenuOpen ? 'rotate-45 translate-y-2' : '',
-            ]"
-          ></span>
-          <span
-            :class="[
-              'w-6 h-0.5 bg-renome transition-all',
-              isMobileMenuOpen ? 'opacity-0' : '',
-            ]"
-          ></span>
-          <span
-            :class="[
-              'w-6 h-0.5 bg-renome transition-all',
-              isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '',
-            ]"
-          ></span>
+          <span :class="[
+            'w-6 h-0.5 bg-renome transition-all',
+            isMobileMenuOpen ? 'rotate-45 translate-y-2' : '',
+          ]"></span>
+          <span :class="[
+            'w-6 h-0.5 bg-renome transition-all',
+            isMobileMenuOpen ? 'opacity-0' : '',
+          ]"></span>
+          <span :class="[
+            'w-6 h-0.5 bg-renome transition-all',
+            isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '',
+          ]"></span>
         </button>
       </div>
     </div>
 
     <!-- Мобильное меню (Шторка) -->
-    <Transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="opacity-0 -translate-y-full"
-      enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition duration-200 ease-in"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 -translate-y-full"
-    >
-      <ul
-        v-if="isMobileMenuOpen"
+    <Transition enter-active-class="transition duration-300 ease-out" enter-from-class="opacity-0 -translate-y-full"
+      enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-full">
+      <ul v-if="isMobileMenuOpen"
         class="fixed inset-0 bg-white z-10 lg:hidden flex flex-col items-center justify-center gap-8"
-        style="height: 100dvh; min-height: -webkit-fill-available"
-      >
-        <li
-          class="text-2xl font-semibold text-renome hover:text-emerald-500"
-          v-for="item in menuItems"
-          :key="item.name"
-        >
+        style="height: 100dvh; min-height: -webkit-fill-available">
+        <li class="text-2xl font-semibold text-renome hover:text-emerald-500" v-for="item in menuItems"
+          :key="item.name">
           <NuxtLink href="#" @click.prevent="handleMenuClick(item.link)">
             {{ item.name }}
           </NuxtLink>
         </li>
-        <button
-          @click="
-            isContactModalOpen = true;
-            closeMobileMenu();
-          "
-          class="btn-renome btn-xl"
-        >
+        <li class="text-2xl font-semibold text-renome hover:text-emerald-500">
+          <a :href="`tel:+${siteInfo?.phone}`" class="">
+            {{ siteInfo?.phone || 'Позвонить' }}
+
+          </a>
+        </li>
+        <button @click="
+          isContactModalOpen = true;
+        closeMobileMenu();
+        " class="btn-renome btn-xl">
           Связаться
         </button>
       </ul>
@@ -191,10 +169,6 @@ const scrollWithOffset = (id: string) => {
   </header>
 
   <Teleport to="body">
-    <ContactModal
-      sourceName="Панель навигации"
-      :isOpen="isContactModalOpen"
-      @close="isContactModalOpen = false"
-    />
+    <ContactModal sourceName="Панель навигации" :isOpen="isContactModalOpen" @close="isContactModalOpen = false" />
   </Teleport>
 </template>
